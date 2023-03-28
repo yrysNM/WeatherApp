@@ -1,0 +1,11 @@
+.day {
+  padding: 24px 48px;
+  color: #fff;
+
+  &-info {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
