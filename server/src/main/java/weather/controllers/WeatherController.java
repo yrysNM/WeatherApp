@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 public class WeatherController {
   private String baseUrl = "https://api.openweathermap.org";
-  private String API_KEY = "25fa28646aac08e447938aaf85ade779";
+  private String API_KEY = "1b386436debb80340ab45dca79516e21";
 
   @GetMapping(value = "/location/{cityName}")
   public List<Object> getLocation(@PathVariable("cityName") String cityName) {
@@ -24,13 +24,10 @@ public class WeatherController {
     return Arrays.asList(location);
   }
 
-  @GetMapping(value = "/wheather/lat={lat}/lon={lon}")
-  public Object getWheatherDaily(@PathVariable("lat") double lat, @PathVariable("lon") double lon) {
-    String wheatherBaseUrl = baseUrl + "/data/2.5/onecall?lat=" + lat + "&lon="
-        + lon + "&appid="
+  @GetMapping(value = "/wheather/{cityName}")
+  public Object getWheatherDaily(@PathVariable("cityName") String cityName) {
+    String wheatherBaseUrl = baseUrl + "/data/2.5/weather?q=" + cityName + "&appid="
         + API_KEY;
-
-    System.out.println(wheatherBaseUrl);
 
     RestTemplate restTemplate = new RestTemplate();
 
