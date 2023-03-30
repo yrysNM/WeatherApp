@@ -31,7 +31,7 @@ public class WeatherService {
 
   public Object gWeatherData(String cityName) {
     String wheatherBaseUrl = _url + "/weather?q=" + cityName + "&appid=" + API_KEY;
-    System.out.println(wheatherBaseUrl);
+
     Object weatherData = restTempplate.getForObject(wheatherBaseUrl, Object.class);
 
     return weatherData;
