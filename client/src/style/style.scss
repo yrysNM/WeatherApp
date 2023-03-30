@@ -12,6 +12,23 @@ body {
   transition: all .4s ease;
 }
 
+html {
+  scroll-padding-top: 9rem;
+
+  &::-webkit-scrollbar {
+    width: 0.4rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(167, 165, 159, .7);
+    border-radius: 5rem;
+  }
+}
+
 h1,
 h2,
 h3,
