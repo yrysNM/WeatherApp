@@ -12,6 +12,39 @@ export interface IWeather extends ICoord, IMainWeatherInfo, IWind, ISys {
   cod: number;
 }
 
+export interface IListWeatherDays extends IMainWeatherInfo, IWind {
+  dt: number;
+  weather: IWeatherObj[];
+  clouds: {
+    all: number;
+  };
+  visibility: number;
+  pop: number;
+  sys: {
+    pod: string;
+  };
+  dt_txt: string;
+}
+
+export interface ICity extends ICoord {
+  city: {
+    country: string;
+    id: number;
+    name: string;
+    population: number;
+    sunrise: number;
+    sunset: number;
+    timezone: number;
+  };
+}
+
+export interface IWeatherDays extends ICity {
+  cnt: number;
+  cod: string;
+  message: number;
+  list: IListWeatherDays[];
+}
+
 export interface ICoord {
   coord: {
     lon: number;
@@ -34,6 +67,9 @@ export interface IMainWeatherInfo {
     temp_max: number;
     pressure: number;
     humidity: number;
+    sea_level?: number;
+    grnd_level?: number;
+    temp_kf?: number;
   };
 }
 
@@ -41,6 +77,7 @@ interface IWind {
   wind: {
     spped: number;
     deg: number;
+    gust?: number;
   };
 }
 
