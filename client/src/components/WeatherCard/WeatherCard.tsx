@@ -18,7 +18,7 @@ const WeatherCard = () => {
   const { request } = useHttp();
 
   useEffect(() => {
-    if (coord) {
+    if (coord?.lat) {
       request<IWeatherDays>({
         url: `${import.meta.env.VITE_BASE_URL}/weather/days`,
         method: "GET",
@@ -52,7 +52,7 @@ const WeatherCard = () => {
   return (
     <CardLayout>
       <CardWeatherHeader />
-      <TableDayWeather listDailyData={listDailyData} />
+      {listDailyData && <TableDayWeather listDailyData={listDailyData} />}
 
       <HelperLayoutDay>
         <DayWeather day="Today" temp={Math.round((main?.temp ?? 0) - 273.15)} />

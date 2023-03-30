@@ -15,15 +15,32 @@ export const TableDayWeather = ({ listDailyData }: ITable) => {
 
   return (
     <div className="tableDays">
-      <div className="tableDays-wrapper">
+      <div
+        className="tableDays-wrapper"
+        style={{
+          gridTemplateColumns: `repeat(${
+            listDailyData.length + 1
+          }, minmax(50px, 1fr))`,
+        }}
+      >
         <div className="box">Now</div>
-        <div className="box">12:00</div>
-        <div className="box">15:00</div>
-        <div className="box">18:00</div>
-        <div className="box">21:00</div>
+        {listDailyData.map(({ dt_txt, dt }) => {
+          return (
+            <div className="box" key={dt}>
+              {dt_txt.substring(11, 13)}:00
+            </div>
+          );
+        })}
 
         {/* Table Row */}
-        <div className="row">
+        <div
+          className="row"
+          style={{
+            gridTemplateColumns: `repeat(${
+              listDailyData.length + 1
+            }, minmax(50px, 1fr))`,
+          }}
+        >
           <div className="box">{((main?.temp ?? 0) - 273.15).toFixed(2)}°</div>
           {listDailyData.map((weatherDays) => (
             <div className="box" key={weatherDays.dt}>
