@@ -1,5 +1,6 @@
 import { useEffect, useContext } from "react";
 
+import { IWeather } from "../../Interfaces";
 import { useHttp } from "../../hooks/http.hook";
 import { WeatherContextType } from "../../@types/weatherContext";
 import { WeatherContext } from "../../context/weatherContext";
@@ -13,7 +14,7 @@ const CardWeatherHeader = () => {
   ) as WeatherContextType;
 
   useEffect(() => {
-    request({
+    request<IWeather>({
       url: `${import.meta.env.VITE_BASE_URL}/wheather/almaty`,
       method: "GET",
     }).then((res) =>
