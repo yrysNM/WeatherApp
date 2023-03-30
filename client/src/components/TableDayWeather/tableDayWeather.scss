@@ -5,7 +5,7 @@
 
   &-wrapper {
     display: grid;
-    grid-template-columns: repeat(7, minmax(50px, 1fr));
+    grid-template-columns: repeat(5, minmax(50px, 1fr));
     color: #fff;
     width: 100%;
     row-gap: 23px;
@@ -17,7 +17,7 @@
   grid-row-start: 2;
   grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: repeat(7, minmax(50px, 1fr));
+  grid-template-columns: repeat(5, minmax(50px, 1fr));
   gap: 8px;
 
 }

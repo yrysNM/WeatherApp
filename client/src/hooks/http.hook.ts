@@ -1,5 +1,4 @@
 import { useCallback } from "react";
-import { IWeather } from "../Interfaces/IWeather";
 
 interface IRequest {
   url: string;
@@ -8,12 +7,14 @@ interface IRequest {
   headers?: {
     "Content-type": "application-json";
     Authorization?: string;
+    lat?: string;
+    lon?: string;
   };
 }
 
 export const useHttp = () => {
   const request = useCallback(
-    async ({
+    async <T>({
       url,
       method,
       body = null,
@@ -32,7 +33,7 @@ export const useHttp = () => {
           throw new Error(`Could not fetch ${url}, status: ${response.status}`);
         }
 
-        const data: IWeather = await response.json();
+        const data: T = await response.json();
 
         return data;
       } catch (e) {

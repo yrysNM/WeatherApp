@@ -1,3 +1,17 @@
-import { IMainWeatherInfo, ICoord, IWeatherObj } from "./IWeather";
+import {
+  IMainWeatherInfo,
+  ICoord,
+  IWeatherObj,
+  IWeatherDays,
+  IWeather,
+  IListWeatherDays,
+} from "./IWeather";
 
-export type { IMainWeatherInfo, ICoord, IWeatherObj };
+export type {
+  IMainWeatherInfo,
+  ICoord,
+  IWeatherObj,
+  IWeatherDays,
+  IWeather,
+  IListWeatherDays,
+};
