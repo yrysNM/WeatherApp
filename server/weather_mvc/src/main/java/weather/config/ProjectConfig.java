@@ -30,7 +30,7 @@ public class ProjectConfig implements WebMvcConfigurer {
 
         templateResolver.setApplicationContext(applicationContext);
 
-        templateResolver.setPrefix("WEB_ING/views/");
+        templateResolver.setPrefix("WEB-INF/views/");
         templateResolver.setSuffix(".html");
 
         return templateResolver;
