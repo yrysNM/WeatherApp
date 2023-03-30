@@ -12,21 +12,21 @@ export interface IWeather extends ICoord, IMainWeatherInfo, IWind, ISys {
   cod: number;
 }
 
-interface ICoord {
+export interface ICoord {
   coord: {
     lon: number;
     lat: number;
   };
 }
 
-interface IWeatherObj {
+export interface IWeatherObj {
   id: number;
   main: string;
   description: string;
   icon: string;
 }
 
-interface IMainWeatherInfo {
+export interface IMainWeatherInfo {
   main: {
     temp: number;
     feels_like: number;
