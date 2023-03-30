@@ -9,6 +9,10 @@ const WeatherProvider: React.FC<IReactChildren> = ({ children }) => {
     weather: [],
     id: 0,
     name: "",
+    coord: {
+      lat: 0,
+      lon: 0,
+    },
   });
 
   const setWeatherDataFN = (weather: IGeneralWeather) => {
