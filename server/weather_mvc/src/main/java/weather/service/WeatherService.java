@@ -1,5 +1,8 @@
 package weather.service;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -16,5 +19,21 @@ public class WeatherService {
     // Object[] listWeatherDays = weatherDays.list;
 
     return weatherDays;
+  }
+
+  public List<Object> gLocation(String cityName) {
+    String urlApi = _url + "/geo/1.0/direct?g=" + cityName + "&limit=5&appid=" + API_KEY;
+
+    Object[] location = restTempplate.getForObject(urlApi, Object[].class);
+
+    return Arrays.asList(location);
+  }
+
+  public Object gWeatherData(String cityName) {
+    String wheatherBaseUrl = _url + "/data/2.5/weather?q=" + cityName + "&appid=" + API_KEY;
+
+    Object weatherData = restTempplate.getForObject(wheatherBaseUrl, Object.class);
+
+    return weatherData;
   }
 }
