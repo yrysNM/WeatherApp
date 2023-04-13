@@ -36,7 +36,7 @@ public class WeatherController {
     return weatherService.gLocation(cityName);
   }
 
-  @GetMapping(value = "/wheather/{cityName}")
+  @GetMapping(value = "/weather/{cityName}")
   public Object getWheatherDaily(@PathVariable("cityName") String cityName) {
     // String wheatherBaseUrl = baseUrl + "/data/2.5/weather?q=" + cityName +
     // "&appid="
