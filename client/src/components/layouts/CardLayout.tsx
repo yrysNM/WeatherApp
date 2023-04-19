@@ -12,6 +12,7 @@ export const CardLayout: React.FC<IReactChildren> = ({ children }) => {
     switch (weatherCompare) {
       case "Clouds":
         return "url('https://mdbgo.io/ascensus/mdb-advanced/img/clouds.gif')";
+      case "Mist":
       case "Fog":
         return "url('https://mdbgo.io/ascensus/mdb-advanced/img/fog.gif')";
       case "Snow":
