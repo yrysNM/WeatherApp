@@ -1,16 +1,22 @@
-import { Route, Routes } from "react-router-dom";
+import { Outlet, Route, Routes } from "react-router-dom";
 
 import "./app.scss";
 import { MainDemo, Main } from "../../pages";
 
 const App = () => {
   return (
-    <div className="container">
-      <Routes>
+    <Routes>
+      <Route
+        element={
+          <div className="container">
+            <Outlet />
+          </div>
+        }
+      >
         <Route path="/" element={<MainDemo />} />
-        <Route path="/main" element={<Main />} />
-      </Routes>
-    </div>
+      </Route>
+      <Route path="/main" element={<Main />} />
+    </Routes>
   );
 };
 

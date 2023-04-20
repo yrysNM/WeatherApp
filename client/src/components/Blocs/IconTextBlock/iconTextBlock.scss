@@ -1,0 +1,24 @@
+.iconText {
+  display: grid;
+  grid-template: 1fr / 20px 1fr;
+  gap: 20px;
+  align-items: center;
+  color: #A2A6A9;
+
+  svg {
+    width: 20px;
+    height: 20px;
+
+    path {
+      stroke: #A2A6A9;
+    }
+  }
+
+  &_active {
+    color: #3967DF;
+
+    svg>path {
+      stroke: #3967DF;
+    }
+  }
+}
