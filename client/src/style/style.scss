@@ -57,4 +57,10 @@ ol {
   margin: 0 auto;
 }
 
+.mainContainer {
+  width: 50%;
+  padding: 0 15px;
+}
+
 @import "./blocks/title";
+@import "./blocks/icon";
