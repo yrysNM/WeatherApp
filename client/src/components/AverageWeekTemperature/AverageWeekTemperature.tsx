@@ -45,14 +45,18 @@ export const data = {
       data: labels.map(() => faker.datatype.number({ min: 10, max: 50 })),
       borderColor: "#172E52",
       backgroundColor: "rgb(252, 252, 252)",
-      tension: 0.1,
-      pointRadius: 0,
+      tension: 0.5,
+      pointRadius: 5,
       pointHoverBackgroundColor: "#172E52",
       pointHoverRadius: 10,
     },
   ],
 };
 
+/**
+ * @featureChange -> recharts
+ * @returns JSX.ELEMENT
+ */
 export const AverageWeekTemperature = () => {
   return (
     <ContentLayout title="Average Weekly Temperature">

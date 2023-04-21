@@ -1,0 +1,20 @@
+.chanceRain-block {
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.procentBlock {
+  height: 35px;
+  width: 70%;
+  border-radius: 20px;
+  background-color: #2A4263;
+
+  .val {
+    height: 100%;
+    background-color: #8CB2FB;
+    border-radius: 20px;
+  }
+}

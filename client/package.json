@@ -17,6 +17,7 @@
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.10.0",
+    "recharts": "^2.5.0",
     "vite-plugin-svgr": "^2.4.0"
   },
   "devDependencies": {
