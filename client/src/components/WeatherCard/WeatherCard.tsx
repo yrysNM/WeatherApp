@@ -4,7 +4,7 @@ import { IListWeatherDays, IWeatherDays } from "../../Interfaces";
 import { useHttp } from "../../hooks/http.hook";
 import { WeatherContext } from "../../context/weatherContext";
 import { CardWeatherHeader } from "../HeadCardWeather";
-import { CardLayout } from "../layouts/CardLayout";
+import { CardLayout } from "../layouts/demo/CardLayout";
 import { TableDayWeather } from "../TableDayWeather";
 import { DayWeather, HelperLayoutDay } from "../DayWeather";
 
