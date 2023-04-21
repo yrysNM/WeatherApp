@@ -9,9 +9,10 @@
   &::after {
     content: "";
     position: absolute;
-    width: 102%;
+    width: 100%;
     bottom: 0;
     left: -15px;
+    padding-right: 30px;
     border-bottom: 1px solid rgba(162, 166, 169, .4);
   }
 

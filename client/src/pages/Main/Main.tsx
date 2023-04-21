@@ -1,6 +1,8 @@
 import { MenuSideBar } from "../../components/MenuSideBar";
 import { Header } from "../../components/Header";
 import { WeatherComponent } from "../../components/WeatherComponent";
+import { TodayOverview } from "../../components/TodayOverview";
+import { AverageWeekTemperature } from "../../components/AverageWeekTemperature";
 
 const Main = () => {
   return (
@@ -9,9 +11,11 @@ const Main = () => {
 
       <div className="mainContainer">
         <Header />
+        <TodayOverview />
+        <AverageWeekTemperature />
       </div>
 
-      <div className="mainContainer">
+      <div className="weatherContainer">
         <WeatherComponent />
       </div>
     </div>

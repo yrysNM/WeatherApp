@@ -1,9 +1,9 @@
 import { useContext } from "react";
 
-import { WeatherContext } from "../../context/weatherContext";
+import { WeatherContext } from "../../../context/weatherContext";
 
-import { IReactChildren } from "../../Interfaces/ICustomReact";
-import { WeatherContextType } from "../../@types/weatherContext";
+import { IReactChildren } from "../../../Interfaces/ICustomReact";
+import { WeatherContextType } from "../../../@types/weatherContext";
 
 export const CardLayout: React.FC<IReactChildren> = ({ children }) => {
   const { weatherData } = useContext(WeatherContext) as WeatherContextType;
