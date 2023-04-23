@@ -5,5 +5,8 @@
         "dev/front-end": false, 
         "dev/back-end": false
       }
-    }
+    },
+    "rewrites":  [
+      {"source": "/(.*)", "destination": "/"}
+   ]
   }
