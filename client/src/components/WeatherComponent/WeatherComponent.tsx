@@ -22,7 +22,7 @@ const WeatherComponent = () => {
 
       <WeatherTemperature />
       <ChanceRain />
-      {/* <SunriesSunset /> */}
+      <SunriesSunset />
     </div>
   );
 };

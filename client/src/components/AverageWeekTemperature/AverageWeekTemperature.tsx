@@ -1,68 +1,60 @@
 import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
   Tooltip,
-  Legend,
-} from "chart.js";
-import { Line } from "react-chartjs-2";
-import { faker } from "@faker-js/faker";
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
+  CartesianGrid,
+  ResponsiveContainer,
+} from "recharts";
 
 import { ContentLayout } from "../layouts/contentLayout";
+
 import "./averageWeekTemperature.scss";
 
-export const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      display: false,
-    },
-    title: {
-      display: false,
-    },
-  },
-};
+const data = [
+  { name: "", value: 0 },
+  { name: "week 1", value: 20 },
+  { name: "week 2", value: 30 },
+  { name: "week 3", value: 10 },
+  { name: "week 4", value: 27 },
+];
 
-const labels = ["Week 1", "Week 2", "Week 3", "Week 4"];
-
-export const data = {
-  labels,
-  datasets: [
-    {
-      data: labels.map(() => faker.datatype.number({ min: 10, max: 50 })),
-      borderColor: "#172E52",
-      backgroundColor: "rgb(252, 252, 252)",
-      tension: 0.5,
-      pointRadius: 5,
-      pointHoverBackgroundColor: "#172E52",
-      pointHoverRadius: 10,
-    },
-  ],
-};
-
-/**
- * @featureChange -> recharts
- * @returns JSX.ELEMENT
- */
-export const AverageWeekTemperature = () => {
+export function AverageWeekTemperature() {
   return (
     <ContentLayout title="Average Weekly Temperature">
       <div className="static">
-        <Line options={options} data={data} />
+        <ResponsiveContainer width="100%" height={300}>
+          <AreaChart width={600} height={300} data={data}>
+            <defs>
+              <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#172E52" stopOpacity={0.2} />
+                <stop offset="95%" stopColor="#172E52" stopOpacity={0} />
+              </linearGradient>
+              <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.5} />
+                <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
+              </linearGradient>
+            </defs>
+            <CartesianGrid
+              strokeDasharray="4 4"
+              horizontal={true}
+              vertical={false}
+            />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Area
+              type="monotone"
+              dataKey="value"
+              stroke="#172E52"
+              strokeWidth={4}
+              fillOpacity={1}
+              fill="url(#colorUv)"
+            />
+          </AreaChart>
+        </ResponsiveContainer>
       </div>
     </ContentLayout>
   );
-};
+}
