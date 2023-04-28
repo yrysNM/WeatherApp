@@ -15,7 +15,7 @@ const CardWeatherHeader = () => {
 
   useEffect(() => {
     request<IWeather>({
-      url: `${import.meta.env.VITE_BASE_URL}/weather/almaty`,
+      url: `${import.meta.env.VITE_BASE_URL}/wheather/almaty`,
       method: "GET",
     }).then((res) =>
       setWeatherDataFN({
