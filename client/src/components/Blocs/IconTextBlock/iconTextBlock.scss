@@ -1,15 +1,19 @@
 .iconText {
   display: grid;
-  grid-template: 1fr / 20px 1fr;
+  grid-template: 1fr / 20px 0fr;
   gap: 20px;
   align-items: center;
+  transition: color .3s ease-in-out;
+
   color: #A2A6A9;
 
   svg {
     width: 20px;
     height: 20px;
 
-    path {
+    path,
+    rect {
+      transition: stroke .3s ease-in-out;
       stroke: #A2A6A9;
     }
   }
@@ -18,7 +22,23 @@
     color: #3967DF;
 
     svg>path {
+      stroke: #3967DF !important;
+
+    }
+  }
+
+  &:hover {
+    color: #3967DF;
+    transition: color .3s ease-in-out;
+
+    svg>path,
+    rect {
+      transition: stroke .3s ease-in-out;
       stroke: #3967DF;
     }
   }
+}
+
+.title-sidebar {
+  color: inherit;
 }

@@ -1,4 +1,4 @@
-import cloudImage from "../../../public/assets/image/clound.png";
+import cloudImage from "../../assets/image/clound.png";
 
 import "./weatherTemperature.scss";
 

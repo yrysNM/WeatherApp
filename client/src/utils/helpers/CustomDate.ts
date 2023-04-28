@@ -131,6 +131,32 @@ export class CustomDate {
       sunset: sunsetTime,
     };
   }
+
+  /**
+   * @param {new Date().toTimeString()} timeString
+   * @returns converted hour and minutes for 24 hour
+   *
+   */
+  public static convertTo24Hour = (timeString: string): string => {
+    // Separate hours, minutes, and AM/PM indicator fromt he time string
+    const [time, modifier] = timeString.split(" ");
+    const [hours, minutes] = time.split(":");
+
+    //Convert hours to 24-hour format
+    let convertedHours = Number(hours);
+    if (convertedHours !== 12 && modifier === "PM") {
+      convertedHours += 12;
+    } else if (modifier === "AM" && convertedHours === 12) {
+      convertedHours = 0;
+    }
+
+    // Pad hours and monites with leading zeros if needed
+    const paddedHours = convertedHours.toString().padStart(2, "0");
+    const paddedMinutes = minutes.padStart(2, "0");
+
+    // return the time in 24-hour format
+    return `${paddedHours}:${paddedMinutes} ${modifier === "PM" ? "PM" : "AM"}`;
+  };
 }
 
 export function cusomDate(): string {

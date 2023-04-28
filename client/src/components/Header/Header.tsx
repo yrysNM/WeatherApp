@@ -1,8 +1,8 @@
-import { CustomDate, cusomDate } from "../../utils/helper/CustomDate";
+import { CustomDate, cusomDate } from "../../utils/helpers/CustomDate";
 
-import { ReactComponent as SearchIcon } from "../../../public/assets/icons/searchIcon.svg";
-import { ReactComponent as BellIcon } from "../../../public/assets/icons/bellIcon.svg";
-import { ReactComponent as ProfileIcon } from "../../../public/assets/icons/profileIcon.svg";
+import { ReactComponent as SearchIcon } from "../../assets/icons/searchIcon.svg";
+import { ReactComponent as BellIcon } from "../../assets/icons/bellIcon.svg";
+import { ReactComponent as ProfileIcon } from "../../assets/icons/profileIcon.svg";
 import "./header.scss";
 
 const Header = () => {
