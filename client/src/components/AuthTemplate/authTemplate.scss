@@ -1,0 +1,83 @@
+.auth {
+  display: grid;
+  place-items: center;
+  height: 100vh;
+
+  &-wrapper {
+    width: 400px;
+    margin-top: 40px;
+
+    @media(max-width: 575px) {
+      width: 250px;
+      margin-left: 0;
+      width: auto;
+    }
+  }
+
+  &-block {
+    display: flex;
+    gap: 100px;
+    align-items: center;
+    width: auto;
+
+    @media(max-width: 575px) {
+      gap: 0;
+    }
+  }
+}
+
+.todoImg {
+  @media(max-width: 797px) {
+    display: none;
+  }
+
+  img {
+    transform: rotateY(180deg);
+  }
+}
+
+
+.form-auth {
+  gap: 25px;
+  display: grid;
+  justify-content: center;
+  grid-template: repeat(2, 60px) 48px / minmax(250px, 400px);
+
+  @media(max-width: 797px) {
+    gap: 30px;
+  }
+}
+
+.bottomTexts {
+  margin-top: 13px;
+}
+
+
+.errorText {
+  color: #C53C27 !important;
+}
+
+.signInUpBtnSpan {
+  color: #fff;
+  font-size: 18px;
+}
+
+.textSignUpIn {
+  margin-top: 15px;
+  border-top: 1px solid #eee;
+  font-size: 13px;
+  text-align: center;
+  padding-top: 10px;
+}
+
+.authText {
+  text-align: center;
+  font-size: 31px;
+  margin-bottom: 20px;
+  font-weight: 400;
+}
+
+.navigateSpan {
+  text-decoration: underline;
+  cursor: pointer;
+}

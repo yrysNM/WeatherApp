@@ -1,0 +1,42 @@
+.inputLabel {
+  text-align: left;
+  border-radius: 10px;
+  border: 1px solid #eee;
+  padding: 8px 8px 4px 8px;
+
+  transition: border .3s ease;
+
+  &-active {
+    transition: border .3s ease;
+    border: 1px solid #000;
+  }
+
+  .input {
+    padding: 5px;
+  }
+}
+
+.label {
+  display: block;
+  font-size: 13px;
+}
+
+.btn-form {
+  width: 100%;
+  background-color: #3967DF;
+  text-align: center;
+  padding: 0 16px;
+  border-radius: 8px;
+  transition: background-color .3s ease-in-out;
+  border: none;
+
+
+  &:hover {
+    transition: background-color .3s ease-in-out;
+    background-color: #8cb2fb;
+  }
+
+  &:focus {
+    outline: 1px solid #000;
+  }
+}

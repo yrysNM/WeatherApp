@@ -1,10 +1,10 @@
 import classNames from "classnames";
 
 import { ContentLayout } from "../layouts/contentLayout";
-import { CustomDate } from "../../utils/helper/CustomDate";
+import { CustomDate } from "../../utils/helpers/CustomDate";
 
-import sunRise from "../../../public/assets/image/sunRise.png";
-import sunSet from "../../../public/assets/image/sunSet.png";
+import sunRise from "../../assets/image/sunRise.png";
+import sunSet from "../../assets/image/sunSet.png";
 
 import "./sunriesSunset.scss";
 

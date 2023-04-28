@@ -1,11 +1,14 @@
 import classNames from "classnames";
+import { NavLink } from "react-router-dom";
+
 import "./iconTextBlock.scss";
 
 interface ITextIconBlock {
-  icon: JSX.Element;
+  icon?: JSX.Element;
   text: string;
   isActive?: boolean;
   clazzBlock?: string;
+  pageUrl?: string;
 }
 
 const IconTextBlock: React.FC<ITextIconBlock> = ({
@@ -13,6 +16,7 @@ const IconTextBlock: React.FC<ITextIconBlock> = ({
   text,
   isActive = false,
   clazzBlock = "",
+  pageUrl = "/main",
 }) => {
   return (
     <div
@@ -21,8 +25,18 @@ const IconTextBlock: React.FC<ITextIconBlock> = ({
         [clazzBlock]: clazzBlock.length > 0,
       })}
     >
-      {icon}
-      <span className="title">{text}</span>
+      <NavLink
+        to={pageUrl}
+        className={({ isActive }) => (isActive ? "iconText_active" : "")}
+      >
+        {icon}
+      </NavLink>
+      <NavLink
+        to={pageUrl}
+        className={({ isActive }) => (isActive ? "iconText_active" : "")}
+      >
+        <span className="title-sidebar">{text}</span>
+      </NavLink>
     </div>
   );
 };

@@ -1,10 +1,10 @@
 import { IReactChildren } from "../../Interfaces/ICustomReact";
 import { ContentLayout } from "../layouts/contentLayout";
 
-import windImg from "../../../public/assets/image/wing.png";
-import rainImg from "../../../public/assets/image/rain.png";
-import sunnyImg from "../../../public/assets/image/sunny.png";
-import pressureImg from "../../../public/assets/image/pressure.png";
+import windImg from "../../assets/image/wing.png";
+import rainImg from "../../assets/image/rain.png";
+import sunnyImg from "../../assets/image/sunny.png";
+import pressureImg from "../../assets/image/pressure.png";
 import "./todayOverview.scss";
 
 export const TodayOverview = () => {
