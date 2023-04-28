@@ -16,6 +16,7 @@
     "formik": "^2.2.9",
     "node-sass": "^8.0.0",
     "react": "^18.2.0",
+<<<<<<< HEAD
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.5",
@@ -24,9 +25,13 @@
     "reselect": "^4.1.8",
     "vite-plugin-svgr": "^2.4.0",
     "yup": "^1.1.1"
+=======
+    "react-dom": "^18.2.0"
+>>>>>>> back-end
   },
   "devDependencies": {
-    "@types/react": "^18.0.28",
+    "@types/node": "^18.15.11",
+    "@types/react": "^18.0.33",
     "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react": "^3.1.0",
     "sass": "^1.60.0",
