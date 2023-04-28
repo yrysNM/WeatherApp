@@ -31,4 +31,15 @@ input {
   outline: none;
   border: none;
   background-color: transparent;
+  width: 100%;
+  font-size: 14px;
+  border-bottom: 1px solid transparent;
+  transition: border-color .3s ease;
+}
+
+.authBlock {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
