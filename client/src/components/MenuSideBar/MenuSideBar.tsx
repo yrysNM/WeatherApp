@@ -1,5 +1,6 @@
 import { IconTextBlock } from "../Blocs";
-import { useAppSelector } from "../../hooks/redux.hook";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux.hook";
+import { logoutCurrentUser } from "../../redux/modules/currentUserSlice";
 
 import { ReactComponent as HomeIcon } from "../../assets/icons/homeIcon.svg";
 import { ReactComponent as MapIcon } from "../../assets/icons/mapIcon.svg";
@@ -14,17 +15,30 @@ import "./menuSideBar.scss";
 
 const MenuSideBar = () => {
   const { isLogged } = useAppSelector((state) => state.currentUser);
+  const dispatch = useAppDispatch();
 
   function systemBlocks() {
     if (isLogged) {
       return (
         <>
-          <IconTextBlock icon={<SettingIcon />} text={"Setting"} />
           <IconTextBlock
-            icon={<LogoutIcon />}
-            text="Logout&nbsp;account"
-            clazzBlock="logout"
+            icon={<SettingIcon />}
+            text={"Setting"}
+            pageUrl="setting"
           />
+          <div className="iconText logout">
+            <LogoutIcon
+              style={{ cursor: "pointer" }}
+              onClick={() => dispatch(logoutCurrentUser())}
+            />
+            <span
+              style={{ cursor: "pointer" }}
+              className="title-sidebar"
+              onClick={() => dispatch(logoutCurrentUser())}
+            >
+              Logout&nbsp;account
+            </span>
+          </div>
         </>
       );
     } else {
@@ -58,11 +72,7 @@ const MenuSideBar = () => {
         <div className="menu subBlocks">
           <ul className="menu-block">
             <li>
-              <IconTextBlock
-                icon={<HomeIcon />}
-                text="Dashboard"
-                pageUrl="main"
-              />
+              <IconTextBlock icon={<HomeIcon />} text="Dashboard" pageUrl="/" />
             </li>
             <li>
               <IconTextBlock icon={<MapIcon />} text="Map" pageUrl="map" />
@@ -71,14 +81,14 @@ const MenuSideBar = () => {
               <IconTextBlock
                 icon={<LocationIcon />}
                 text="Saved&nbsp;Location"
-                pageUrl="location"
+                pageUrl="savedLocation"
               />
             </li>
             <li>
               <IconTextBlock
                 icon={<CalendarIcon />}
                 text="Calendar"
-                pageUrl="calecdar"
+                pageUrl="calendar"
               />
             </li>
           </ul>

@@ -16,7 +16,7 @@ const IconTextBlock: React.FC<ITextIconBlock> = ({
   text,
   isActive = false,
   clazzBlock = "",
-  pageUrl = "/main",
+  pageUrl = "/",
 }) => {
   return (
     <div

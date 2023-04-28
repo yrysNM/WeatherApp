@@ -1,20 +1,21 @@
-<<<<<<< HEAD
 import { Outlet, Route, Routes } from "react-router-dom";
 import PrivateRoutes from "../../utils/PrivateRoutes";
 
-import { MainDemo, Main, Login, Register } from "../../pages";
+import {
+  MainDemo,
+  Main,
+  Login,
+  Register,
+  Setting,
+  Calendar,
+  SavedLocation,
+  Map,
+} from "../../pages";
 import { PageLayout } from "../layouts/pagesLayout";
-=======
-import { WeatherCard } from "../WeatherCard";
-import WeatherProvider from "../../context/weatherContext";
-
-import "./app.scss";
->>>>>>> back-end
 
 import "./app.scss";
 const App = () => {
   return (
-<<<<<<< HEAD
     <Routes>
       <Route element={<PrivateRoutes />}>
         <Route
@@ -24,22 +25,21 @@ const App = () => {
             </div>
           }
         >
-          <Route path="/" element={<MainDemo />} />
+          <Route path="/main" element={<MainDemo />} />
+        </Route>
+        <Route element={<PageLayout />}>
+          <Route path="setting" element={<Setting />} />
         </Route>
       </Route>
       <Route element={<PageLayout />}>
-        <Route path="/main" element={<Main />} />
+        <Route path="/" element={<Main />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
+        <Route path="map" element={<Map />} />
+        <Route path="savedLocation" element={<SavedLocation />} />
+        <Route path="calendar" element={<Calendar />} />
       </Route>
     </Routes>
-=======
-    <div className="container">
-      <WeatherProvider>
-        <WeatherCard />
-      </WeatherProvider>
-    </div>
->>>>>>> back-end
   );
 };
 
