@@ -1,15 +1,14 @@
-import { Route, Routes } from "react-router-dom";
+import { WeatherCard } from "../WeatherCard";
+import WeatherProvider from "../../context/weatherContext";
 
 import "./app.scss";
-import { MainDemo, Main } from "../../pages";
 
 const App = () => {
   return (
     <div className="container">
-      <Routes>
-        <Route path="/" element={<MainDemo />} />
-        <Route path="/main" element={<Main />} />
-      </Routes>
+      <WeatherProvider>
+        <WeatherCard />
+      </WeatherProvider>
     </div>
   );
 };
