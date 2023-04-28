@@ -21,11 +21,7 @@ const MenuSideBar = () => {
     if (isLogged) {
       return (
         <>
-          <IconTextBlock
-            icon={<SettingIcon />}
-            text={"Setting"}
-            pageUrl="setting"
-          />
+          <IconTextBlock icon={<SettingIcon />} text={"Setting"} />
           <div className="iconText logout">
             <LogoutIcon
               style={{ cursor: "pointer" }}
@@ -72,7 +68,7 @@ const MenuSideBar = () => {
         <div className="menu subBlocks">
           <ul className="menu-block">
             <li>
-              <IconTextBlock icon={<HomeIcon />} text="Dashboard" pageUrl="/" />
+              <IconTextBlock icon={<HomeIcon />} text="Home" pageUrl="/" />
             </li>
             <li>
               <IconTextBlock icon={<MapIcon />} text="Map" pageUrl="map" />
@@ -80,15 +76,15 @@ const MenuSideBar = () => {
             <li>
               <IconTextBlock
                 icon={<LocationIcon />}
-                text="Saved&nbsp;Location"
-                pageUrl="savedLocation"
+                text="Reports"
+                pageUrl="reports"
               />
             </li>
             <li>
               <IconTextBlock
                 icon={<CalendarIcon />}
-                text="Calendar"
-                pageUrl="calendar"
+                text="My&nbsp;Weather"
+                pageUrl={`/weather/${!isLogged && "anonymous"}`}
               />
             </li>
           </ul>

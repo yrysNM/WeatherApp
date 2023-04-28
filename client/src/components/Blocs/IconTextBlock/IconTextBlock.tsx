@@ -29,7 +29,7 @@ const IconTextBlock: React.FC<ITextIconBlock> = ({
         to={pageUrl}
         className={({ isActive }) => (isActive ? "iconText_active" : "")}
       >
-        {icon}
+        <span className="icon">{icon}</span>
       </NavLink>
       <NavLink
         to={pageUrl}

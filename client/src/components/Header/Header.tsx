@@ -4,6 +4,7 @@ import { ReactComponent as SearchIcon } from "../../assets/icons/searchIcon.svg"
 import { ReactComponent as BellIcon } from "../../assets/icons/bellIcon.svg";
 import { ReactComponent as ProfileIcon } from "../../assets/icons/profileIcon.svg";
 import "./header.scss";
+import { NavLink } from "react-router-dom";
 
 const Header = () => {
   return (
@@ -27,9 +28,14 @@ const Header = () => {
         <div className="header_data-block">
           <BellIcon className="icon-standart" />
         </div>
-        <div className="header_data-block">
-          <ProfileIcon className="icon-standart" />
-        </div>
+        <NavLink
+          to="/profile"
+          className={({ isActive }) => (isActive ? "active-header" : "")}
+        >
+          <div className="header_data-block">
+            <ProfileIcon className="icon-standart" />
+          </div>
+        </NavLink>
       </div>
     </div>
   );

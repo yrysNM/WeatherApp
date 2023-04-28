@@ -2,18 +2,9 @@ import { MainDemo } from "./Main-demo";
 import { Main } from "./Main";
 import { Login } from "./Login";
 import { Register } from "./Register";
-import { Setting } from "./Setting";
 import { Map } from "./Map";
-import { SavedLocation } from "./Saved-location";
-import { Calendar } from "./Calendar";
+import { Reports } from "./Reports";
+import { MyWeather } from "./MyWeather";
+import { Profile } from "./Profile";
 
-export {
-  MainDemo,
-  Main,
-  Login,
-  Register,
-  Setting,
-  Map,
-  SavedLocation,
-  Calendar,
-};
+export { MainDemo, Main, Login, Register, Map, Reports, MyWeather, Profile };

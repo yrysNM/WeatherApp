@@ -6,10 +6,10 @@ import {
   Main,
   Login,
   Register,
-  Setting,
-  Calendar,
-  SavedLocation,
+  MyWeather,
+  Reports,
   Map,
+  Profile,
 } from "../../pages";
 import { PageLayout } from "../layouts/pagesLayout";
 
@@ -28,7 +28,8 @@ const App = () => {
           <Route path="/main" element={<MainDemo />} />
         </Route>
         <Route element={<PageLayout />}>
-          <Route path="setting" element={<Setting />} />
+          <Route path="reports" element={<Reports />} />
+          <Route path="weather/:user" element={<MyWeather />} />
         </Route>
       </Route>
       <Route element={<PageLayout />}>
@@ -36,8 +37,7 @@ const App = () => {
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="map" element={<Map />} />
-        <Route path="savedLocation" element={<SavedLocation />} />
-        <Route path="calendar" element={<Calendar />} />
+        <Route path="profile" element={<Profile />} />
       </Route>
     </Routes>
   );
