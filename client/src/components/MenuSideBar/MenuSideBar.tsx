@@ -4,8 +4,8 @@ import { logoutCurrentUser } from "../../redux/modules/currentUserSlice";
 
 import { ReactComponent as HomeIcon } from "../../assets/icons/homeIcon.svg";
 import { ReactComponent as MapIcon } from "../../assets/icons/mapIcon.svg";
-import { ReactComponent as LocationIcon } from "../../assets/icons/locationIcon.svg";
-import { ReactComponent as CalendarIcon } from "../../assets/icons/calendarIcon.svg";
+import { ReactComponent as MyWeather } from "../../assets/icons/myWeather.svg";
+import { ReactComponent as ReportsIcon } from "../../assets/icons/reportsIcon.svg";
 import { ReactComponent as SettingIcon } from "../../assets/icons/settingsIcon.svg";
 import { ReactComponent as LogoutIcon } from "../../assets/icons/logoutIcon.svg";
 
@@ -75,14 +75,14 @@ const MenuSideBar = () => {
             </li>
             <li>
               <IconTextBlock
-                icon={<LocationIcon />}
+                icon={<ReportsIcon />}
                 text="Reports"
                 pageUrl="reports"
               />
             </li>
             <li>
               <IconTextBlock
-                icon={<CalendarIcon />}
+                icon={<MyWeather />}
                 text="My&nbsp;Weather"
                 pageUrl={`/weather/${!isLogged && "anonymous"}`}
               />
