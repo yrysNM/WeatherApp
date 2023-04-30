@@ -1,7 +1,18 @@
 import { Outlet, Route, Routes } from "react-router-dom";
 import PrivateRoutes from "../../utils/PrivateRoutes";
 
-import { MainDemo, Main, Login, Register } from "../../pages";
+import {
+  MainDemo,
+  Main,
+  Login,
+  Register,
+  MyWeather,
+  Reports,
+  Map,
+  AddReport,
+  EditUser,
+  EditReport,
+} from "../../pages";
 import { PageLayout } from "../layouts/pagesLayout";
 
 import "./app.scss";
@@ -16,13 +27,21 @@ const App = () => {
             </div>
           }
         >
-          <Route path="/" element={<MainDemo />} />
+          <Route path="/main" element={<MainDemo />} />
+        </Route>
+        <Route element={<PageLayout />}>
+          <Route path="weather/:user" element={<MyWeather />} />
+          <Route path="edit/user/:user" element={<EditUser />} />
+          <Route path="edit/report/:reportId" element={<EditReport />} />
+          <Route path="add/report" element={<AddReport />} />
         </Route>
       </Route>
       <Route element={<PageLayout />}>
-        <Route path="/main" element={<Main />} />
+        <Route path="/" element={<Main />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
+        <Route path="map" element={<Map />} />
+        <Route path="reports" element={<Reports />} />
       </Route>
     </Routes>
   );

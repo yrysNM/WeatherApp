@@ -1,0 +1,77 @@
+.report {
+  margin-top: 20px;
+  min-height: auto;
+
+  &__wrapper {
+    border-radius: 8px;
+    border: 1px solid rgba(162, 166, 169, 0.2);
+    display: grid;
+    grid-template: repeat(1, 1fr) / 0.7fr 0.3fr;
+
+
+    &_block {
+      color: #25394e;
+      border-bottom: 1px solid rgba(162, 166, 169, 0.2);
+    }
+  }
+}
+
+.report_customBlock {
+  padding: 15px 5px 15px 15px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  border-right: 1px solid rgba(162, 166, 169, 0.2)
+}
+
+.report_weatherBlock {
+  padding: 15px 0 15px 15px;
+  text-align: center;
+
+  &-temp {
+    font-size: 22px;
+    margin: 5px 0;
+
+  }
+
+  &-descr {
+    display: block;
+    font-size: 16px;
+    margin-top: 10px;
+  }
+}
+
+.report__moreInfo {
+  grid-column: 1/3;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  padding: 5px 15px 5px 15px;
+  color: #25394e;
+}
+
+
+.like {
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+
+  .icon svg {
+    fill: #25394e;
+  }
+
+  .icon-edit {
+    margin-top: 10px;
+    border-color: #3967DF;
+
+    path {
+
+      stroke: #3967DF;
+    }
+  }
+}
+
+.likeNumber {
+  font-size: 18px;
+}

@@ -32,9 +32,16 @@ export class CustomDate {
 
   constructor() {}
 
-  static getDayName = (): string => {
-    const dayName: string = this.days[this.d.getDay()];
-    return dayName;
+  static getDayName = (dateValue?: Date): string => {
+    if (typeof dateValue === "undefined") {
+      const dayName: string = this.days[this.d.getDay()];
+
+      return dayName;
+    } else {
+      const dayName: string = this.days[dateValue.getDay()];
+
+      return dayName;
+    }
   };
 
   static getMonthName = (): string => {

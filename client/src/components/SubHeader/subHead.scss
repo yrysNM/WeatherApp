@@ -1,0 +1,46 @@
+.subHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(162, 166, 169, 0.2);
+}
+
+.datePicker {
+  width: 200px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, .3);
+  padding: 10px 5px;
+  display: flex;
+  align-items: center;
+  flex-flow: row nowrap;
+  gap: 10px;
+  color: #25394e;
+
+  .icon {
+
+    path,
+    rect {
+      stroke: #25394e !important;
+    }
+  }
+}
+
+
+.react-datepicker__header {
+  background-color: #216ba5;
+
+}
+
+.react-datepicker__navigation-icon::before,
+.react-datepicker__current-month,
+.react-datepicker__day-name {
+  border-color: #fff;
+  color: #fff;
+}
+
+.react-datepicker-popper[data-placement^=bottom] .react-datepicker__triangle::before,
+.react-datepicker-popper[data-placement^=bottom] .react-datepicker__triangle::after {
+  border-bottom-color: #216ba5;
+}

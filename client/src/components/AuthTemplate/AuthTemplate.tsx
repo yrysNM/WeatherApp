@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-import { CustomInputLayout } from "../layouts/customInputLayout/CustomInputLayout";
+import { CustomInputLayout } from "../layouts/customInputLayout";
 
 import "./authTemplate.scss";
 
-type blur = {
+export type blur = {
   active: boolean;
   typeInput: string;
 };
@@ -27,37 +27,6 @@ export const AuthTemplate = ({ isLogin, getValueInput }: IAuthTemplate) => {
     active: false,
     typeInput: "",
   });
-
-  // const validate = (values: inputValues) => {
-  //   const errors: inputValues = {
-  //     email: "",
-  //     password: "",
-  //   };
-
-  //   if (!values.email) {
-  //     errors.email = "Obligatory field!";
-  //   } else if (
-  //     !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-  //   ) {
-  //     errors.email = "Wrong email address";
-  //   }
-
-  //   if (!values.password) {
-  //     errors.password = "Obligatory field!";
-  //   } else if (values.password.length < 8) {
-  //     errors.password = "At least 8 characters";
-  //   } else if (
-  //     // eslint-disable-next-line no-useless-escape
-  //     /^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/.test(
-  //       values.password
-  //     )
-  //   ) {
-  //     errors.password =
-  //       "Must consist of Latin letters, special characters, and single digits.";
-  //   }
-
-  //   return errors;
-  // };
 
   const formik = useFormik({
     initialValues: {

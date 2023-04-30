@@ -1,7 +1,7 @@
 .auth {
-  display: grid;
-  place-items: center;
-  height: 100vh;
+  // display: grid;
+  // place-items: center;
+  // height: 100vh;
 
   &-wrapper {
     width: 400px;
@@ -55,6 +55,7 @@
 
 .errorText {
   color: #C53C27 !important;
+  font-size: 13px !important;
 }
 
 .signInUpBtnSpan {
