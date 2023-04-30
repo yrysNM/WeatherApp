@@ -5,6 +5,19 @@ import { Register } from "./Register";
 import { Map } from "./Map";
 import { Reports } from "./Reports";
 import { MyWeather } from "./MyWeather";
-import { Profile } from "./Profile";
+import { EditUser } from "./EditUser";
+import { EditReport } from "./EditReport";
+import { AddReport } from "./AddReport";
 
-export { MainDemo, Main, Login, Register, Map, Reports, MyWeather, Profile };
+export {
+  AddReport,
+  MainDemo,
+  EditReport,
+  Main,
+  Login,
+  Register,
+  Map,
+  Reports,
+  MyWeather,
+  EditUser,
+};

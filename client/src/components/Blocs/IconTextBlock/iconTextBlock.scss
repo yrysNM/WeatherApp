@@ -21,7 +21,9 @@
   &_active {
     color: #3967DF;
 
-    svg>path {
+    svg>path,
+    rect,
+    circle {
       stroke: #3967DF !important;
 
     }
@@ -32,7 +34,8 @@
     transition: color .3s ease-in-out;
 
     svg>path,
-    rect {
+    rect,
+    circle {
       transition: stroke .3s ease-in-out;
       stroke: #3967DF;
     }

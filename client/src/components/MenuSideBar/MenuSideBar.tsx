@@ -1,4 +1,5 @@
 import { IconTextBlock } from "../Blocs";
+import { Settings } from "../Settings";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux.hook";
 import { logoutCurrentUser } from "../../redux/modules/currentUserSlice";
 
@@ -6,7 +7,6 @@ import { ReactComponent as HomeIcon } from "../../assets/icons/homeIcon.svg";
 import { ReactComponent as MapIcon } from "../../assets/icons/mapIcon.svg";
 import { ReactComponent as MyWeather } from "../../assets/icons/myWeather.svg";
 import { ReactComponent as ReportsIcon } from "../../assets/icons/reportsIcon.svg";
-import { ReactComponent as SettingIcon } from "../../assets/icons/settingsIcon.svg";
 import { ReactComponent as LogoutIcon } from "../../assets/icons/logoutIcon.svg";
 
 import logoImg from "../../assets/image/logoImg.png";
@@ -14,14 +14,14 @@ import logoImg from "../../assets/image/logoImg.png";
 import "./menuSideBar.scss";
 
 const MenuSideBar = () => {
-  const { isLogged } = useAppSelector((state) => state.currentUser);
+  const { isLogged, user } = useAppSelector((state) => state.currentUser);
   const dispatch = useAppDispatch();
 
   function systemBlocks() {
     if (isLogged) {
       return (
         <>
-          <IconTextBlock icon={<SettingIcon />} text={"Setting"} />
+          <Settings />
           <div className="iconText logout">
             <LogoutIcon
               style={{ cursor: "pointer" }}
@@ -43,13 +43,13 @@ const MenuSideBar = () => {
           <IconTextBlock
             text="Sign&nbsp;In"
             icon={<LogoutIcon className="loginIcon" />}
-            pageUrl="login"
+            pageUrl="/login"
             clazzBlock="logout"
           />
           <IconTextBlock
             text="Sign&nbsp;Up"
             icon={<LogoutIcon className="loginIcon" />}
-            pageUrl="register"
+            pageUrl="/register"
             clazzBlock="logout"
           />
         </>
@@ -71,20 +71,20 @@ const MenuSideBar = () => {
               <IconTextBlock icon={<HomeIcon />} text="Home" pageUrl="/" />
             </li>
             <li>
-              <IconTextBlock icon={<MapIcon />} text="Map" pageUrl="map" />
+              <IconTextBlock icon={<MapIcon />} text="Map" pageUrl="/map" />
             </li>
             <li>
               <IconTextBlock
                 icon={<ReportsIcon />}
                 text="Reports"
-                pageUrl="reports"
+                pageUrl="/reports"
               />
             </li>
             <li>
               <IconTextBlock
                 icon={<MyWeather />}
-                text="My&nbsp;Weather"
-                pageUrl={`/weather/${!isLogged && "anonymous"}`}
+                text="My&nbsp;Weathers"
+                pageUrl={`/weather/${user.username}`}
               />
             </li>
           </ul>

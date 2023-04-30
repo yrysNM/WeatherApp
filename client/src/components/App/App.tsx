@@ -9,7 +9,9 @@ import {
   MyWeather,
   Reports,
   Map,
-  Profile,
+  AddReport,
+  EditUser,
+  EditReport,
 } from "../../pages";
 import { PageLayout } from "../layouts/pagesLayout";
 
@@ -28,8 +30,10 @@ const App = () => {
           <Route path="/main" element={<MainDemo />} />
         </Route>
         <Route element={<PageLayout />}>
-          <Route path="reports" element={<Reports />} />
           <Route path="weather/:user" element={<MyWeather />} />
+          <Route path="edit/user/:user" element={<EditUser />} />
+          <Route path="edit/report/:reportId" element={<EditReport />} />
+          <Route path="add/report" element={<AddReport />} />
         </Route>
       </Route>
       <Route element={<PageLayout />}>
@@ -37,7 +41,7 @@ const App = () => {
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="map" element={<Map />} />
-        <Route path="profile" element={<Profile />} />
+        <Route path="reports" element={<Reports />} />
       </Route>
     </Routes>
   );

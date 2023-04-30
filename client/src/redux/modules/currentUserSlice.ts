@@ -6,7 +6,8 @@ interface IUser {
     username: string;
     email: string;
     token: string;
-  } | null;
+    password: string;
+  };
 }
 
 interface ICurrentUser extends IUser {
@@ -18,7 +19,12 @@ interface ICurrentUser extends IUser {
 const initialState: ICurrentUser = {
   isLogged: true,
   errorMessage: "",
-  user: null,
+  user: {
+    username: "Anonymous",
+    email: "none",
+    token: "",
+    password: "",
+  },
   userLoading: "idle",
 };
 
