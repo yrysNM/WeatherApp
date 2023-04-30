@@ -55,3 +55,8 @@
   width: 100%;
   padding-left: 25px;
 }
+
+.active-header {
+  background-color: #17397B;
+  transition: background-color .3s ease-in-out;
+}

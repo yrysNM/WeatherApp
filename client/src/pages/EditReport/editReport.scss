@@ -1,0 +1,16 @@
+.edit-report {
+  margin-top: 20px;
+}
+
+.edit-report__headInfo {
+  display: grid;
+  gap: 20px;
+  grid-template: 1fr/200px 250px;
+  justify-items: center;
+  margin-top: 30px;
+  color: #25394e;
+
+  &_text {
+    color: #25394e
+  }
+}

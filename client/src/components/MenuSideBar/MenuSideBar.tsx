@@ -1,11 +1,12 @@
 import { IconTextBlock } from "../Blocs";
-import { useAppSelector } from "../../hooks/redux.hook";
+import { Settings } from "../Settings";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux.hook";
+import { logoutCurrentUser } from "../../redux/modules/currentUserSlice";
 
 import { ReactComponent as HomeIcon } from "../../assets/icons/homeIcon.svg";
 import { ReactComponent as MapIcon } from "../../assets/icons/mapIcon.svg";
-import { ReactComponent as LocationIcon } from "../../assets/icons/locationIcon.svg";
-import { ReactComponent as CalendarIcon } from "../../assets/icons/calendarIcon.svg";
-import { ReactComponent as SettingIcon } from "../../assets/icons/settingsIcon.svg";
+import { ReactComponent as MyWeather } from "../../assets/icons/myWeather.svg";
+import { ReactComponent as ReportsIcon } from "../../assets/icons/reportsIcon.svg";
 import { ReactComponent as LogoutIcon } from "../../assets/icons/logoutIcon.svg";
 
 import logoImg from "../../assets/image/logoImg.png";
@@ -13,18 +14,27 @@ import logoImg from "../../assets/image/logoImg.png";
 import "./menuSideBar.scss";
 
 const MenuSideBar = () => {
-  const { isLogged } = useAppSelector((state) => state.currentUser);
+  const { isLogged, user } = useAppSelector((state) => state.currentUser);
+  const dispatch = useAppDispatch();
 
   function systemBlocks() {
     if (isLogged) {
       return (
         <>
-          <IconTextBlock icon={<SettingIcon />} text={"Setting"} />
-          <IconTextBlock
-            icon={<LogoutIcon />}
-            text="Logout&nbsp;account"
-            clazzBlock="logout"
-          />
+          <Settings />
+          <div className="iconText logout">
+            <LogoutIcon
+              style={{ cursor: "pointer" }}
+              onClick={() => dispatch(logoutCurrentUser())}
+            />
+            <span
+              style={{ cursor: "pointer" }}
+              className="title-sidebar"
+              onClick={() => dispatch(logoutCurrentUser())}
+            >
+              Logout&nbsp;account
+            </span>
+          </div>
         </>
       );
     } else {
@@ -33,13 +43,13 @@ const MenuSideBar = () => {
           <IconTextBlock
             text="Sign&nbsp;In"
             icon={<LogoutIcon className="loginIcon" />}
-            pageUrl="login"
+            pageUrl="/login"
             clazzBlock="logout"
           />
           <IconTextBlock
             text="Sign&nbsp;Up"
             icon={<LogoutIcon className="loginIcon" />}
-            pageUrl="register"
+            pageUrl="/register"
             clazzBlock="logout"
           />
         </>
@@ -58,27 +68,23 @@ const MenuSideBar = () => {
         <div className="menu subBlocks">
           <ul className="menu-block">
             <li>
-              <IconTextBlock
-                icon={<HomeIcon />}
-                text="Dashboard"
-                pageUrl="main"
-              />
+              <IconTextBlock icon={<HomeIcon />} text="Home" pageUrl="/" />
             </li>
             <li>
-              <IconTextBlock icon={<MapIcon />} text="Map" pageUrl="map" />
+              <IconTextBlock icon={<MapIcon />} text="Map" pageUrl="/map" />
             </li>
             <li>
               <IconTextBlock
-                icon={<LocationIcon />}
-                text="Saved&nbsp;Location"
-                pageUrl="location"
+                icon={<ReportsIcon />}
+                text="Reports"
+                pageUrl="/reports"
               />
             </li>
             <li>
               <IconTextBlock
-                icon={<CalendarIcon />}
-                text="Calendar"
-                pageUrl="calecdar"
+                icon={<MyWeather />}
+                text="My&nbsp;Weathers"
+                pageUrl={`/weather/${user.username}`}
               />
             </li>
           </ul>

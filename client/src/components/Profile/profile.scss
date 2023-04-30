@@ -1,0 +1,15 @@
+.profile {
+  padding: 30px;
+  padding-bottom: 0;
+  width: 400px;
+  gap: 20px;
+  display: grid;
+  grid-template: repeat(3, 1fr)/ minmax(150px, 1fr);
+  align-items: center;
+}
+
+.profile-block_password {
+  display: flex;
+  align-items: center;
+
+}

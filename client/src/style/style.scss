@@ -52,6 +52,12 @@ ol {
   list-style: none;
 }
 
+textarea {
+  resize: none;
+  border: none;
+  outline: none
+}
+
 .container {
   width: 1200px;
   margin: 0 auto;
@@ -68,3 +74,4 @@ ol {
 
 @import "./blocks/title";
 @import "./blocks/icon";
+@import "./blocks/button";

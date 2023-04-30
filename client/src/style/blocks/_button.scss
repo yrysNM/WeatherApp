@@ -1,0 +1,46 @@
+.btn {
+  border: none;
+  font-size: 16px;
+  text-align: center;
+  border-radius: 8px;
+
+  &:focus {
+    outline: 1px solid #000;
+  }
+}
+
+.btn-edit {
+  float: right;
+  padding: 10px 30px;
+  margin-right: 30px;
+  margin-top: 15px;
+  cursor: pointer;
+  color: #fff;
+  background-color: #3967DF;
+  transition: background-color .3s ease-in-out;
+
+  &:hover {
+    transition: background-color .3s ease-in-out;
+    background-color: #8cb2fb;
+  }
+}
+
+.btn-form {
+  width: 100%;
+  background-color: #3967DF;
+  text-align: center;
+  padding: 0 16px;
+  border-radius: 8px;
+  transition: background-color .3s ease-in-out;
+  border: none;
+
+
+  &:hover {
+    transition: background-color .3s ease-in-out;
+    background-color: #8cb2fb;
+  }
+
+  &:focus {
+    outline: 1px solid #000;
+  }
+}

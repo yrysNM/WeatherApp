@@ -6,7 +6,8 @@ interface IUser {
     username: string;
     email: string;
     token: string;
-  } | null;
+    password: string;
+  };
 }
 
 interface ICurrentUser extends IUser {
@@ -16,9 +17,14 @@ interface ICurrentUser extends IUser {
 }
 
 const initialState: ICurrentUser = {
-  isLogged: false,
+  isLogged: true,
   errorMessage: "",
-  user: null,
+  user: {
+    username: "Anonymous",
+    email: "none",
+    token: "",
+    password: "",
+  },
   userLoading: "idle",
 };
 
@@ -35,6 +41,9 @@ const currentUserSlice = createSlice({
       state.isLogged = true;
       state.userLoading = "idle";
     },
+    logoutCurrentUser: (state) => {
+      state.isLogged = false;
+    },
   },
 });
 
@@ -42,4 +51,5 @@ const { actions, reducer } = currentUserSlice;
 
 export default reducer;
 
-export const { getCurrentUserStart, getCurrentUserSuccess } = actions;
+export const { getCurrentUserStart, getCurrentUserSuccess, logoutCurrentUser } =
+  actions;
