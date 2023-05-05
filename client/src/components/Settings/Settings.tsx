@@ -10,7 +10,7 @@ import "./settings.scss";
 import { boolean } from "yup";
 
 const Settings = () => {
-  console.log("settings");
+  // console.log("settings");
   const [dropBlock, dropBlockToggle] = useToggle(false);
   const [changeTempList, setChangeTemList] = useState({
     temp: "Celsius °C",
@@ -89,7 +89,7 @@ interface ITempList {
 
 const TemperatureListComponent = memo(
   ({ temp, isTicked, handleChange }: ITempList) => {
-    console.log("rerender");
+    // console.log("rerender");
     return (
       <div
         className={classNames("tempList", {

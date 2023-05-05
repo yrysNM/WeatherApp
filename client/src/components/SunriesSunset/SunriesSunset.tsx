@@ -1,44 +1,35 @@
+import moment from "moment";
 import classNames from "classnames";
+import { useAppSelector } from "../../hooks/redux.hook";
 
 import { ContentLayout } from "../layouts/contentLayout";
-import { CustomDate } from "../../utils/helpers/CustomDate";
 
 import sunRise from "../../assets/image/sunRise.png";
 import sunSet from "../../assets/image/sunSet.png";
 
 import "./sunriesSunset.scss";
 
-const getLotitudeAndLongitude = (position: GeolocationPosition) => {
-  const cDate = new CustomDate();
-
-  console.log(
-    cDate.getSunriseAndSunset(
-      new Date(),
-      43.25,
-      76.95
-      // position.coords.longitude
-    )
-  );
-};
-
 export const SunriesSunset = () => {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(getLotitudeAndLongitude);
-  }
+  const { sys, timezone } = useAppSelector((state) => state.cityWeather);
+  const sunRiseDt = moment
+    .utc(sys.sunrise, "X")
+    .add(timezone, "seconds")
+    .format("HH:mm");
+  const sunSetDt = new Date(sys.sunset);
 
   return (
     <ContentLayout title="Sunries & Sunset" isWeather>
       <LayoutSunriesSunset
         img={sunSet}
         text="Sunrise"
-        time="4:20 AM"
+        time={`${sunRiseDt} AM`}
         nowTime="4 hourse ago"
         isSunSet={true}
       />
       <LayoutSunriesSunset
         img={sunRise}
         text="Sunset"
-        time="5:50 AM"
+        time={`${sunSetDt.getHours()}:${sunSetDt.getMinutes()} PM`}
         nowTime="in 9 hours"
       />
     </ContentLayout>
