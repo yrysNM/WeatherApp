@@ -12,8 +12,8 @@ public class ServerApplication implements WebMvcConfigurer {
 		SpringApplication.run(ServerApplication.class, args);
 	}
 
-	verride
-
+	@Override
+	public void addCorsMappings(CorsRegistry registry) {
+		registry.addMapping("/**");
 	}
 }
-
