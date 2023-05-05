@@ -22,7 +22,7 @@ public class WeatherController {
 
     return weatherService.gLocation(cityName);
   }
-//  @CrossOrigin(origins = "http://localhost:8080")
+
   @GetMapping(value = "/weather/{cityName}")
   public Object getWheatherDaily(@PathVariable("cityName") String cityName) {
 
@@ -31,7 +31,7 @@ public class WeatherController {
 
   @RequestMapping("/weather/days")
   public Object getWeatherDays(@RequestHeader(value = "lat", required = true) double lat,
-                               @RequestHeader(value = "lon", required = true) double lon) {
+      @RequestHeader(value = "lon", required = true) double lon) {
     return weatherService.gWeatherDays(lat, lon);
   }
 }
