@@ -15,8 +15,6 @@ public class WeatherService {
   public Object gWeatherDays(double lat, double lon) {
     String ui = _url + "/forecast/?lat=" + lat + "&lon=" + lon + "&appid=" + API_KEY;
 
-    // Object[] listWeatherDays = weatherDays.list;
-
     return restTempplate.getForObject(ui, Object.class);
   }
 
@@ -30,8 +28,6 @@ public class WeatherService {
 
   public Object gWeatherData(String cityName) {
     String wheatherBaseUrl = _url + "/weather?q=" + cityName + "&appid=" + API_KEY;
-//    Object weatherData = restTempplate.getForObject(wheatherBaseUrl, Object.class);
-//    System.out.println(wheatherBaseUrl);
 
     return restTempplate.getForObject(wheatherBaseUrl, Object.class);
   }
