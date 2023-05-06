@@ -2,7 +2,6 @@ package com.weather.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.weather.service.WeatherService;
@@ -12,7 +11,6 @@ public class WeatherController {
 
   private WeatherService weatherService;
 
-  @Autowired
   public WeatherController(WeatherService weatherService) {
     this.weatherService = weatherService;
   }
@@ -22,16 +20,18 @@ public class WeatherController {
 
     return weatherService.gLocation(cityName);
   }
-//  @CrossOrigin(origins = "http://localhost:8080")
-  @GetMapping(value = "/weather/{cityName}")
+
+  @GetMapping(value = "/weather_city/{cityName}")
   public Object getWheatherDaily(@PathVariable("cityName") String cityName) {
 
     return weatherService.gWeatherData(cityName);
   }
 
-  @RequestMapping("/weather/days")
-  public Object getWeatherDays(@RequestHeader(value = "lat", required = true) double lat,
-                               @RequestHeader(value = "lon", required = true) double lon) {
+  @RequestMapping(value = "/weather_forecast", params = { "lat", "lon" }, method = RequestMethod.GET)
+  @ResponseBody
+  public Object getWeatherDays(@RequestParam String lat,
+      @RequestParam String lon) {
+
     return weatherService.gWeatherDays(lat, lon);
   }
 }

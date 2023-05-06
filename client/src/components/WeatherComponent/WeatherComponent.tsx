@@ -1,19 +1,39 @@
-import { useAppSelector } from "../../hooks/redux.hook";
-import { ChanceRain } from "../ChanceRain";
-import { SunriesSunset } from "../SunriesSunset";
-import { WeatherTemperature } from "../WeatherTemperature";
-import { CustomDate } from "../../utils/helpers/CustomDate";
+import {useCallback, useEffect} from 'react';
+import {useAppDispatch, useAppSelector} from '../../hooks/redux.hook';
 
-import "./weatherComponent.scss";
+import {fetchWeatherDaysTheCity} from '../../api/weather';
+
+import {ForecastForHours} from '../ForecastForHours';
+import {SunriesSunset} from '../SunriesSunset';
+import {WeatherTemperature} from '../WeatherTemperature';
+import {CustomDate} from '../../utils/helpers/CustomDate';
+
+import './weatherComponent.scss';
 
 const WeatherComponent = () => {
-  const { isLogged } = useAppSelector((state) => state.currentUser);
+  const {isLogged} = useAppSelector((state) => state.currentUser);
+  const {coord} = useAppSelector((state) => state.cityWeather);
+  const dispatch = useAppDispatch();
+
+  const fetchForecast = useCallback(() => {
+    if (coord?.lat) {
+      dispatch(
+        fetchWeatherDaysTheCity({
+          ...coord,
+        })
+      );
+    }
+  }, [coord.lat]);
+
+  useEffect(() => {
+    fetchForecast();
+  }, [fetchForecast]);
 
   function weatherHead() {
     if (isLogged) {
       return (
         <>
-          <h3 className="title-fw400" style={{ fontSize: 25 }}>
+          <h3 className="title-fw400" style={{fontSize: 25}}>
             Name Surname
           </h3>
           <span className="weather-cityTitle sub-title">
@@ -23,7 +43,7 @@ const WeatherComponent = () => {
       );
     } else {
       return (
-        <h3 className="title-fw400" style={{ fontSize: 25 }}>
+        <h3 className="title-fw400" style={{fontSize: 25}}>
           Almaty, Kazakhstan
         </h3>
       );
@@ -42,10 +62,10 @@ const WeatherComponent = () => {
       </div>
 
       <WeatherTemperature />
-      <ChanceRain />
+      <ForecastForHours />
       <SunriesSunset />
     </div>
   );
 };
 
-export { WeatherComponent };
+export {WeatherComponent};
