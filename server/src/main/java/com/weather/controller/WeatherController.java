@@ -23,15 +23,17 @@ public class WeatherController {
     return weatherService.gLocation(cityName);
   }
 
-  @GetMapping(value = "/weather/{cityName}")
+  @GetMapping(value = "/weather_city/{cityName}")
   public Object getWheatherDaily(@PathVariable("cityName") String cityName) {
 
     return weatherService.gWeatherData(cityName);
   }
 
-  @RequestMapping("/weather/days")
-  public Object getWeatherDays(@RequestHeader(value = "lat", required = true) double lat,
-      @RequestHeader(value = "lon", required = true) double lon) {
+  @RequestMapping(value = "/weather_forecast", params = { "lat", "lon" }, method = RequestMethod.GET)
+  @ResponseBody
+  public Object getWeatherDays(@RequestParam String lat,
+      @RequestParam String lon) {
+
     return weatherService.gWeatherDays(lat, lon);
   }
 }
