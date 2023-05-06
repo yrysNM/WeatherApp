@@ -20,7 +20,7 @@ public class WeatherReportEntity {
     @Id
     private long reportId;
     private String city;
-    private int temperature;
+    private Integer temperature;
     private String weatherDescription;
     @CreationTimestamp
     private LocalDateTime createdAt;

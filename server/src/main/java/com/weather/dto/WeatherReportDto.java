@@ -16,8 +16,8 @@ import java.time.LocalDateTime;
 public class WeatherReportDto {
     private long reportId;
     private String city;
-    private int temperature;
+    private Integer temperature;
     private String weatherDescription;
     private LocalDateTime createdAt;
-    private UserEntity user;
+    private String userName;
 }

@@ -10,6 +10,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -31,7 +32,7 @@ public class UserEntity {
     @UpdateTimestamp
     private LocalDateTime lastUpdateAt;
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-    private Set<WeatherReportEntity> weatherReportsByUser = new HashSet<>();
+    private List<WeatherReportEntity> weatherReportsByUser;
 
     @Override
     public boolean equals(Object o) {
