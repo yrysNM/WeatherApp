@@ -1,13 +1,20 @@
+import moment from 'moment';
+import {useAppSelector} from '../../hooks/redux.hook';
 import {ContentLayout} from '../layouts/contentLayout';
 import './chanceRain.scss';
 
 export const ForecastForHours = () => {
+  const {list} = useAppSelector((state) => state.weatherDailyForecast);
+
   return (
-    <ContentLayout title="Forecast for 3 hours" isWeather={true}>
-      <LayoutChanceRain timeText="7 PM" procent={44} />
-      <LayoutChanceRain timeText="8 PM" procent={30} />
-      <LayoutChanceRain timeText="9 PM" procent={67} />
-      <LayoutChanceRain timeText="10 PM" procent={72} />
+    <ContentLayout title="Forecast rain for 3 hours" isWeather={true}>
+      {list.map((forecast) => (
+        <LayoutChanceRain
+          key={forecast.dt}
+          timeText={moment(forecast.dt_txt).format('HH a')}
+          procent={forecast.main.humidity}
+        />
+      ))}
     </ContentLayout>
   );
 };

@@ -12,7 +12,7 @@ import './sunriesSunset.scss';
 
 export const SunriesSunset = () => {
   const {sys, timezone} = useAppSelector((state) => state.cityWeather);
-  const [currentTime] = useState(moment());
+  const [currentTime, setCurrentTime] = useState(moment());
 
   console.log('test');
 
