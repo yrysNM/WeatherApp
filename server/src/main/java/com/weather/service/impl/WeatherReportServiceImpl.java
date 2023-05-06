@@ -50,6 +50,7 @@ public class WeatherReportServiceImpl implements WeatherReportService {
         return WeatherReportDto.builder()
                 .reportId(reportEntity.getReportId())
                 .city(reportEntity.getCity())
+                .temperature(reportEntity.getTemperature())
                 .weatherDescription(reportEntity.getWeatherDescription())
                 .createdAt(reportEntity.getCreatedAt())
                 .userName(reportEntity.getUser().getUserLogin())
