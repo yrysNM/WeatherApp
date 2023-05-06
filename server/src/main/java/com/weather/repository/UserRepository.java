@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import com.weather.entity.UserEntity;
 
 @Repository
-public interface UserRepository extends JpaRepository<UserEntity, Long> {
+public interface UserRepository extends JpaRepository<UserEntity, Integer> {
     UserEntity findByUserLogin(String userLogin);
 }
