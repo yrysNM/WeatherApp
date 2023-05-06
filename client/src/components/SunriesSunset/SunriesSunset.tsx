@@ -1,7 +1,7 @@
 import moment from "moment";
 import classNames from "classnames";
 import { useAppSelector } from "../../hooks/redux.hook";
-
+import { CustomDate } from "../../utils/helpers/CustomDate";
 import { ContentLayout } from "../layouts/contentLayout";
 
 import sunRise from "../../assets/image/sunRise.png";
@@ -15,22 +15,36 @@ export const SunriesSunset = () => {
     .utc(sys.sunrise, "X")
     .add(timezone, "seconds")
     .format("HH:mm");
-  const sunSetDt = new Date(sys.sunset);
+  const sunSetDt = moment
+    .utc(sys.sunset, "X ")
+    .add(timezone, "seconds")
+    .format("HH:mm");
 
+  const date24HourNow = CustomDate.convertTo24Hour(
+    new Date().toTimeString()
+  ).split(" ");
+
+  const currentTime = moment();
   return (
     <ContentLayout title="Sunries & Sunset" isWeather>
       <LayoutSunriesSunset
         img={sunSet}
         text="Sunrise"
         time={`${sunRiseDt} AM`}
-        nowTime="4 hourse ago"
-        isSunSet={true}
+        nowTime={`${currentTime.diff(
+          moment(sunRiseDt, "HH:mm"),
+          "hours"
+        )} hourse ago`}
+        isSunSet={date24HourNow[1] === "AM"}
       />
       <LayoutSunriesSunset
         img={sunRise}
         text="Sunset"
-        time={`${sunSetDt.getHours()}:${sunSetDt.getMinutes()} PM`}
-        nowTime="in 9 hours"
+        time={`${sunSetDt} PM`}
+        nowTime={`in ${
+          -1 * currentTime.diff(moment(sunSetDt, "HH:mm"), "hours")
+        } hours`}
+        isSunSet={date24HourNow[1] === "PM"}
       />
     </ContentLayout>
   );

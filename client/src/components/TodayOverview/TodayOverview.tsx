@@ -1,3 +1,4 @@
+import { useAppSelector } from "../../hooks/redux.hook";
 import { IReactChildren } from "../../Interfaces/ICustomReact";
 import { ContentLayout } from "../layouts/contentLayout";
 
@@ -8,25 +9,29 @@ import pressureImg from "../../assets/image/pressure.png";
 import "./todayOverview.scss";
 
 export const TodayOverview = () => {
+  const { main, wind, changeTemp } = useAppSelector(
+    (state) => state.cityWeather
+  );
+
   return (
     <ContentLayout title="Today overview">
       <div className="today">
         <div className="today-wrapper">
           <LayoutTodayOverview imgWeather={windImg}>
             <span className="sub-title">Wind Speed</span>
-            <p className="title-justFw500">12km/h</p>
+            <p className="title-justFw500">{wind.speed}km/h</p>
           </LayoutTodayOverview>
           <LayoutTodayOverview imgWeather={rainImg}>
-            <span className="sub-title">Rain Chanse</span>
-            <p className="title-justFw500">24%</p>
+            <span className="sub-title">Feels like</span>
+            <p className="title-justFw500">{changeTemp?.feels_like}</p>
           </LayoutTodayOverview>
           <LayoutTodayOverview imgWeather={pressureImg}>
             <span className="sub-title">Pressure</span>
-            <p className="title-justFw500">720 hpa</p>
+            <p className="title-justFw500">{main.pressure} hpa</p>
           </LayoutTodayOverview>
           <LayoutTodayOverview imgWeather={sunnyImg}>
-            <span className="sub-title">Uv index</span>
-            <p className="title-justFw500">2,3</p>
+            <span className="sub-title">Humidity</span>
+            <p className="title-justFw500">{main.humidity}%</p>
           </LayoutTodayOverview>
         </div>
       </div>

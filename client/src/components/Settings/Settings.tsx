@@ -1,16 +1,23 @@
 import { memo, useCallback, useState } from "react";
 import classNames from "classnames";
+
 import { useToggle } from "../../hooks/toggle.hook";
+import { useAppDispatch } from "../../hooks/redux.hook";
+import {
+  getCelsius,
+  getDefaultKelvin,
+  getFarenheit,
+} from "../../redux/modules/currentCityWeatherSlice";
 
 import { ReactComponent as TickIcon } from "../../assets/icons/tickIcon.svg";
 import { ReactComponent as SettingIcon } from "../../assets/icons/settingsIcon.svg";
 import { ReactComponent as DropIcon } from "../../assets/icons/dropIcon.svg";
 
 import "./settings.scss";
-import { boolean } from "yup";
 
 const Settings = () => {
   // console.log("settings");
+  const dispatch = useAppDispatch();
   const [dropBlock, dropBlockToggle] = useToggle(false);
   const [changeTempList, setChangeTemList] = useState({
     temp: "Celsius °C",
@@ -60,17 +67,26 @@ const Settings = () => {
           <TemperatureListComponent
             temp="Celsius °C"
             isTicked={changeTempList}
-            handleChange={handleChangeTemp}
+            handleChange={() => {
+              handleChangeTemp("Celsius °C", true);
+              dispatch(getCelsius());
+            }}
           />
           <TemperatureListComponent
             temp="Fahrenheit °F"
             isTicked={changeTempList}
-            handleChange={handleChangeTemp}
+            handleChange={() => {
+              handleChangeTemp("Fahrenheit °F", true);
+              dispatch(getFarenheit());
+            }}
           />
           <TemperatureListComponent
             temp="Kelvin °K"
             isTicked={changeTempList}
-            handleChange={handleChangeTemp}
+            handleChange={() => {
+              handleChangeTemp("Kelvin °K", true);
+              dispatch(getDefaultKelvin());
+            }}
           />
         </div>
       </div>
