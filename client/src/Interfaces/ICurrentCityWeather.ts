@@ -75,7 +75,7 @@ export interface City {
 export interface List {
   clouds: Clouds;
   dt: number;
-  dt_txt: Date;
+  dt_txt: string;
   main: MainClassDays;
   pop: number;
   rain?: Rain;

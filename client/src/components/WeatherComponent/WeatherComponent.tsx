@@ -1,4 +1,8 @@
-import {useAppSelector} from '../../hooks/redux.hook';
+import {useCallback, useEffect} from 'react';
+import {useAppDispatch, useAppSelector} from '../../hooks/redux.hook';
+
+import {fetchWeatherDaysTheCity} from '../../api/weather';
+
 import {ForecastForHours} from '../ForecastForHours';
 import {SunriesSunset} from '../SunriesSunset';
 import {WeatherTemperature} from '../WeatherTemperature';
@@ -8,6 +12,22 @@ import './weatherComponent.scss';
 
 const WeatherComponent = () => {
   const {isLogged} = useAppSelector((state) => state.currentUser);
+  const {coord} = useAppSelector((state) => state.cityWeather);
+  const dispatch = useAppDispatch();
+
+  const fetchForecast = useCallback(() => {
+    if (coord?.lat) {
+      dispatch(
+        fetchWeatherDaysTheCity({
+          ...coord,
+        })
+      );
+    }
+  }, [coord.lat]);
+
+  useEffect(() => {
+    fetchForecast();
+  }, [fetchForecast]);
 
   function weatherHead() {
     if (isLogged) {
