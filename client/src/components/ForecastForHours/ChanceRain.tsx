@@ -1,9 +1,9 @@
-import { ContentLayout } from "../layouts/contentLayout";
-import "./chanceRain.scss";
+import {ContentLayout} from '../layouts/contentLayout';
+import './chanceRain.scss';
 
-export const ChanceRain = () => {
+export const ForecastForHours = () => {
   return (
-    <ContentLayout title="Chance of rain" isWeather={true}>
+    <ContentLayout title="Forecast for 3 hours" isWeather={true}>
       <LayoutChanceRain timeText="7 PM" procent={44} />
       <LayoutChanceRain timeText="8 PM" procent={30} />
       <LayoutChanceRain timeText="9 PM" procent={67} />
@@ -25,7 +25,7 @@ const LayoutChanceRain = ({
     <span>{timeText}</span>
 
     <div className="procentBlock">
-      <div style={{ width: `${procent}%` }} className="val" />
+      <div style={{width: `${procent}%`}} className="val" />
     </div>
 
     <span>{procent}%</span>

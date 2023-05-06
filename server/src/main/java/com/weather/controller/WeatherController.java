@@ -2,7 +2,6 @@ package com.weather.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.weather.service.WeatherService;
@@ -12,7 +11,6 @@ public class WeatherController {
 
   private WeatherService weatherService;
 
-  @Autowired
   public WeatherController(WeatherService weatherService) {
     this.weatherService = weatherService;
   }

@@ -1,9 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 
 import currentUser from "./modules/currentUserSlice";
+import cityWeather from "./modules/currentCityWeatherSlice";
 
 const store = configureStore({
-  reducer: { currentUser },
+  reducer: { currentUser, cityWeather },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
