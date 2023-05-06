@@ -151,7 +151,7 @@ export class CustomDate {
 
     //Convert hours to 24-hour format
     let convertedHours = Number(hours);
-    if (convertedHours !== 12 && modifier === "PM") {
+    if (modifier === "PM" && convertedHours !== 12) {
       convertedHours += 12;
     } else if (modifier === "AM" && convertedHours === 12) {
       convertedHours = 0;

@@ -1,30 +1,31 @@
-import moment from "moment";
-import classNames from "classnames";
-import { useAppSelector } from "../../hooks/redux.hook";
-import { CustomDate } from "../../utils/helpers/CustomDate";
-import { ContentLayout } from "../layouts/contentLayout";
+import {useState} from 'react';
+import moment from 'moment';
+import classNames from 'classnames';
+import {useAppSelector} from '../../hooks/redux.hook';
+import {ContentLayout} from '../layouts/contentLayout';
+import {CustomDate} from '../../utils/helpers/CustomDate';
 
-import sunRise from "../../assets/image/sunRise.png";
-import sunSet from "../../assets/image/sunSet.png";
+import sunRise from '../../assets/image/sunRise.png';
+import sunSet from '../../assets/image/sunSet.png';
 
-import "./sunriesSunset.scss";
+import './sunriesSunset.scss';
 
 export const SunriesSunset = () => {
-  const { sys, timezone } = useAppSelector((state) => state.cityWeather);
+  const {sys, timezone} = useAppSelector((state) => state.cityWeather);
+  const [currentTime] = useState(moment());
+
+  console.log('test');
+
   const sunRiseDt = moment
-    .utc(sys.sunrise, "X")
-    .add(timezone, "seconds")
-    .format("HH:mm");
+    .utc(sys.sunrise, 'X')
+    .add(timezone, 'seconds')
+    .format('HH:mm');
+
   const sunSetDt = moment
-    .utc(sys.sunset, "X ")
-    .add(timezone, "seconds")
-    .format("HH:mm");
+    .utc(sys.sunset, 'X ')
+    .add(timezone, 'seconds')
+    .format('HH:mm');
 
-  const date24HourNow = CustomDate.convertTo24Hour(
-    new Date().toTimeString()
-  ).split(" ");
-
-  const currentTime = moment();
   return (
     <ContentLayout title="Sunries & Sunset" isWeather>
       <LayoutSunriesSunset
@@ -32,19 +33,19 @@ export const SunriesSunset = () => {
         text="Sunrise"
         time={`${sunRiseDt} AM`}
         nowTime={`${currentTime.diff(
-          moment(sunRiseDt, "HH:mm"),
-          "hours"
+          moment(sunRiseDt, 'HH:mm'),
+          'hours'
         )} hourse ago`}
-        isSunSet={date24HourNow[1] === "AM"}
+        isSunSet={currentTime.format('A') === 'AM'}
       />
       <LayoutSunriesSunset
         img={sunRise}
         text="Sunset"
         time={`${sunSetDt} PM`}
         nowTime={`in ${
-          -1 * currentTime.diff(moment(sunSetDt, "HH:mm"), "hours")
+          -1 * currentTime.diff(moment(sunSetDt, 'HH:mm'), 'hours')
         } hours`}
-        isSunSet={date24HourNow[1] === "PM"}
+        isSunSet={currentTime.format('A') === 'PM'}
       />
     </ContentLayout>
   );
@@ -52,7 +53,7 @@ export const SunriesSunset = () => {
 
 interface ILayoutSunriesSunset {
   img: string;
-  text: "Sunrise" | "Sunset";
+  text: 'Sunrise' | 'Sunset';
   time: string;
   nowTime: string;
   isSunSet?: boolean;
@@ -67,8 +68,8 @@ const LayoutSunriesSunset = ({
 }: ILayoutSunriesSunset) => {
   return (
     <div
-      className={classNames("sunset-sunrise_block ", {
-        "sunset-sunrise_block-active": isSunSet,
+      className={classNames('sunset-sunrise_block ', {
+        'sunset-sunrise_block-active': isSunSet,
       })}
     >
       <div className="sunset-sunrise_block-wrapper">

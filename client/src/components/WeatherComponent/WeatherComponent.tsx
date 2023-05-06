@@ -1,19 +1,19 @@
-import { useAppSelector } from "../../hooks/redux.hook";
-import { ChanceRain } from "../ChanceRain";
-import { SunriesSunset } from "../SunriesSunset";
-import { WeatherTemperature } from "../WeatherTemperature";
-import { CustomDate } from "../../utils/helpers/CustomDate";
+import {useAppSelector} from '../../hooks/redux.hook';
+import {ForecastForHours} from '../ForecastForHours';
+import {SunriesSunset} from '../SunriesSunset';
+import {WeatherTemperature} from '../WeatherTemperature';
+import {CustomDate} from '../../utils/helpers/CustomDate';
 
-import "./weatherComponent.scss";
+import './weatherComponent.scss';
 
 const WeatherComponent = () => {
-  const { isLogged } = useAppSelector((state) => state.currentUser);
+  const {isLogged} = useAppSelector((state) => state.currentUser);
 
   function weatherHead() {
     if (isLogged) {
       return (
         <>
-          <h3 className="title-fw400" style={{ fontSize: 25 }}>
+          <h3 className="title-fw400" style={{fontSize: 25}}>
             Name Surname
           </h3>
           <span className="weather-cityTitle sub-title">
@@ -23,7 +23,7 @@ const WeatherComponent = () => {
       );
     } else {
       return (
-        <h3 className="title-fw400" style={{ fontSize: 25 }}>
+        <h3 className="title-fw400" style={{fontSize: 25}}>
           Almaty, Kazakhstan
         </h3>
       );
@@ -42,10 +42,10 @@ const WeatherComponent = () => {
       </div>
 
       <WeatherTemperature />
-      <ChanceRain />
+      <ForecastForHours />
       <SunriesSunset />
     </div>
   );
 };
 
-export { WeatherComponent };
+export {WeatherComponent};

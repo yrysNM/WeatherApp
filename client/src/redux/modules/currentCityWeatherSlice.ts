@@ -1,8 +1,8 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
-import { fetchCurrentCityWeather } from "../../api/weather";
+import {fetchCurrentCityWeather} from '../../api/weather';
 
-import { ICurrentCityWeather } from "../../Interfaces/ICurrentCityWeather";
+import {ICurrentCityWeather} from '../../Interfaces/ICurrentCityWeather';
 
 interface ICityWeather extends ICurrentCityWeather {
   changeTemp: {
@@ -13,10 +13,10 @@ interface ICityWeather extends ICurrentCityWeather {
 
 const initialState: ICityWeather = {
   changeTemp: {
-    feels_like: "",
-    temp: "",
+    feels_like: '',
+    temp: '',
   },
-  base: "",
+  base: '',
   clouds: {
     all: 0,
   },
@@ -37,9 +37,9 @@ const initialState: ICityWeather = {
     temp_max: 0,
     temp_min: 0,
   },
-  name: "",
+  name: '',
   sys: {
-    country: "",
+    country: '',
     sunrise: 0,
     sunset: 0,
   },
@@ -54,7 +54,7 @@ const initialState: ICityWeather = {
 };
 
 const currentCityWeatherSlice = createSlice({
-  name: "cityWeather",
+  name: 'cityWeather',
   initialState,
   reducers: {
     getCelsius: (state) => {
@@ -63,8 +63,8 @@ const currentCityWeatherSlice = createSlice({
         state.main.feels_like - 273.15
       );
       state.changeTemp = {
-        temp: convertKelvinToCelsuisTemp + "° C",
-        feels_like: convertKelvinToCelsuisFeels_like + "° C",
+        temp: convertKelvinToCelsuisTemp + '° C',
+        feels_like: convertKelvinToCelsuisFeels_like + '° C',
       };
     },
     getFarenheit: (state) => {
@@ -76,36 +76,36 @@ const currentCityWeatherSlice = createSlice({
       );
 
       state.changeTemp = {
-        temp: convertKelvinToFarenheitTemp + "° F",
-        feels_like: convertKelvinToFarenheitFeels_like + "° F",
+        temp: convertKelvinToFarenheitTemp + '° F',
+        feels_like: convertKelvinToFarenheitFeels_like + '° F',
       };
     },
     getDefaultKelvin: (state) => {
       state.changeTemp = {
-        temp: state.main.temp + "° K",
-        feels_like: state.main.feels_like + "° K",
+        temp: state.main.temp + '° K',
+        feels_like: state.main.feels_like + '° K',
       };
     },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchCurrentCityWeather.fulfilled, (state, action) => {
-      const { main } = action.payload.data;
-      let cp = { changeTemp: { ...state.changeTemp } };
+      const {main} = action.payload.data;
+      let cp = {changeTemp: {...state.changeTemp}};
 
       cp = {
         changeTemp: {
-          temp: Math.round(main.temp - 273.15) + "° C",
-          feels_like: Math.round(main.feels_like - 273.15) + "° C",
+          temp: Math.round(main.temp - 273.15) + '° C',
+          feels_like: Math.round(main.feels_like - 273.15) + '° C',
         },
       };
 
-      return { ...state, ...action.payload.data, ...cp };
+      return {...state, ...action.payload.data, ...cp};
     });
   },
 });
 
-const { actions, reducer } = currentCityWeatherSlice;
+const {actions, reducer} = currentCityWeatherSlice;
 
-export const { getCelsius, getFarenheit, getDefaultKelvin } = actions;
+export const {getCelsius, getFarenheit, getDefaultKelvin} = actions;
 
 export default reducer;

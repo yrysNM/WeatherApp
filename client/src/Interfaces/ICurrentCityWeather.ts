@@ -52,3 +52,60 @@ export interface Wind {
   gust: number;
   speed: number;
 }
+
+export interface IWeatherCityDays {
+  city: City;
+  cnt: number;
+  cod: string;
+  list: List[];
+  message: number;
+}
+
+export interface City {
+  coord: Coord;
+  country: string;
+  id: number;
+  name: string;
+  population: number;
+  sunrise: number;
+  sunset: number;
+  timezone: number;
+}
+
+export interface List {
+  clouds: Clouds;
+  dt: number;
+  dt_txt: Date;
+  main: MainClassDays;
+  pop: number;
+  rain?: Rain;
+  sys: SysDays;
+  visibility: number;
+  weather: Weather[];
+  wind: Wind;
+}
+
+export interface MainClassDays {
+  feels_like: number;
+  grnd_level: number;
+  humidity: number;
+  pressure: number;
+  sea_level: number;
+  temp: number;
+  temp_kf: number;
+  temp_max: number;
+  temp_min: number;
+}
+
+export interface Rain {
+  '3h': number;
+}
+
+export interface SysDays {
+  pod: Pod;
+}
+
+export enum Pod {
+  D = 'd',
+  N = 'n',
+}
