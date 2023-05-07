@@ -8,5 +8,7 @@ import java.util.List;
 
 public interface UserService {
     List<UserDto> findAllUsers();
-    UserEntity registration(UserEntity userEntity) throws UserAlreadyExistsException;
+    UserDto registration(UserEntity userEntity) throws UserAlreadyExistsException;
+    UserDto getUser(Integer userId);
+    Integer deleteUser(Integer userId);
 }

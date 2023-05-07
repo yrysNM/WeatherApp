@@ -3,6 +3,7 @@ package com.weather.controller;
 import com.weather.entity.UserEntity;
 import com.weather.exception.UserAlreadyExistsException;
 import com.weather.service.UserService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,10 +30,21 @@ public class UserController {
         }
     }
 
-    @GetMapping("/")
-    public ResponseEntity getUser() {
+    @GetMapping
+    public ResponseEntity getUser(@RequestParam Integer userId) {
         try {
-            return ResponseEntity.ok("Server is working!");
+            return ResponseEntity.ok(userService.getUser(userId));
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("There is some error!");
+        }
+    }
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity deleteUser(@PathVariable Integer userId) {
+        try {
+            return ResponseEntity.ok(userService.deleteUser(userId));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("There is some error!");
         }
