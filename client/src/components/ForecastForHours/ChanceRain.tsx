@@ -1,4 +1,6 @@
+import {useState} from 'react';
 import moment from 'moment';
+
 import {useAppSelector} from '../../hooks/redux.hook';
 import {ContentLayout} from '../layouts/contentLayout';
 import './chanceRain.scss';
@@ -8,7 +10,7 @@ export const ForecastForHours = () => {
 
   return (
     <ContentLayout title="Forecast rain for 3 hours" isWeather={true}>
-      {list.map((forecast) => (
+      {list.slice(0, 4).map((forecast) => (
         <LayoutChanceRain
           key={forecast.dt}
           timeText={moment(forecast.dt_txt).format('HH a')}

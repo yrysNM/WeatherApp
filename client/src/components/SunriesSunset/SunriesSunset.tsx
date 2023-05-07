@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import moment from 'moment';
 import classNames from 'classnames';
 import {useAppSelector} from '../../hooks/redux.hook';
