@@ -1,10 +1,16 @@
 package com.weather.controller;
 
+import com.weather.dto.UserDto;
 import com.weather.entity.UserEntity;
 import com.weather.exception.UserAlreadyExistsException;
+import com.weather.exception.NotFoundException;
 import com.weather.service.UserService;
-import jakarta.persistence.EntityNotFoundException;
+
+import jakarta.validation.Valid;
+
+// import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,34 +25,20 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity registration(@RequestBody UserEntity userEntity) {
-        try {
-            userService.registration(userEntity);
-            return ResponseEntity.ok("User successfully has been saved!");
-        } catch (UserAlreadyExistsException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("There is some error!");
-        }
+    public ResponseEntity<UserDto> registration(@RequestBody @Valid UserEntity userEntity)
+            throws UserAlreadyExistsException {
+
+        return new ResponseEntity<>(userService.registration(userEntity), HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity getUser(@RequestParam Integer userId) {
-        try {
-            return ResponseEntity.ok(userService.getUser(userId));
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("There is some error!");
-        }
+    public ResponseEntity<UserDto> getUser(@RequestParam Integer userId) throws NotFoundException {
+        return ResponseEntity.ok(userService.getUser(userId));
     }
 
     @DeleteMapping("/{userId}")
-    public ResponseEntity deleteUser(@PathVariable Integer userId) {
-        try {
-            return ResponseEntity.ok(userService.deleteUser(userId));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("There is some error!");
-        }
+    public ResponseEntity<Integer> deleteUser(@PathVariable Integer userId) {
+
+        return ResponseEntity.ok(userService.deleteUser(userId));
     }
 }
