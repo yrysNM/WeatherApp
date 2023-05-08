@@ -9,10 +9,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
-import java.util.HashSet;
+// import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
+// import java.util.Set;
 
 @Entity
 @Builder
@@ -36,15 +35,21 @@ public class UserEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         UserEntity that = (UserEntity) o;
 
-        if (userId != that.userId) return false;
-        if (userLogin != null ? !userLogin.equals(that.userLogin) : that.userLogin != null) return false;
-        if (userEmail != null ? !userEmail.equals(that.userEmail) : that.userEmail != null) return false;
-        if (userPassword != null ? !userPassword.equals(that.userPassword) : that.userPassword != null) return false;
+        if (userId != that.userId)
+            return false;
+        if (userLogin != null ? !userLogin.equals(that.userLogin) : that.userLogin != null)
+            return false;
+        if (userEmail != null ? !userEmail.equals(that.userEmail) : that.userEmail != null)
+            return false;
+        if (userPassword != null ? !userPassword.equals(that.userPassword) : that.userPassword != null)
+            return false;
 
         return true;
     }

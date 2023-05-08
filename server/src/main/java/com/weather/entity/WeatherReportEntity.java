@@ -24,23 +24,31 @@ public class WeatherReportEntity {
     private String weatherDescription;
     @CreationTimestamp
     private LocalDateTime createdAt;
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         WeatherReportEntity that = (WeatherReportEntity) o;
 
-        if (reportId != that.reportId) return false;
-        if (temperature != that.temperature) return false;
-        if (city != null ? !city.equals(that.city) : that.city != null) return false;
-        if (weatherDescription != null ? !weatherDescription.equals(that.weatherDescription) : that.weatherDescription != null)
+        if (reportId != that.reportId)
             return false;
-        if (createdAt != null ? !createdAt.equals(that.createdAt) : that.createdAt != null) return false;
+        if (temperature != that.temperature)
+            return false;
+        if (city != null ? !city.equals(that.city) : that.city != null)
+            return false;
+        if (weatherDescription != null ? !weatherDescription.equals(that.weatherDescription)
+                : that.weatherDescription != null)
+            return false;
+        if (createdAt != null ? !createdAt.equals(that.createdAt) : that.createdAt != null)
+            return false;
 
         return true;
     }

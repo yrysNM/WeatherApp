@@ -9,7 +9,9 @@ import com.weather.dto.UserDto;
 import com.weather.entity.UserEntity;
 import com.weather.repository.UserRepository;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -49,21 +51,16 @@ public class UserServiceImpl implements UserService {
 
     public static UserDto mapToUserDto(UserEntity userEntity) {
 
-        /**
-         * ISSUE weatherRepotsByUser(userEntity.getWEatherRepostBuyser()) the return
-         * value of is null
-         * 
-         */
-
         return UserDto.builder()
                 .userId(userEntity.getUserId())
                 .userLogin(userEntity.getUserLogin())
                 .userEmail(userEntity.getUserEmail())
                 .createdAt(userEntity.getCreatedAt())
                 .lastUpdateAt(userEntity.getLastUpdateAt())
-                .weatherReportsByUser(userEntity.getWeatherReportsByUser()
-                        .stream().map(WeatherReportServiceImpl::mapToWeatherReportDto)
-                        .collect(Collectors.toList()))
+                .weatherReportsByUser(
+                        Optional.ofNullable(userEntity.getWeatherReportsByUser()).orElseGet(Collections::emptyList)
+                                .stream().map(WeatherReportServiceImpl::mapToWeatherReportDto)
+                                .collect(Collectors.toList()))
                 .build();
     }
 }
