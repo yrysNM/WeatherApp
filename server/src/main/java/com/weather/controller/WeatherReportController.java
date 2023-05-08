@@ -29,10 +29,12 @@ public class WeatherReportController {
         }
     }
 
-    @PutMapping
-    public ResponseEntity updateReportData(@RequestParam Long reportId, Integer temperature, String description) {
+    @PutMapping("/{reportId}")
+    public ResponseEntity updateReportData(@PathVariable("reportId") Long reportId,
+            @RequestBody WeatherReportEntity userReportData) {
         try {
-            return ResponseEntity.ok(weatherReportService.updateReportData(reportId, temperature, description));
+            return ResponseEntity.ok(weatherReportService.updateReportData(reportId, userReportData.getTemperature(),
+                    userReportData.getWeatherDescription()));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("There is some error!");
         }
