@@ -7,4 +7,6 @@ import com.weather.entity.UserEntity;
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Integer> {
     UserEntity findByUserLogin(String userLogin);
+
+    UserEntity findByUserId(Integer id);
 }

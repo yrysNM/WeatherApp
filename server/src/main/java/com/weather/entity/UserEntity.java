@@ -13,6 +13,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 // import java.util.Set;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 @Entity
 @Builder
 @AllArgsConstructor
@@ -23,9 +27,18 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private int userId;
+
+    @NotNull(message = "username shoudn't be null")
+    @NotBlank(message = "username is mandatory")
     private String userLogin;
+
+    @Email(message = "Invalid email address")
+    @NotBlank(message = "email is mandatory")
     private String userEmail;
+
+    @NotBlank(message = "password is mandatory")
     private String userPassword;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
     @UpdateTimestamp

@@ -1,8 +1,13 @@
 package com.weather.controller;
 
+import com.weather.dto.WeatherReportDto;
 import com.weather.entity.WeatherReportEntity;
-import com.weather.exception.UserNotFoundException;
+import com.weather.exception.NotFoundException;
 import com.weather.service.WeatherReportService;
+
+import jakarta.validation.Valid;
+
+import java.util.List;
 
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,35 +25,24 @@ public class WeatherReportController {
     }
 
     @PostMapping
-    public ResponseEntity createReport(@RequestBody WeatherReportEntity weatherReportEntity,
-            @RequestParam Integer userId) {
-        try {
-            return ResponseEntity.ok(weatherReportService.createReport(weatherReportEntity, userId));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("There is some error!");
-        }
+    public ResponseEntity<WeatherReportDto> createReport(@RequestBody @Valid WeatherReportEntity weatherReportEntity,
+            @RequestParam Integer userId) throws NotFoundException {
+
+        return ResponseEntity.ok(weatherReportService.createReport(weatherReportEntity, userId));
     }
 
     @PutMapping("/{reportId}")
-    public ResponseEntity updateReportData(@PathVariable("reportId") Long reportId,
-            @RequestBody WeatherReportEntity userReportData) {
-        try {
-            return ResponseEntity.ok(weatherReportService.updateReportData(reportId, userReportData.getTemperature(),
-                    userReportData.getWeatherDescription()));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("There is some error!");
-        }
+    public ResponseEntity<WeatherReportDto> updateReportData(@PathVariable("reportId") Long reportId,
+            @RequestBody @Valid WeatherReportEntity userReportData) throws NotFoundException {
+
+        return ResponseEntity.ok(weatherReportService.updateReportData(reportId, userReportData.getTemperature(),
+                userReportData.getWeatherDescription()));
     }
 
     @GetMapping
-    public ResponseEntity getReportsFromUser(@RequestParam Integer userId) {
-        try {
-            return ResponseEntity.ok(weatherReportService.getReportsFromUser(userId));
+    public ResponseEntity<List<WeatherReportDto>> getReportsFromUser(@RequestParam Integer userId)
+            throws NotFoundException {
 
-        } catch (UserNotFoundException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("There is some error!");
-        }
+        return ResponseEntity.ok(weatherReportService.getReportsFromUser(userId));
     }
 }

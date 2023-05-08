@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.weather.dto.WeatherReportDto;
 import com.weather.entity.WeatherReportEntity;
-import com.weather.exception.UserNotFoundException;
+import com.weather.exception.NotFoundException;
 import com.weather.repository.WeatherReportRepository;
 
 import java.util.List;
@@ -33,30 +33,43 @@ public class WeatherReportServiceImpl implements WeatherReportService {
     }
 
     @Override
-    public WeatherReportDto createReport(WeatherReportEntity weatherReportEntity, Integer userId) {
-        UserEntity userEntity = userRepository.findById(userId).get();
+    public WeatherReportDto createReport(WeatherReportEntity weatherReportEntity, Integer userId)
+            throws NotFoundException {
+        UserEntity userEntity = userRepository.findByUserId(userId);
+
+        if (userEntity == null) {
+            throw new NotFoundException("User not found!");
+        }
+
         weatherReportEntity.setUser(userEntity);
         return mapToWeatherReportDto(weatherReportRepository.save(weatherReportEntity));
     }
 
     @Override
-    public WeatherReportDto updateReportData(Long reportId, Integer temperature, String description) {
-        WeatherReportEntity weatherReportEntity = weatherReportRepository.getReferenceById(reportId);
+    public WeatherReportDto updateReportData(Long reportId, Integer temperature, String description)
+            throws NotFoundException {
+        WeatherReportEntity weatherReportEntity = weatherReportRepository.findByReportId(reportId);
+
+        if (weatherReportEntity == null) {
+            throw new NotFoundException("Report not found! id: " + reportId);
+        }
+
         weatherReportEntity.setTemperature(temperature);
         weatherReportEntity.setWeatherDescription(description);
         return mapToWeatherReportDto(weatherReportRepository.save(weatherReportEntity));
     }
 
     @Override
-    public List<WeatherReportDto> getReportsFromUser(Integer userId) throws UserNotFoundException {
-        UserEntity user = userRepository.findById(userId).get();
+    public List<WeatherReportDto> getReportsFromUser(Integer userId) throws NotFoundException {
+        UserEntity user = userRepository.findByUserId(userId);
 
         if (user == null) {
-            throw new UserNotFoundException("User not found!");
+            throw new NotFoundException("Reports not found!");
         }
 
         return user.getWeatherReportsByUser().stream().map(WeatherReportServiceImpl::mapToWeatherReportDto)
                 .collect(Collectors.toList());
+
     }
 
     public static WeatherReportDto mapToWeatherReportDto(WeatherReportEntity reportEntity) {

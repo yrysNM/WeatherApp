@@ -1,12 +1,14 @@
 package com.weather.service.impl;
 
-import com.weather.dto.WeatherReportDto;
-import com.weather.exception.UserAlreadyExistsException;
+// import com.weather.dto.WeatherReportDto;
+// import com.weather.exception.UserAlreadyExistsException;
 import com.weather.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.weather.dto.UserDto;
 import com.weather.entity.UserEntity;
+import com.weather.exception.UserAlreadyExistsException;
+import com.weather.exception.NotFoundException;
 import com.weather.repository.UserRepository;
 
 import java.util.Collections;
@@ -33,14 +35,20 @@ public class UserServiceImpl implements UserService {
     public UserDto registration(UserEntity user) throws UserAlreadyExistsException {
         if (userRepository.findByUserLogin(user.getUserLogin()) != null) {
             throw new UserAlreadyExistsException("User with such login already exists!");
+        } else {
+
+            return mapToUserDto(userRepository.save(user));
         }
-        return mapToUserDto(userRepository.save(user));
     }
 
     @Override
-    public UserDto getUser(Integer userId) {
-        UserEntity userEntity = userRepository.getReferenceById(userId);
-        return mapToUserDto(userEntity);
+    public UserDto getUser(Integer userId) throws NotFoundException {
+        UserEntity userEntity = userRepository.findByUserId(userId);
+        if (userEntity != null) {
+            return mapToUserDto(userEntity);
+        } else {
+            throw new NotFoundException("User not found! id: " + userId);
+        }
     }
 
     @Override

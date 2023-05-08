@@ -6,4 +6,5 @@ import com.weather.entity.WeatherReportEntity;
 
 @Repository
 public interface WeatherReportRepository extends JpaRepository<WeatherReportEntity, Long> {
+  WeatherReportEntity findByReportId(Long id);
 }
