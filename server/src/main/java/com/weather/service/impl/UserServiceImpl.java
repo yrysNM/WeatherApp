@@ -29,14 +29,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto registration(UserEntity user) throws UserAlreadyExistsException {
-        if(userRepository.findByUserLogin(user.getUserLogin()) != null) {
+        if (userRepository.findByUserLogin(user.getUserLogin()) != null) {
             throw new UserAlreadyExistsException("User with such login already exists!");
         }
         return mapToUserDto(userRepository.save(user));
     }
 
     @Override
-    public UserDto getUser(Integer userId){
+    public UserDto getUser(Integer userId) {
         UserEntity userEntity = userRepository.getReferenceById(userId);
         return mapToUserDto(userEntity);
     }
@@ -48,6 +48,13 @@ public class UserServiceImpl implements UserService {
     }
 
     public static UserDto mapToUserDto(UserEntity userEntity) {
+
+        /**
+         * ISSUE weatherRepotsByUser(userEntity.getWEatherRepostBuyser()) the return
+         * value of is null
+         * 
+         */
+
         return UserDto.builder()
                 .userId(userEntity.getUserId())
                 .userLogin(userEntity.getUserLogin())
