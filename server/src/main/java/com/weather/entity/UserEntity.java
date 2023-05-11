@@ -58,7 +58,7 @@ public class UserEntity implements UserDetails {
     private List<WeatherReportEntity> weatherReportsByUser;
 
     @OneToMany(mappedBy = "user")
-    private List<Token> tokens;
+    private List<TokenEntity> tokens;
 
     @Override
     public boolean equals(Object o) {

@@ -13,7 +13,7 @@ import com.weather.config.JwtService;
 import com.weather.dto.AuthenticationRequestDto;
 import com.weather.dto.AuthenticationResponseDto;
 import com.weather.dto.RegisterRequestDto;
-import com.weather.entity.Token;
+import com.weather.entity.TokenEntity;
 import com.weather.entity.UserEntity;
 import com.weather.entity.roles.RoleToken;
 import com.weather.entity.roles.RoleUser;
@@ -46,7 +46,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         .role(RoleUser.USER)
         .build();
 
-    if (userRepository.findByUserLogin(user.getUserEmail()) == null) {
+    if (userRepository.findByUserEmailCustomEntity(user.getUserEmail()) == null) {
+      // throw new UserAlreadyExistsException(
+      // "user with such login already exists!" +
+      // userRepository.findByUserLogin(user.getUserEmail()));
+
+      // } else {
       var savedUser = userRepository.save(user);
 
       var jwtToken = jwtService.generateToken(user);
@@ -57,15 +62,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
           .accessToken(jwtToken)
           .refreshToken(refreshToken)
           .build();
-    } else {
-      throw new UserAlreadyExistsException(
-          "user with such login already exists!" + userRepository.findByUserLogin(user.getUserEmail()));
     }
   }
 
   @Override
   public void saveUserToken(UserEntity user, String jwtToken) {
-    var token = Token.builder()
+    var token = TokenEntity.builder()
         .user(user)
         .token(jwtToken)
         .tokenType(RoleToken.BEARER)
