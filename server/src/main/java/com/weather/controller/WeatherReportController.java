@@ -24,7 +24,7 @@ public class WeatherReportController {
         this.weatherReportService = weatherReportService;
     }
 
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<WeatherReportDto> createReport(@RequestBody @Valid WeatherReportEntity weatherReportEntity,
             @RequestParam Integer userId) throws NotFoundException {
 

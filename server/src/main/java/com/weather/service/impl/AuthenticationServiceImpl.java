@@ -33,7 +33,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
 
-  @Autowired
+  // @Autowired
   private final UserRepository userRepository;
   private final TokenRepository tokenRepository;
   private final PasswordEncoder passwordEncoder;
@@ -41,15 +41,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
   private final AuthenticationManager authenticationManager;
 
   @Override
-  public AuthenticationResponseDto register(RegisterRequestDto requestBody) {
+  public AuthenticationResponseDto register(RegisterRequestDto requestBody) throws UserAlreadyExistsException {
     Optional<UserEntity> userC = userRepository.findByUserEmail(requestBody.getEmail());
 
     if (!userC.isEmpty()) {
-      // throw new UserAlreadyExistsException(
-      // "user with such login already exists!" + " " + requestBody.getEmail() + " " +
-      // userRepository.findByUserEmail(requestBody.getEmail()));
-      System.out.println("ERROR");
-      return null;
+      throw new UserAlreadyExistsException(
+          "user with such login already exists!" + " " + requestBody.getEmail() + " " +
+              userRepository.findByUserEmail(requestBody.getEmail()));
+      // System.out.println("ERROR");
+      // return null;
     } else {
       UserEntity user = UserEntity.builder()
           .userLogin(requestBody.getUsername())

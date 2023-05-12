@@ -19,8 +19,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @EnableMethodSecurity
 public class SecurityConfig {
-  private final JwtAuthenticationFilterConfig jwtAuthFilet;
 
+  private final JwtAuthenticationFilterConfig jwtAuthFilet;
   private final AuthenticationProvider authenticationProvider;
   private final LogoutHandler logoutHandler;
 
@@ -31,7 +31,7 @@ public class SecurityConfig {
         .csrf()
         .disable()
         .authorizeHttpRequests()
-        .requestMatchers("/auth/authenticate", "/auth/register", "/weather/**", "reports/all")
+        .requestMatchers("/auth/authenticate", "/auth/register", "/weather/**", "reports/all", "users/**")
         .permitAll()
         .anyRequest()
         .authenticated()
