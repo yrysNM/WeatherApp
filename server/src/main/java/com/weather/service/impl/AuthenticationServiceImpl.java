@@ -3,7 +3,7 @@ package com.weather.service.impl;
 import java.io.IOException;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -46,10 +46,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     if (!userC.isEmpty()) {
       throw new UserAlreadyExistsException(
-          "user with such login already exists!" + " " + requestBody.getEmail() + " " +
-              userRepository.findByUserEmail(requestBody.getEmail()));
-      // System.out.println("ERROR");
-      // return null;
+          "user with such email already exists!");
     } else {
       UserEntity user = UserEntity.builder()
           .userLogin(requestBody.getUsername())
