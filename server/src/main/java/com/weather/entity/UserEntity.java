@@ -42,6 +42,7 @@ public class UserEntity implements UserDetails {
 
     @Email(message = "Invalid email address")
     @NotBlank(message = "email is mandatory")
+    @Column(unique = true)
     private String userEmail;
 
     @NotBlank(message = "password is mandatory")

@@ -27,8 +27,7 @@ public class AuthenticationController {
   private final AuthenticationService service;
 
   @PostMapping("/register")
-  public ResponseEntity<AuthenticationResponseDto> register(@RequestBody RegisterRequestDto requestBody)
-      throws UserAlreadyExistsException {
+  public ResponseEntity<AuthenticationResponseDto> register(@RequestBody RegisterRequestDto requestBody) {
     return ResponseEntity.ok(service.register(requestBody));
   }
 

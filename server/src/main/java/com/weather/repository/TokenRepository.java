@@ -13,7 +13,7 @@ public interface TokenRepository extends JpaRepository<TokenEntity, Integer> {
 
   @Query(value = """
       select t from token t inner join users u\s
-      on t.users.user_id = u.user_id\s
+      on t.user_id = u.user_id\s
       where u.user_id = :id and (t.expired = false or t.revoked = false)\s
       """, nativeQuery = true)
   List<TokenEntity> findAllValidTokenByUser(Integer id);

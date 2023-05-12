@@ -1,7 +1,9 @@
 package com.weather.service.impl;
 
 import java.io.IOException;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -31,6 +33,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
 
+  @Autowired
   private final UserRepository userRepository;
   private final TokenRepository tokenRepository;
   private final PasswordEncoder passwordEncoder;
@@ -38,20 +41,22 @@ public class AuthenticationServiceImpl implements AuthenticationService {
   private final AuthenticationManager authenticationManager;
 
   @Override
-  public AuthenticationResponseDto register(RegisterRequestDto requestBody) throws UserAlreadyExistsException {
-    UserEntity user = UserEntity.builder()
-        .userLogin(requestBody.getUsername())
-        .userEmail(requestBody.getEmail())
-        .userPassword(passwordEncoder.encode(requestBody.getPassword()))
-        .role(RoleUser.USER)
-        .build();
+  public AuthenticationResponseDto register(RegisterRequestDto requestBody) {
+    Optional<UserEntity> userC = userRepository.findByUserEmail(requestBody.getEmail());
 
-    if (userRepository.findByUserEmailCustomEntity(user.getUserEmail()) == null) {
+    if (!userC.isEmpty()) {
       // throw new UserAlreadyExistsException(
-      // "user with such login already exists!" +
-      // userRepository.findByUserLogin(user.getUserEmail()));
-
-      // } else {
+      // "user with such login already exists!" + " " + requestBody.getEmail() + " " +
+      // userRepository.findByUserEmail(requestBody.getEmail()));
+      System.out.println("ERROR");
+      return null;
+    } else {
+      UserEntity user = UserEntity.builder()
+          .userLogin(requestBody.getUsername())
+          .userEmail(requestBody.getEmail())
+          .userPassword(passwordEncoder.encode(requestBody.getPassword()))
+          .role(RoleUser.USER)
+          .build();
       var savedUser = userRepository.save(user);
 
       var jwtToken = jwtService.generateToken(user);

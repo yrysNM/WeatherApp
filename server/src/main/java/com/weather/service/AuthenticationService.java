@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public interface AuthenticationService {
-  AuthenticationResponseDto register(RegisterRequestDto requestBody) throws UserAlreadyExistsException;
+  AuthenticationResponseDto register(RegisterRequestDto requestBody);
 
   void saveUserToken(UserEntity user, String jwtToken);
 
