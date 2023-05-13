@@ -6,9 +6,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import com.weather.entity.roles.RoleUser;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Collection;
+// import java.util.HashSet;
 // import java.util.HashSet;
 import java.util.List;
 // import java.util.Set;
@@ -23,7 +31,7 @@ import jakarta.validation.constraints.NotNull;
 @NoArgsConstructor
 @Data
 @Table(name = "Users")
-public class UserEntity {
+public class UserEntity implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private int userId;
@@ -34,10 +42,14 @@ public class UserEntity {
 
     @Email(message = "Invalid email address")
     @NotBlank(message = "email is mandatory")
+    @Column(unique = true)
     private String userEmail;
 
     @NotBlank(message = "password is mandatory")
     private String userPassword;
+
+    @Enumerated(EnumType.STRING)
+    private RoleUser role;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -45,6 +57,9 @@ public class UserEntity {
     private LocalDateTime lastUpdateAt;
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<WeatherReportEntity> weatherReportsByUser;
+
+    @OneToMany(mappedBy = "user")
+    private List<TokenEntity> tokens;
 
     @Override
     public boolean equals(Object o) {
@@ -74,6 +89,41 @@ public class UserEntity {
         result = 31 * result + (userEmail != null ? userEmail.hashCode() : 0);
         result = 31 * result + (userPassword != null ? userPassword.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.name()));
+    }
+
+    @Override
+    public String getPassword() {
+        return userPassword;
+    }
+
+    @Override
+    public String getUsername() {
+        return userEmail;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
 }

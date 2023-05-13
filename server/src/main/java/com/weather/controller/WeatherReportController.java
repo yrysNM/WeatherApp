@@ -9,7 +9,7 @@ import jakarta.validation.Valid;
 
 import java.util.List;
 
-import org.apache.catalina.connector.Response;
+// import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +24,7 @@ public class WeatherReportController {
         this.weatherReportService = weatherReportService;
     }
 
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<WeatherReportDto> createReport(@RequestBody @Valid WeatherReportEntity weatherReportEntity,
             @RequestParam Integer userId) throws NotFoundException {
 
@@ -44,5 +44,10 @@ public class WeatherReportController {
             throws NotFoundException {
 
         return ResponseEntity.ok(weatherReportService.getReportsFromUser(userId));
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<WeatherReportDto>> getAllReports() {
+        return ResponseEntity.ok(weatherReportService.getAllReports());
     }
 }

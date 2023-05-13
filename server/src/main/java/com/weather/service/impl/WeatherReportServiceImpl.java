@@ -27,15 +27,9 @@ public class WeatherReportServiceImpl implements WeatherReportService {
     }
 
     @Override
-    public List<WeatherReportDto> findAllReports() {
-        List<WeatherReportEntity> reports = weatherReportRepository.findAll();
-        return reports.stream().map(WeatherReportServiceImpl::mapToWeatherReportDto).collect(Collectors.toList());
-    }
-
-    @Override
     public WeatherReportDto createReport(WeatherReportEntity weatherReportEntity, Integer userId)
             throws NotFoundException {
-        UserEntity userEntity = userRepository.findByUserId(userId);
+        UserEntity userEntity = userRepository.findById(userId).get();
 
         if (userEntity == null) {
             throw new NotFoundException("User not found!");
@@ -61,7 +55,7 @@ public class WeatherReportServiceImpl implements WeatherReportService {
 
     @Override
     public List<WeatherReportDto> getReportsFromUser(Integer userId) throws NotFoundException {
-        UserEntity user = userRepository.findByUserId(userId);
+        UserEntity user = userRepository.findById(userId).get();
 
         if (user == null) {
             throw new NotFoundException("Reports not found!");
@@ -70,6 +64,13 @@ public class WeatherReportServiceImpl implements WeatherReportService {
         return user.getWeatherReportsByUser().stream().map(WeatherReportServiceImpl::mapToWeatherReportDto)
                 .collect(Collectors.toList());
 
+    }
+
+    @Override
+    public List<WeatherReportDto> getAllReports() {
+        List<WeatherReportEntity> reports = weatherReportRepository.findAll();
+
+        return reports.stream().map(WeatherReportServiceImpl::mapToWeatherReportDto).collect(Collectors.toList());
     }
 
     public static WeatherReportDto mapToWeatherReportDto(WeatherReportEntity reportEntity) {

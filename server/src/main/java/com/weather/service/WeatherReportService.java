@@ -7,11 +7,12 @@ import com.weather.exception.NotFoundException;
 import java.util.List;
 
 public interface WeatherReportService {
-    List<WeatherReportDto> findAllReports();
 
     WeatherReportDto createReport(WeatherReportEntity weatherReportEntity, Integer userId) throws NotFoundException;
 
     WeatherReportDto updateReportData(Long reportId, Integer temperature, String description) throws NotFoundException;
 
     List<WeatherReportDto> getReportsFromUser(Integer userId) throws NotFoundException;
+
+    List<WeatherReportDto> getAllReports();
 }
