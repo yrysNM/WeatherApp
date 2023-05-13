@@ -17,7 +17,7 @@ public interface AuthenticationService {
 
   void saveUserToken(UserEntity user, String jwtToken);
 
-  AuthenticationResponseDto authenticate(AuthenticationRequestDto requestBody) throws NotFoundException;
+  AuthenticationResponseDto authenticate(AuthenticationRequestDto requestBody);
 
   void refreshToken(HttpServletRequest request,
       HttpServletResponse response) throws IOException;

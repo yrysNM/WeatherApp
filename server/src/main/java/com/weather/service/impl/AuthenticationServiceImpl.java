@@ -68,6 +68,52 @@ public class AuthenticationServiceImpl implements AuthenticationService {
   }
 
   @Override
+  public AuthenticationResponseDto authenticate(AuthenticationRequestDto requestBody) {
+    // authenticationManager.authenticate(
+    // new UsernamePasswordAuthenticationToken(requestBody.getEmail(),
+    // requestBody.getPassword()));
+
+    // var user =
+    // userRepository.findByUserEmail(requestBody.getEmail()).orElseThrow();
+
+    // // if (user == null) {
+    // // // throw new NotFoundException("User not found!");
+    // // return null;
+    // // }
+
+    // var jwtToken = jwtService.generateToken(user);
+    // var refreshToken = jwtService.generateRefreshToken(user);
+    // revokeAllUserTokens(user);
+    // saveUserToken(user, jwtToken);
+
+    // return AuthenticationResponseDto
+    // .builder()
+    // .accessToken(jwtToken)
+    // .refreshToken(refreshToken)
+    // .build();
+
+    authenticationManager.authenticate(
+        new UsernamePasswordAuthenticationToken(
+            requestBody.getEmail(),
+            requestBody.getPassword()));
+    var user = userRepository.findByUserEmail(requestBody.getEmail())
+        .orElseThrow();
+
+    if (user == null) {
+      return null;
+    }
+
+    var jwtToken = jwtService.generateToken(user);
+    var refreshToken = jwtService.generateRefreshToken(user);
+    revokeAllUserTokens(user);
+    saveUserToken(user, jwtToken);
+    return AuthenticationResponseDto.builder()
+        .accessToken(jwtToken)
+        .refreshToken(refreshToken)
+        .build();
+  }
+
+  @Override
   public void saveUserToken(UserEntity user, String jwtToken) {
     var token = TokenEntity.builder()
         .user(user)
@@ -77,27 +123,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         .revoked(false)
         .build();
     tokenRepository.save(token);
-  }
-
-  @Override
-  public AuthenticationResponseDto authenticate(AuthenticationRequestDto requestBody) throws NotFoundException {
-    authenticationManager.authenticate(
-        new UsernamePasswordAuthenticationToken(requestBody.getEmail(), requestBody.getPassword()));
-
-    var user = userRepository.findByUserEmail(requestBody.getEmail()).orElseThrow();
-
-    if (user == null) {
-      throw new NotFoundException("User not found!");
-    }
-
-    var jwtToken = jwtService.generateToken(user);
-    var refreshToken = jwtService.generateRefreshToken(user);
-
-    return AuthenticationResponseDto
-        .builder()
-        .accessToken(jwtToken)
-        .refreshToken(refreshToken)
-        .build();
   }
 
   private void revokeAllUserTokens(UserEntity user) {
