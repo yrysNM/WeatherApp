@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import com.weather.service.WeatherService;
 
 @RestController
+@RequestMapping("/weather")
 public class WeatherController {
 
   private WeatherService weatherService;
@@ -21,13 +22,13 @@ public class WeatherController {
     return weatherService.gLocation(cityName);
   }
 
-  @GetMapping(value = "/weather_city/{cityName}")
+  @GetMapping(value = "/city/{cityName}")
   public Object getWheatherDaily(@PathVariable("cityName") String cityName) {
 
     return weatherService.gWeatherData(cityName);
   }
 
-  @RequestMapping(value = "/weather_forecast", params = { "lat", "lon" }, method = RequestMethod.GET)
+  @RequestMapping(value = "/forecast", params = { "lat", "lon" }, method = RequestMethod.GET)
   @ResponseBody
   public Object getWeatherDays(@RequestParam String lat,
       @RequestParam String lon) {
