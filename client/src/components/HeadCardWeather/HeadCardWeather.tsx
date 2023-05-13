@@ -1,22 +1,22 @@
-import { useEffect, useContext } from "react";
+import {useEffect, useContext} from 'react';
 
-import { IWeather } from "../../Interfaces";
-import { useHttp } from "../../hooks/http.hook";
-import { WeatherContextType } from "../../@types/weatherContext";
-import { WeatherContext } from "../../context/weatherContext";
+import {IWeather} from '../../Interfaces';
+import {useHttp} from '../../hooks/http.hook';
+import {WeatherContextType} from '../../@types/weatherContext';
+import {WeatherContext} from '../../context/weatherContext';
 
-import "./cardWeather.scss";
+import './cardWeather.scss';
 
 const CardWeatherHeader = () => {
-  const { request } = useHttp();
-  const { setWeatherDataFN, weatherData } = useContext(
+  const {request} = useHttp();
+  const {setWeatherDataFN, weatherData} = useContext(
     WeatherContext
   ) as WeatherContextType;
 
   useEffect(() => {
     request<IWeather>({
-      url: `${import.meta.env.VITE_BASE_URL}/wheather/almaty`,
-      method: "GET",
+      url: `${import.meta.env.VITE_BASE_WEATHER_URL}/wheather/almaty`,
+      method: 'GET',
     }).then((res) =>
       setWeatherDataFN({
         weather: res.weather,
@@ -41,7 +41,7 @@ const CardWeatherHeader = () => {
 
           <div className="moreInfo">
             <p className="sub-title">
-              Pressure: {weatherData.main?.pressure} | Humidity:{" "}
+              Pressure: {weatherData.main?.pressure} | Humidity:{' '}
               {weatherData.main?.humidity}°C
             </p>
           </div>
@@ -51,4 +51,4 @@ const CardWeatherHeader = () => {
   );
 };
 
-export { CardWeatherHeader };
+export {CardWeatherHeader};
