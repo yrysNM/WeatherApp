@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { useFormik } from "formik";
-import * as Yup from "yup";
+import React, {useState} from 'react';
+import {Link} from 'react-router-dom';
+import {useFormik} from 'formik';
+import * as Yup from 'yup';
 
-import { CustomInputLayout } from "../layouts/customInputLayout";
+import {CustomInputLayout} from '../layouts/customInputLayout';
 
-import "./authTemplate.scss";
+import './authTemplate.scss';
 
 export type blur = {
   active: boolean;
@@ -15,39 +15,40 @@ export type blur = {
 type inputValues = {
   email: string;
   password: string;
+  username?: string;
 };
 
 interface IAuthTemplate {
   isLogin: boolean;
-  getValueInput: ({ email, password }: inputValues) => void;
+  getValueInput: ({email, password, username}: inputValues) => void;
 }
 
-export const AuthTemplate = ({ isLogin, getValueInput }: IAuthTemplate) => {
+export const AuthTemplate = ({isLogin, getValueInput}: IAuthTemplate) => {
   const [isBlur, setIsBlur] = useState<blur>({
     active: false,
-    typeInput: "",
+    typeInput: '',
   });
 
   const formik = useFormik({
     initialValues: {
-      email: "",
-      password: "",
-      username: "",
+      email: '',
+      password: '',
+      username: '',
     },
     validationSchema: Yup.object({
       username: !isLogin
-        ? Yup.string().required("Obligatory field!")
+        ? Yup.string().required('Obligatory field!')
         : Yup.string(),
       email: Yup.string()
-        .email("Wrong email address.")
-        .required("Obligatory field!"),
+        .email('Wrong email address.')
+        .required('Obligatory field!'),
       password: Yup.string()
-        .required("Obligatory field!")
-        .min(8, "At least 8 characters.")
+        .required('Obligatory field!')
+        .min(8, 'At least 8 characters.')
         .matches(
           // eslint-disable-next-line no-useless-escape
           /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/,
-          "Must consist of Latin letters, special characters, and single digits."
+          'Must consist of Latin letters, special characters, and single digits.'
         ),
     }),
     onSubmit: (values) => {
@@ -62,8 +63,8 @@ export const AuthTemplate = ({ isLogin, getValueInput }: IAuthTemplate) => {
         onSubmit={formik.handleSubmit}
         style={{
           gridTemplate: isLogin
-            ? "repeat(2, 60px) 48px / minmax(250px, 400px)"
-            : "repeat(3, 60px) 48px / minmax(250px, 400px)",
+            ? 'repeat(2, 60px) 48px / minmax(250px, 400px)'
+            : 'repeat(3, 60px) 48px / minmax(250px, 400px)',
         }}
       >
         {!isLogin && (
@@ -79,10 +80,10 @@ export const AuthTemplate = ({ isLogin, getValueInput }: IAuthTemplate) => {
               type="text"
               autoComplete="on"
               value={formik.values.username}
-              onFocus={() => setIsBlur({ active: true, typeInput: "username" })}
+              onFocus={() => setIsBlur({active: true, typeInput: 'username'})}
               onBlur={(e) => {
                 formik.handleBlur(e);
-                setIsBlur({ active: false, typeInput: "username" });
+                setIsBlur({active: false, typeInput: 'username'});
               }}
               onChange={formik.handleChange}
               placeholder="Enter full name"
@@ -99,9 +100,9 @@ export const AuthTemplate = ({ isLogin, getValueInput }: IAuthTemplate) => {
             type="email"
             className="input"
             value={formik.values.email}
-            onFocus={() => setIsBlur({ active: true, typeInput: "email" })}
+            onFocus={() => setIsBlur({active: true, typeInput: 'email'})}
             onBlur={(e) => {
-              setIsBlur({ active: false, typeInput: "email" });
+              setIsBlur({active: false, typeInput: 'email'});
               formik.handleBlur(e);
             }}
             onChange={formik.handleChange}
@@ -124,10 +125,10 @@ export const AuthTemplate = ({ isLogin, getValueInput }: IAuthTemplate) => {
             type="password"
             autoComplete="on"
             value={formik.values.password}
-            onFocus={() => setIsBlur({ active: true, typeInput: "password" })}
+            onFocus={() => setIsBlur({active: true, typeInput: 'password'})}
             onBlur={(e) => {
               formik.handleBlur(e);
-              setIsBlur({ active: false, typeInput: "password" });
+              setIsBlur({active: false, typeInput: 'password'});
             }}
             onChange={formik.handleChange}
             placeholder="Enter password…"
@@ -151,26 +152,26 @@ export const AuthTemplate = ({ isLogin, getValueInput }: IAuthTemplate) => {
   );
 };
 
-const BottomTexts: React.FC<{ isLogin: boolean }> = ({ isLogin }) => {
+const BottomTexts: React.FC<{isLogin: boolean}> = ({isLogin}) => {
   return (
     <div className="bottomTexts">
       {isLogin && (
-        <Link to={"/restorePassword"}>
+        <Link to={'/restorePassword'}>
           <span className="sub-title navigateSpan">Forgot your password?</span>
         </Link>
       )}
 
       {isLogin ? (
         <p className="textSignUpIn">
-          Don't have an account yet?{" "}
-          <Link to={"/register"}>
+          Don't have an account yet?{' '}
+          <Link to={'/register'}>
             <span className="navigateSpan">Sign up</span>
           </Link>
         </p>
       ) : (
         <p className="textSignUpIn">
-          Already have an account?{" "}
-          <Link to={"/login"}>
+          Already have an account?{' '}
+          <Link to={'/login'}>
             <span className="navigateSpan">Then sign in</span>
           </Link>
         </p>

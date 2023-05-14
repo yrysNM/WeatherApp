@@ -4,6 +4,7 @@ import {useAppSelector} from '../../hooks/redux.hook';
 
 import {ReactComponent as TickIcon} from '../../assets/icons/tickIcon.svg';
 import './map.scss';
+import {LatLngExpression} from 'leaflet';
 
 type TLayer = {
   type: string;
@@ -28,7 +29,7 @@ export const Map = () => {
   return (
     <>
       <MapContainer
-        center={coord}
+        center={coord as unknown as LatLngExpression}
         zoom={5}
         scrollWheelZoom={false}
         style={{
