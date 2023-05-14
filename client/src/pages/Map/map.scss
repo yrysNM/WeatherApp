@@ -1,0 +1,16 @@
+.selectors {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1000;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 5px;
+  width: 120px;
+
+  &-block {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}

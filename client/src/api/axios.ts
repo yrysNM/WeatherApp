@@ -1,5 +1,13 @@
-import axios from "axios";
+import axios from 'axios';
+import {getItem} from '../helpers/persistanceStorage';
 
-axios.defaults.baseURL = "http://localhost:8080";
+axios.defaults.baseURL = 'http://localhost:8080';
 
-export { axios };
+axios.interceptors.request.use((config) => {
+  const token = getItem('accessToken');
+  const authorizationToken = token ? `Bearer ${token}` : '';
+  config.headers.Authorization = authorizationToken;
+  return config;
+});
+
+export {axios};
