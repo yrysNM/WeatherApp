@@ -1,14 +1,21 @@
+import {useNavigate} from 'react-router-dom';
 import {useState} from 'react';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
-import {useAppSelector} from '../../hooks/redux.hook';
+import {axios} from '../../api/axios';
+
+import {useAppDispatch, useAppSelector} from '../../hooks/redux.hook';
 
 import type {blur} from '../../components/AuthTemplate/AuthTemplate';
 import {CustomInputLayout} from '../../components/layouts/customInputLayout';
 
 import './editUser.scss';
+import {setItem} from '../../helpers/persistanceStorage';
+import {logoutCurrentUser} from '../../redux/modules/currentUserSlice';
 
 const EditUser = () => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const {user} = useAppSelector((state) => state.currentUser);
   const [isBlur, setIsBlur] = useState<blur>({
     active: false,
@@ -42,7 +49,19 @@ const EditUser = () => {
         .min(8, 'At least 8 characters.'),
     }),
     onSubmit: (values) => {
-      console.log(values);
+      axios
+        .put(
+          `${import.meta.env.VITE_BASE_JAVA_API_URL}/users/${user?.userId}`,
+          {
+            userLogin: values.username,
+            userEmail: values.email,
+            confirmPassword: values.confirm_password,
+          }
+        )
+        .then(() => {
+          navigate('/login');
+          dispatch(logoutCurrentUser());
+        });
     },
   });
 
@@ -149,7 +168,14 @@ const EditUser = () => {
             </p>
           ) : null}
         </CustomInputLayout>
-        <button type="submit" className="btn-form">
+        <button
+          type="submit"
+          className="btn-form"
+          onClick={(e) => {
+            formik.handleSubmit();
+            e.preventDefault();
+          }}
+        >
           <span className="signInUpBtnSpan">Save</span>
         </button>
       </form>
