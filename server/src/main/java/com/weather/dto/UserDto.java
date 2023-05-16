@@ -17,6 +17,7 @@ public class UserDto {
     private String userLogin;
     private String userEmail;
     private LocalDateTime createdAt;
+    private String confirmPassword;
     private LocalDateTime lastUpdateAt;
     private List<WeatherReportDto> weatherReportsByUser;
 }

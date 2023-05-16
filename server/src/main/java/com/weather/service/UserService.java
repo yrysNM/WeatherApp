@@ -14,5 +14,7 @@ public interface UserService {
 
     UserDto getUser(String userEmail) throws NotFoundException;
 
+    String updateUser(String userLogin, String userEmail, String confirmPassword) throws NotFoundException;
+
     Integer deleteUser(Integer userId);
 }

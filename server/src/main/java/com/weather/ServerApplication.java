@@ -12,9 +12,21 @@ public class ServerApplication implements WebMvcConfigurer {
 		SpringApplication.run(ServerApplication.class, args);
 	}
 
+	/**
+	 * CORS configuration
+	 */
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
-		registry.addMapping("/**");
+		registry.addMapping("/**")
+				.allowedOrigins(
+						"http://localhost:5173")
+				.allowedMethods(
+						"GET",
+						"PUT",
+						"POST",
+						"DELETE",
+						"PATCH",
+						"OPTIONS");
 	}
 
 }
