@@ -31,10 +31,11 @@ public class UserController {
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<String> updateUser(@RequestBody UserDto userDto) throws NotFoundException {
+    public ResponseEntity<String> updateUser(@RequestBody UserDto userDto, @PathVariable Integer userId)
+            throws NotFoundException {
         return ResponseEntity
                 .ok(userService.updateUser(userDto.getUserLogin(), userDto.getUserEmail(),
-                        userDto.getConfirmPassword()));
+                        userDto.getConfirmPassword(), userId));
     }
 
     @GetMapping

@@ -59,8 +59,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String updateUser(String userLogin, String userEmail, String confirmPassword) throws NotFoundException {
-        Optional<UserEntity> user = userRepository.findByUserEmail(userEmail);
+    public String updateUser(String userLogin, String userEmail, String confirmPassword, Integer userId)
+            throws NotFoundException {
+        Optional<UserEntity> user = userRepository.findById(userId);
 
         if (user.isEmpty()) {
             throw new NotFoundException("User not found!");
