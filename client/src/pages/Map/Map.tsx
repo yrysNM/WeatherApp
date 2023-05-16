@@ -70,6 +70,11 @@ export const Map = () => {
             weatherType={dataLayer}
             onChangeType={changeType}
           />
+          <MapSelectorBlock
+            typeName="Pressure"
+            weatherType={dataLayer}
+            onChangeType={changeType}
+          />
         </div>
       </MapContainer>
     </>

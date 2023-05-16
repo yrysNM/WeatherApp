@@ -3,6 +3,9 @@ package com.weather.service;
 import java.util.Arrays;
 import java.util.List;
 
+import com.weather.entity.UserEntity;
+import com.weather.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -11,6 +14,10 @@ public class WeatherService {
   private final String _url = "https://api.openweathermap.org/data/2.5";
   private final String API_KEY = "1b386436debb80340ab45dca79516e21";
   private RestTemplate restTempplate = new RestTemplate();
+
+
+  @Autowired
+  private UserRepository userRepository;
 
   public Object gWeatherDays(String lat, String lon) {
     String ui = _url + "/forecast/?lat=" + lat + "&lon=" + lon + "&appid=" + API_KEY;

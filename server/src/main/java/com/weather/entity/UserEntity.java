@@ -14,12 +14,10 @@ import com.weather.entity.roles.RoleUser;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.Collection;
-// import java.util.HashSet;
-// import java.util.HashSet;
 import java.util.List;
-// import java.util.Set;
+
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -56,7 +54,7 @@ public class UserEntity implements UserDetails {
     @UpdateTimestamp
     private LocalDateTime lastUpdateAt;
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-    private List<WeatherReportEntity> weatherReportsByUser;
+    private List<WeatherReportEntity> weatherReportsByUser = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
     private List<TokenEntity> tokens;

@@ -1,7 +1,6 @@
 package com.weather.service.impl;
 
-// import com.weather.dto.WeatherReportDto;
-// import com.weather.exception.UserAlreadyExistsException;
+import com.weather.mapper.UserMapper;
 import com.weather.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,9 +10,7 @@ import com.weather.exception.UserAlreadyExistsException;
 import com.weather.exception.NotFoundException;
 import com.weather.repository.UserRepository;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,16 +25,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDto> findAllUsers() {
         List<UserEntity> users = userRepository.findAll();
-        return users.stream().map(UserServiceImpl::mapToUserDto).collect(Collectors.toList());
+        return users.stream().map(UserMapper::mapToUserDto).collect(Collectors.toList());
     }
 
     @Override
     public UserDto registration(UserEntity user) throws UserAlreadyExistsException {
-        if (userRepository.findByUserLogin(user.getUserLogin()) != null) {
+        if (userRepository.findByUserLogin(user.getUserLogin()).isPresent()) {
             throw new UserAlreadyExistsException("User with such login already exists!");
         } else {
 
-            return mapToUserDto(userRepository.save(user));
+            return UserMapper.mapToUserDto(userRepository.save(user));
         }
     }
 
@@ -45,7 +42,7 @@ public class UserServiceImpl implements UserService {
     public UserDto getUser(String userEmail) throws NotFoundException {
         UserEntity userEntity = userRepository.findByUserEmail(userEmail).get();
         if (userEntity != null) {
-            return mapToUserDto(userEntity);
+            return UserMapper.mapToUserDto(userEntity);
         } else {
             throw new NotFoundException("User not found!");
         }
@@ -57,18 +54,5 @@ public class UserServiceImpl implements UserService {
         return userId;
     }
 
-    public static UserDto mapToUserDto(UserEntity userEntity) {
 
-        return UserDto.builder()
-                .userId(userEntity.getUserId())
-                .userLogin(userEntity.getUserLogin())
-                .userEmail(userEntity.getUserEmail())
-                .createdAt(userEntity.getCreatedAt())
-                .lastUpdateAt(userEntity.getLastUpdateAt())
-                .weatherReportsByUser(
-                        Optional.ofNullable(userEntity.getWeatherReportsByUser()).orElseGet(Collections::emptyList)
-                                .stream().map(WeatherReportServiceImpl::mapToWeatherReportDto)
-                                .collect(Collectors.toList()))
-                .build();
-    }
 }

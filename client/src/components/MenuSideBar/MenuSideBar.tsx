@@ -1,4 +1,6 @@
+import {useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
+
 import {IconTextBlock} from '../Blocs';
 import {Settings} from '../Settings';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux.hook';
@@ -13,11 +15,18 @@ import {ReactComponent as LogoutIcon} from '../../assets/icons/logoutIcon.svg';
 import logoImg from '../../assets/image/logoImg.png';
 
 import './menuSideBar.scss';
+import {fetchUserData} from '../../api/auth';
 
 const MenuSideBar = () => {
   const {isLogged, user} = useAppSelector((state) => state.currentUser);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isLogged) {
+      dispatch(fetchUserData());
+    }
+  }, [isLogged]);
 
   function systemBlocks() {
     if (isLogged) {
@@ -92,7 +101,7 @@ const MenuSideBar = () => {
               <IconTextBlock
                 icon={<MyWeather />}
                 text="My&nbsp;Weathers"
-                pageUrl={`/weather/${user.username}`}
+                pageUrl={`/weather/${user?.userLogin ?? 'anonymous'}`}
               />
             </li>
           </ul>

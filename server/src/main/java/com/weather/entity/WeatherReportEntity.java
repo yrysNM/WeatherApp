@@ -7,12 +7,10 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import java.time.LocalDateTime;
 
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Builder
@@ -24,22 +22,15 @@ public class WeatherReportEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private long reportId;
-
-    @NotNull(message = "city name shoudn't be null")
-    @NotBlank(message = "city is mandatory")
     private String city;
-
-    @Min(0)
-    @Max(335)
     private Integer temperature;
-
-    @NotNull(message = "description must not be empty")
-    @NotBlank(message = "description is mandatory")
+    private String title;
+    private String icon;
     private String weatherDescription;
-
     @CreationTimestamp
     private LocalDateTime createdAt;
-
+    @UpdateTimestamp
+    private LocalDateTime lastUpdateAt;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;

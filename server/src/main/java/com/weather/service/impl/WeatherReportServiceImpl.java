@@ -1,6 +1,8 @@
 package com.weather.service.impl;
 
 import com.weather.entity.UserEntity;
+import com.weather.mapper.WeatherReportMapper;
+import com.weather.repository.IconRepository;
 import com.weather.repository.UserRepository;
 import com.weather.service.WeatherReportService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,28 +21,35 @@ public class WeatherReportServiceImpl implements WeatherReportService {
     private WeatherReportRepository weatherReportRepository;
     private UserRepository userRepository;
 
+    private IconRepository iconRepository;
+
     @Autowired
     public WeatherReportServiceImpl(WeatherReportRepository weatherReportRepository,
-            UserRepository userRepository) {
+            UserRepository userRepository, IconRepository iconRepository) {
         this.weatherReportRepository = weatherReportRepository;
         this.userRepository = userRepository;
+        this.iconRepository = iconRepository;
     }
 
     @Override
-    public WeatherReportDto createReport(WeatherReportEntity weatherReportEntity, Integer userId)
+    public WeatherReportDto createReport(WeatherReportDto weatherReportDto, Integer userId)
             throws NotFoundException {
-        UserEntity userEntity = userRepository.findById(userId).get();
+        UserEntity userEntity = userRepository.getReferenceById(userId);
+        String iconCode = iconRepository.findByTitle(weatherReportDto.getTitle()).getIconCode();
+        WeatherReportEntity weatherReportEntity = WeatherReportEntity.builder()
+                .city(weatherReportDto.getCity())
+                .temperature(weatherReportDto.getTemperature())
+                .title(weatherReportDto.getTitle())
+                .icon(iconCode)
+                .weatherDescription(weatherReportDto.getWeatherDescription())
+                .user(userEntity)
+                .build();
 
-        if (userEntity == null) {
-            throw new NotFoundException("User not found!");
-        }
-
-        weatherReportEntity.setUser(userEntity);
-        return mapToWeatherReportDto(weatherReportRepository.save(weatherReportEntity));
+        return WeatherReportMapper.mapToWeatherReportDto(weatherReportRepository.save(weatherReportEntity));
     }
 
     @Override
-    public WeatherReportDto updateReportData(Long reportId, Integer temperature, String description)
+    public WeatherReportDto updateReportData(Long reportId, WeatherReportDto weatherReportDto)
             throws NotFoundException {
         WeatherReportEntity weatherReportEntity = weatherReportRepository.findByReportId(reportId);
 
@@ -48,41 +57,30 @@ public class WeatherReportServiceImpl implements WeatherReportService {
             throw new NotFoundException("Report not found! id: " + reportId);
         }
 
-        weatherReportEntity.setTemperature(temperature);
-        weatherReportEntity.setWeatherDescription(description);
-        return mapToWeatherReportDto(weatherReportRepository.save(weatherReportEntity));
+        weatherReportEntity.setTemperature(weatherReportEntity.getTemperature());
+        weatherReportEntity.setWeatherDescription(weatherReportDto.getWeatherDescription());
+        return WeatherReportMapper.mapToWeatherReportDto(weatherReportRepository.save(weatherReportEntity));
     }
 
     @Override
-    public List<WeatherReportDto> getReportsFromUser(Integer userId) throws NotFoundException {
-        UserEntity user = userRepository.findById(userId).get();
+    public List<WeatherReportDto> getReportsFromUser(Integer userId, Integer hour){
+        UserEntity user = userRepository.getReferenceById(userId);
 
-        if (user == null) {
-            throw new NotFoundException("Reports not found!");
-        }
-
-        return user.getWeatherReportsByUser().stream().map(WeatherReportServiceImpl::mapToWeatherReportDto)
+        return user.getWeatherReportsByUser().stream()
+                .map(weatherReport -> WeatherReportMapper.mapToWeatherReportDtoTime(weatherReport, hour))
                 .collect(Collectors.toList());
 
     }
 
     @Override
-    public List<WeatherReportDto> getAllReports() {
+    public List<WeatherReportDto> getAllReports(Integer hour) {
         List<WeatherReportEntity> reports = weatherReportRepository.findAll();
 
-        return reports.stream().map(WeatherReportServiceImpl::mapToWeatherReportDto).collect(Collectors.toList());
+        return reports.stream()
+                .map(weatherReport -> WeatherReportMapper.mapToWeatherReportDtoTime(weatherReport, hour))
+                .collect(Collectors.toList());
     }
 
-    public static WeatherReportDto mapToWeatherReportDto(WeatherReportEntity reportEntity) {
 
-        return WeatherReportDto.builder()
-                .reportId(reportEntity.getReportId())
-                .city(reportEntity.getCity())
-                .temperature(reportEntity.getTemperature())
-                .weatherDescription(reportEntity.getWeatherDescription())
-                .createdAt(reportEntity.getCreatedAt())
-                .userName(reportEntity.getUser().getUserLogin())
-                .build();
-    }
 
 }

@@ -25,29 +25,27 @@ public class WeatherReportController {
     }
 
     @PostMapping()
-    public ResponseEntity<WeatherReportDto> createReport(@RequestBody @Valid WeatherReportEntity weatherReportEntity,
+    public ResponseEntity<WeatherReportDto> createReport(@RequestBody @Valid WeatherReportDto weatherReport,
             @RequestParam Integer userId) throws NotFoundException {
 
-        return ResponseEntity.ok(weatherReportService.createReport(weatherReportEntity, userId));
+        return ResponseEntity.ok(weatherReportService.createReport(weatherReport, userId));
     }
 
     @PutMapping("/{reportId}")
     public ResponseEntity<WeatherReportDto> updateReportData(@PathVariable("reportId") Long reportId,
-            @RequestBody @Valid WeatherReportEntity userReportData) throws NotFoundException {
-
-        return ResponseEntity.ok(weatherReportService.updateReportData(reportId, userReportData.getTemperature(),
-                userReportData.getWeatherDescription()));
+            @RequestBody @Valid WeatherReportDto userReportData) throws NotFoundException {
+        return ResponseEntity.ok(weatherReportService.updateReportData(reportId, userReportData));
     }
 
     @GetMapping
-    public ResponseEntity<List<WeatherReportDto>> getReportsFromUser(@RequestParam Integer userId)
+    public ResponseEntity<List<WeatherReportDto>> getReportsFromUser(@RequestParam Integer userId, Integer hour)
             throws NotFoundException {
 
-        return ResponseEntity.ok(weatherReportService.getReportsFromUser(userId));
+        return ResponseEntity.ok(weatherReportService.getReportsFromUser(userId, hour));
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<WeatherReportDto>> getAllReports() {
-        return ResponseEntity.ok(weatherReportService.getAllReports());
+    public ResponseEntity<List<WeatherReportDto>> getAllReports(@RequestParam Integer hour) {
+        return ResponseEntity.ok(weatherReportService.getAllReports(hour));
     }
 }
