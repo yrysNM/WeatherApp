@@ -1,15 +1,11 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {fetchUserLogin, fetchUserRegister} from '../../api/auth';
+import {fetchUserData, fetchUserLogin, fetchUserRegister} from '../../api/auth';
 import {getItem, setItem} from '../../helpers/persistanceStorage';
 import {axios} from '../../api/axios';
+import {IUserData} from '../../Interfaces/IUser';
 
 interface IUser {
-  user: {
-    username: string;
-    email: string;
-    token: string;
-    password: string;
-  };
+  user: IUserData | null;
 }
 
 interface ICurrentUser extends IUser {
@@ -19,14 +15,9 @@ interface ICurrentUser extends IUser {
 }
 
 const initialState: ICurrentUser = {
-  isLogged: false || getItem('accessToken'),
+  isLogged: getItem('accessToken') ? true : false,
   errorMessage: '',
-  user: {
-    username: 'Anonymous',
-    email: 'none',
-    token: '',
-    password: '',
-  },
+  user: null,
   userLoading: 'idle',
 };
 
@@ -44,10 +35,8 @@ const currentUserSlice = createSlice({
       state.userLoading = 'idle';
     },
     logoutCurrentUser: (state) => {
-      new Promise(() => {
-        axios.post(`${import.meta.env.VITE_BASE_JAVA_API_URL}/logout`);
-      });
       setItem('accessToken', '');
+      state.user = null;
       state.isLogged = false;
     },
   },
@@ -92,6 +81,9 @@ const currentUserSlice = createSlice({
       })
       .addCase(fetchUserRegister.pending, (state) => {
         state.userLoading = 'loading';
+      })
+      .addCase(fetchUserData.fulfilled, (state, {payload}) => {
+        state.user = payload.data;
       });
   },
 });

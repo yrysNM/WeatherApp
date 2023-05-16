@@ -30,9 +30,17 @@ public class UserController {
         return new ResponseEntity<>(userService.registration(userEntity), HttpStatus.CREATED);
     }
 
+    @PutMapping("/{userId}")
+    public ResponseEntity<String> updateUser(@RequestBody UserDto userDto, @PathVariable Integer userId)
+            throws NotFoundException {
+        return ResponseEntity
+                .ok(userService.updateUser(userDto.getUserLogin(), userDto.getUserEmail(),
+                        userDto.getConfirmPassword(), userId));
+    }
+
     @GetMapping
-    public ResponseEntity<UserDto> getUser(@RequestParam Integer userId) throws NotFoundException {
-        return ResponseEntity.ok(userService.getUser(userId));
+    public ResponseEntity<UserDto> getUser(@RequestParam String userEmail) throws NotFoundException {
+        return ResponseEntity.ok(userService.getUser(userEmail));
     }
 
     @DeleteMapping("/{userId}")

@@ -1,5 +1,5 @@
 import {useNavigate} from 'react-router-dom';
-import {fetchUserLogin} from '../../api/auth';
+import {fetchUserData, fetchUserLogin} from '../../api/auth';
 import {AuthTemplate} from '../../components/AuthTemplate';
 import {useAppDispatch} from '../../hooks/redux.hook';
 
@@ -15,9 +15,10 @@ export const Login = () => {
         <AuthTemplate
           isLogin={true}
           getValueInput={(v: {email: string; password: string}) =>
-            dispatch(fetchUserLogin(v)).then(() =>
-              navigate('/', {replace: false})
-            )
+            dispatch(fetchUserLogin(v)).then(() => {
+              navigate('/', {replace: false});
+              dispatch(fetchUserData());
+            })
           }
         />
       </div>

@@ -4,7 +4,7 @@
   width: 400px;
   gap: 20px;
   display: grid;
-  grid-template: repeat(3, 1fr)/ minmax(150px, 1fr);
+  grid-template: repeat(2, 1fr)/ minmax(150px, 1fr);
   align-items: center;
 }
 

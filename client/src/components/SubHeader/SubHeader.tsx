@@ -1,12 +1,13 @@
-import { Link } from "react-router-dom";
-import React, { useRef, useState } from "react";
-import DatePicker, { ReactDatePicker } from "react-datepicker";
+import {Link} from 'react-router-dom';
+import React, {useRef, useState} from 'react';
+import DatePicker, {ReactDatePicker} from 'react-datepicker';
 
-import { CustomDate } from "../../utils/helpers/CustomDate";
+import {CustomDate} from '../../utils/helpers/CustomDate';
 
-import { ReactComponent as CalendarIcon } from "../../assets/icons/myWeather.svg";
-import "react-datepicker/dist/react-datepicker.css";
-import "./subHead.scss";
+import {ReactComponent as CalendarIcon} from '../../assets/icons/myWeather.svg';
+import {ReactComponent as SearchIcon} from '../../assets/icons/searchIcon.svg';
+import 'react-datepicker/dist/react-datepicker.css';
+import './subHead.scss';
 
 const SubHeader = () => {
   const [date, setDate] = useState<Date>(new Date());
@@ -22,25 +23,30 @@ const SubHeader = () => {
   return (
     <React.Fragment>
       <div className="subHeader">
-        <div className="datePicker" onClick={handleDatePickerBlockClick}>
-          <span className="icon">
-            <CalendarIcon />
-          </span>
-          <div>
-            <span className="getDayName">{CustomDate.getDayName(date)}</span>
-            <DatePicker
-              ref={datePick}
-              selected={date}
-              onChange={(date) => setDate(date ?? new Date())}
-              showTimeSelect={false}
-              dateFormat={"MMMM d, yyyy"}
-              minDate={new Date()}
-              showDisabledMonthNavigation
-            />
+        <div className="subHeader-filter">
+          <div className="datePicker" onClick={handleDatePickerBlockClick}>
+            <span className="icon">
+              <CalendarIcon />
+            </span>
+            <div>
+              <span className="getDayName">{CustomDate.getDayName(date)}</span>
+              <DatePicker
+                ref={datePick}
+                selected={date}
+                onChange={(date) => setDate(date ?? new Date())}
+                showTimeSelect={false}
+                dateFormat={'MMMM d, yyyy'}
+                minDate={new Date()}
+                showDisabledMonthNavigation
+              />
+            </div>
+          </div>
+          <div className="location-textBlock">
+            <span className="location-text">Almaty, Kazakhstan</span>
           </div>
         </div>
 
-        <Link to={"/add/report"}>
+        <Link to={'/add/report'}>
           <span className="icon-edit">
             <i className="ion-edit" />
           </span>
@@ -50,4 +56,4 @@ const SubHeader = () => {
   );
 };
 
-export { SubHeader };
+export {SubHeader};

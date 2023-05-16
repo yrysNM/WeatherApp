@@ -2,7 +2,12 @@ package com.weather.service.impl;
 
 import com.weather.mapper.UserMapper;
 import com.weather.service.UserService;
+
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.weather.dto.UserDto;
 import com.weather.entity.UserEntity;
@@ -11,16 +16,15 @@ import com.weather.exception.NotFoundException;
 import com.weather.repository.UserRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-    private UserRepository userRepository;
-
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public List<UserDto> findAllUsers() {
@@ -39,12 +43,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto getUser(Integer userId) throws NotFoundException {
-        UserEntity userEntity = userRepository.findByUserId(userId);
+    public UserDto getUser(String userEmail) throws NotFoundException {
+        UserEntity userEntity = userRepository.findByUserEmail(userEmail).get();
         if (userEntity != null) {
             return UserMapper.mapToUserDto(userEntity);
         } else {
-            throw new NotFoundException("User not found! id: " + userId);
+            throw new NotFoundException("User not found!");
         }
     }
 
@@ -54,5 +58,24 @@ public class UserServiceImpl implements UserService {
         return userId;
     }
 
+    @Override
+    public String updateUser(String userLogin, String userEmail, String confirmPassword, Integer userId)
+            throws NotFoundException {
+        Optional<UserEntity> user = userRepository.findById(userId);
+
+        if (user.isEmpty()) {
+            throw new NotFoundException("User not found!");
+        }
+
+        if (!passwordEncoder.matches(confirmPassword, user.get().getUserPassword())) {
+            throw new NotFoundException("Password is not correct!");
+        }
+
+        user.get().setUserEmail(userEmail);
+        user.get().setUserLogin(userLogin);
+        userRepository.save(user.get());
+
+        return "User updated successfully!";
+    }
 
 }

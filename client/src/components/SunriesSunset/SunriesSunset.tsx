@@ -44,7 +44,7 @@ export const SunriesSunset = () => {
         nowTime={
           checkSunrise > 0
             ? `${checkSunrise} hourse ago`
-            : `in ${checkSunrise} hours`
+            : `in ${checkSunrise * -1} hours`
         }
         isSunSet={currentTime.format('A') === 'AM'}
       />
