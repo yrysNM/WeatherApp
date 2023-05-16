@@ -1,45 +1,45 @@
-import { useState } from "react";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import { useAppSelector } from "../../hooks/redux.hook";
+import {useState} from 'react';
+import {useFormik} from 'formik';
+import * as Yup from 'yup';
+import {useAppSelector} from '../../hooks/redux.hook';
 
-import type { blur } from "../../components/AuthTemplate/AuthTemplate";
-import { CustomInputLayout } from "../../components/layouts/customInputLayout";
+import type {blur} from '../../components/AuthTemplate/AuthTemplate';
+import {CustomInputLayout} from '../../components/layouts/customInputLayout';
 
-import "./editUser.scss";
+import './editUser.scss';
 
 const EditUser = () => {
-  const { user } = useAppSelector((state) => state.currentUser);
+  const {user} = useAppSelector((state) => state.currentUser);
   const [isBlur, setIsBlur] = useState<blur>({
     active: false,
-    typeInput: "",
+    typeInput: '',
   });
 
   const formik = useFormik({
     initialValues: {
-      username: user.username,
-      email: user.email,
-      password: "",
-      confirm_password: "",
+      username: user?.userLogin,
+      email: user?.userEmail,
+      password: '',
+      confirm_password: '',
     },
     validationSchema: Yup.object({
-      username: Yup.string().required("Obligatory field!"),
+      username: Yup.string().required('Obligatory field!'),
       email: Yup.string()
-        .email("Wrong email address.")
-        .required("Obligatory field!"),
+        .email('Wrong email address.')
+        .required('Obligatory field!'),
       password: Yup.string()
-        .required("Obligatory field!")
-        .min(8, "At least 8 characters.")
+        .required('Obligatory field!')
+        .min(8, 'At least 8 characters.')
         .matches(
           // eslint-disable-next-line no-useless-escape
           /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/,
-          "Must consist of Latin letters, special characters, and single digits."
+          'Must consist of Latin letters, special characters, and single digits.'
         ),
       confirm_password: Yup.string()
-        .label("confirm password")
-        .oneOf([Yup.ref("password"), undefined], "Passwords must match")
-        .required("Obligatory field!")
-        .min(8, "At least 8 characters."),
+        .label('confirm password')
+        .oneOf([Yup.ref('password'), undefined], 'Passwords must match')
+        .required('Obligatory field!')
+        .min(8, 'At least 8 characters.'),
     }),
     onSubmit: (values) => {
       console.log(values);
@@ -48,7 +48,7 @@ const EditUser = () => {
 
   return (
     <div className="edit">
-      <h1 className="title-fw500" style={{ textAlign: "center" }}>
+      <h1 className="title-fw500" style={{textAlign: 'center'}}>
         Account Settings concept
       </h1>
       <form className="form form-auth">
@@ -64,10 +64,10 @@ const EditUser = () => {
             type="text"
             autoComplete="on"
             value={formik.values.username}
-            onFocus={() => setIsBlur({ active: true, typeInput: "username" })}
+            onFocus={() => setIsBlur({active: true, typeInput: 'username'})}
             onBlur={(e) => {
               formik.handleBlur(e);
-              setIsBlur({ active: false, typeInput: "username" });
+              setIsBlur({active: false, typeInput: 'username'});
             }}
             onChange={formik.handleChange}
             placeholder="Enter full name"
@@ -83,9 +83,9 @@ const EditUser = () => {
             type="email"
             className="input"
             value={formik.values.email}
-            onFocus={() => setIsBlur({ active: true, typeInput: "email" })}
+            onFocus={() => setIsBlur({active: true, typeInput: 'email'})}
             onBlur={(e) => {
-              setIsBlur({ active: false, typeInput: "email" });
+              setIsBlur({active: false, typeInput: 'email'});
               formik.handleBlur(e);
             }}
             onChange={formik.handleChange}
@@ -108,10 +108,10 @@ const EditUser = () => {
             type="password"
             autoComplete="on"
             value={formik.values.password}
-            onFocus={() => setIsBlur({ active: true, typeInput: "password" })}
+            onFocus={() => setIsBlur({active: true, typeInput: 'password'})}
             onBlur={(e) => {
               formik.handleBlur(e);
-              setIsBlur({ active: false, typeInput: "password" });
+              setIsBlur({active: false, typeInput: 'password'});
             }}
             onChange={formik.handleChange}
             placeholder="Enter password…"
@@ -134,11 +134,11 @@ const EditUser = () => {
             autoComplete="on"
             value={formik.values.confirm_password}
             onFocus={() =>
-              setIsBlur({ active: true, typeInput: "confirm_password" })
+              setIsBlur({active: true, typeInput: 'confirm_password'})
             }
             onBlur={(e) => {
               formik.handleBlur(e);
-              setIsBlur({ active: false, typeInput: "confirm_password" });
+              setIsBlur({active: false, typeInput: 'confirm_password'});
             }}
             onChange={formik.handleChange}
             placeholder="Enter password…"
@@ -157,4 +157,4 @@ const EditUser = () => {
   );
 };
 
-export { EditUser };
+export {EditUser};

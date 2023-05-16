@@ -92,7 +92,7 @@ const MenuSideBar = () => {
               <IconTextBlock
                 icon={<MyWeather />}
                 text="My&nbsp;Weathers"
-                pageUrl={`/weather/${user.username}`}
+                pageUrl={`/weather/${user?.userLogin ?? 'anonymous'}`}
               />
             </li>
           </ul>

@@ -1,5 +1,5 @@
 import {useNavigate} from 'react-router-dom';
-import {fetchUserRegister} from '../../api/auth';
+import {fetchUserData, fetchUserRegister} from '../../api/auth';
 import {AuthTemplate} from '../../components/AuthTemplate';
 import {useAppDispatch} from '../../hooks/redux.hook';
 
@@ -24,7 +24,10 @@ export const Register = () => {
                 fetchUserRegister(
                   v as {username: string; email: string; password: string}
                 )
-              ).then(() => navigate('/', {replace: false}));
+              ).then(() => {
+                navigate('/', {replace: false});
+                dispatch(fetchUserData({email: v.email}));
+              });
           }}
         />
       </div>
