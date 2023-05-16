@@ -1,46 +1,23 @@
-import { useRef, useState } from "react";
-import DatePicker, { ReactDatePicker } from "react-datepicker";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Mousewheel, Navigation } from "swiper";
+import {useRef, useState} from 'react';
+import {Swiper, SwiperSlide} from 'swiper/react';
+import {Mousewheel, Navigation} from 'swiper';
 
-import { CustomInputLayout } from "../../components/layouts/customInputLayout";
+import {CustomInputLayout} from '../../components/layouts/customInputLayout';
 
-import { ReactComponent as DateIcon } from "../../assets/icons/myWeather.svg";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/mousewheel";
-import "./addReport.scss";
+import {ReactComponent as DateIcon} from '../../assets/icons/myWeather.svg';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/mousewheel';
+import './addReport.scss';
 
 export const AddReport = () => {
-  const datePick = useRef<ReactDatePicker>(null);
-  const [dateReport, setDateReport] = useState<Date>(new Date());
-
   return (
     <div className="add-report">
       <p className="title-justFw500 title_page">Add report</p>
 
-      <div
-        className="add-report__datePicker"
-        onClick={() => datePick.current?.setFocus()}
-      >
-        <span className="icon">
-          <DateIcon />
-        </span>
-        <div>
-          <DatePicker
-            ref={datePick}
-            selected={dateReport}
-            onChange={(date) => setDateReport(date ?? new Date())}
-            showTimeSelect={false}
-            dateFormat={"MMMM d, yyyy"}
-            minDate={new Date()}
-            showDisabledMonthNavigation
-          />
-        </div>
-      </div>
       <WeatherDataTypes />
       <WeatherDataDescription />
-      <button className="btn btn-edit" style={{ marginRight: 0 }}>
+      <button className="btn btn-edit" style={{marginRight: 0}}>
         <span className="signInUpBtnSpan">Post</span>
       </button>
     </div>
@@ -55,7 +32,7 @@ export const WeatherDataTypes = () => {
           <Swiper
             spaceBetween={50}
             slidesPerView={1}
-            onSlideChange={() => console.log("slide change")}
+            onSlideChange={() => console.log('slide change')}
             onSwiper={(swiper) => console.log(swiper)}
             navigation={true}
             mousewheel={true}
@@ -75,7 +52,7 @@ export const WeatherDataTypes = () => {
           <Swiper
             spaceBetween={50}
             slidesPerView={1}
-            onSlideChange={() => console.log("slide change")}
+            onSlideChange={() => console.log('slide change')}
             onSwiper={(swiper) => console.log(swiper)}
             navigation={true}
             mousewheel={true}
@@ -103,7 +80,7 @@ export const WeatherDataDescription = () => {
         htmlFor="weather_description"
         isBlur={{
           active: Boolean(textareaLengthCounter),
-          typeInput: "weather_description",
+          typeInput: 'weather_description',
         }}
       >
         <textarea

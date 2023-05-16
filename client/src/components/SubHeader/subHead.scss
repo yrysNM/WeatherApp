@@ -5,6 +5,13 @@
   margin-top: 20px;
   padding-bottom: 15px;
   border-bottom: 1px solid rgba(162, 166, 169, 0.2);
+
+  &-filter {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+
+  }
 }
 
 .datePicker {
@@ -25,6 +32,11 @@
       stroke: #25394e !important;
     }
   }
+}
+
+.location-textBlock {
+  font-size: 30px;
+  font-weight: 400;
 }
 
 
