@@ -30,6 +30,13 @@ public class UserController {
         return new ResponseEntity<>(userService.registration(userEntity), HttpStatus.CREATED);
     }
 
+    @PutMapping("/{userId}")
+    public ResponseEntity<String> updateUser(@RequestBody UserDto userDto) throws NotFoundException {
+        return ResponseEntity
+                .ok(userService.updateUser(userDto.getUserLogin(), userDto.getUserEmail(),
+                        userDto.getConfirmPassword()));
+    }
+
     @GetMapping
     public ResponseEntity<UserDto> getUser(@RequestParam String userEmail) throws NotFoundException {
         return ResponseEntity.ok(userService.getUser(userEmail));
