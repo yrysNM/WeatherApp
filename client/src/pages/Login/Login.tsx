@@ -17,7 +17,7 @@ export const Login = () => {
           getValueInput={(v: {email: string; password: string}) =>
             dispatch(fetchUserLogin(v)).then(() => {
               navigate('/', {replace: false});
-              dispatch(fetchUserData({email: v.email}));
+              dispatch(fetchUserData());
             })
           }
         />

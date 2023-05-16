@@ -26,7 +26,7 @@ export const Register = () => {
                 )
               ).then(() => {
                 navigate('/', {replace: false});
-                dispatch(fetchUserData({email: v.email}));
+                dispatch(fetchUserData());
               });
           }}
         />

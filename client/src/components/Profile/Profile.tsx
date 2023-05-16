@@ -1,5 +1,5 @@
 import {useNavigate} from 'react-router-dom';
-import {useState} from 'react';
+// import {useState} from 'react';
 import {useAppSelector} from '../../hooks/redux.hook';
 
 import {CustomInputLayout} from '../layouts/customInputLayout';
@@ -10,16 +10,16 @@ export const Profile = ({onClose}: {onClose: () => void}) => {
   const navigate = useNavigate();
   const {isLogged, user} = useAppSelector((state) => state.currentUser);
 
-  const [passwordType, setPasswordType] = useState('password');
-  const [passwordInput] = useState('ergegr');
+  // const [passwordType, setPasswordType] = useState('password');
+  // const [passwordInput] = useState('ergegr');
 
-  const togglePassword = () => {
-    if (passwordType === 'password') {
-      setPasswordType('text');
-      return;
-    }
-    setPasswordType('password');
-  };
+  // const togglePassword = () => {
+  //   if (passwordType === 'password') {
+  //     setPasswordType('text');
+  //     return;
+  //   }
+  //   setPasswordType('password');
+  // };
 
   return (
     <>
@@ -44,7 +44,7 @@ export const Profile = ({onClose}: {onClose: () => void}) => {
             <span className="title">{isLogged ? user?.userEmail : 'None'}</span>
           </div>
         </CustomInputLayout>
-        <CustomInputLayout
+        {/* <CustomInputLayout
           labelText="Password"
           htmlFor="full_name"
           isBlur={{typeInput: 'password', active: true}}
@@ -71,7 +71,7 @@ export const Profile = ({onClose}: {onClose: () => void}) => {
               </button>
             </div>
           </div>
-        </CustomInputLayout>
+        </CustomInputLayout> */}
       </div>
       <button
         className="btn btn-edit"

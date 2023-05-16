@@ -15,7 +15,7 @@ interface ICurrentUser extends IUser {
 }
 
 const initialState: ICurrentUser = {
-  isLogged: false,
+  isLogged: getItem('accessToken') ? true : false,
   errorMessage: '',
   user: null,
   userLoading: 'idle',
@@ -35,10 +35,8 @@ const currentUserSlice = createSlice({
       state.userLoading = 'idle';
     },
     logoutCurrentUser: (state) => {
-      new Promise(() => {
-        axios.post(`${import.meta.env.VITE_BASE_JAVA_API_URL}/logout`);
-      });
       setItem('accessToken', '');
+      state.user = null;
       state.isLogged = false;
     },
   },
