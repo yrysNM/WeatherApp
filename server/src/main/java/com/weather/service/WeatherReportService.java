@@ -8,11 +8,11 @@ import java.util.List;
 
 public interface WeatherReportService {
 
-    WeatherReportDto createReport(WeatherReportEntity weatherReportEntity, Integer userId) throws NotFoundException;
+    WeatherReportDto createReport(WeatherReportDto weatherReport, Integer userId) throws NotFoundException;
 
-    WeatherReportDto updateReportData(Long reportId, Integer temperature, String description) throws NotFoundException;
+    WeatherReportDto updateReportData(Long reportId, WeatherReportDto weatherReport) throws NotFoundException;
 
-    List<WeatherReportDto> getReportsFromUser(Integer userId) throws NotFoundException;
+    List<WeatherReportDto> getReportsFromUser(Integer userId, Integer hour) throws NotFoundException;
 
-    List<WeatherReportDto> getAllReports();
+    List<WeatherReportDto> getAllReports(Integer hour);
 }
