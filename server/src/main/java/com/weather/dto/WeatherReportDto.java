@@ -31,4 +31,7 @@ public class WeatherReportDto {
     private LocalDateTime createdAt;
     private LocalDateTime lastUpdateAt;
     private String userName;
+    private int rank;
+    private boolean meRankedUp;
+    private boolean meRankedDown;
 }

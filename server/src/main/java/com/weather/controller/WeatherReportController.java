@@ -1,7 +1,6 @@
 package com.weather.controller;
 
 import com.weather.dto.WeatherReportDto;
-import com.weather.entity.WeatherReportEntity;
 import com.weather.exception.NotFoundException;
 import com.weather.service.WeatherReportService;
 
@@ -9,7 +8,6 @@ import jakarta.validation.Valid;
 
 import java.util.List;
 
-// import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -45,7 +43,7 @@ public class WeatherReportController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<WeatherReportDto>> getAllReports(@RequestParam Integer hour) {
-        return ResponseEntity.ok(weatherReportService.getAllReports(hour));
+    public ResponseEntity<List<WeatherReportDto>> getAllReports(@RequestParam Integer userId, Integer hour) {
+        return ResponseEntity.ok(weatherReportService.getAllReports(hour, userId));
     }
 }

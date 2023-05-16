@@ -55,9 +55,12 @@ public class UserEntity implements UserDetails {
     private LocalDateTime lastUpdateAt;
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<WeatherReportEntity> weatherReportsByUser = new ArrayList<>();
-
     @OneToMany(mappedBy = "user")
     private List<TokenEntity> tokens;
+    @ManyToMany(mappedBy = "likes")
+    private List<WeatherReportEntity> likedReports = new ArrayList<>();
+    @ManyToMany(mappedBy = "dislikes")
+    private List<WeatherReportEntity> dislikedReports = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {

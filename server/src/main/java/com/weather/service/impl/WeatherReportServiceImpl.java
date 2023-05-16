@@ -6,6 +6,7 @@ import com.weather.repository.IconRepository;
 import com.weather.repository.UserRepository;
 import com.weather.service.WeatherReportService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import com.weather.dto.WeatherReportDto;
@@ -13,6 +14,7 @@ import com.weather.entity.WeatherReportEntity;
 import com.weather.exception.NotFoundException;
 import com.weather.repository.WeatherReportRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,11 +53,7 @@ public class WeatherReportServiceImpl implements WeatherReportService {
     @Override
     public WeatherReportDto updateReportData(Long reportId, WeatherReportDto weatherReportDto)
             throws NotFoundException {
-        WeatherReportEntity weatherReportEntity = weatherReportRepository.findByReportId(reportId);
-
-        if (weatherReportEntity == null) {
-            throw new NotFoundException("Report not found! id: " + reportId);
-        }
+        WeatherReportEntity weatherReportEntity = weatherReportRepository.getReferenceById(reportId);
 
         weatherReportEntity.setTemperature(weatherReportEntity.getTemperature());
         weatherReportEntity.setWeatherDescription(weatherReportDto.getWeatherDescription());
@@ -67,20 +65,60 @@ public class WeatherReportServiceImpl implements WeatherReportService {
         UserEntity user = userRepository.getReferenceById(userId);
 
         return user.getWeatherReportsByUser().stream()
-                .map(weatherReport -> WeatherReportMapper.mapToWeatherReportDtoTime(weatherReport, hour))
+                .map(weatherReport -> WeatherReportMapper.mapToWeatherReportDtoGet(weatherReport, user, hour))
                 .collect(Collectors.toList());
 
     }
 
     @Override
-    public List<WeatherReportDto> getAllReports(Integer hour) {
+    public List<WeatherReportDto> getAllReports(Integer userId, Integer hour) {
         List<WeatherReportEntity> reports = weatherReportRepository.findAll();
+        UserEntity user = userRepository.getReferenceById(userId);
 
         return reports.stream()
-                .map(weatherReport -> WeatherReportMapper.mapToWeatherReportDtoTime(weatherReport, hour))
+                .map(weatherReport -> WeatherReportMapper.mapToWeatherReportDtoGet(weatherReport, user, hour))
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public Long deleteReport(Long reportId) {
+        weatherReportRepository.deleteById(reportId);
+        return reportId;
+    }
+
+    @Override
+    public Integer rankUp(Long reportId, Integer userId) {
+        WeatherReportEntity weatherReportEntity = weatherReportRepository.getReferenceById(reportId);
+        UserEntity user = userRepository.getReferenceById(userId);
+        List<UserEntity> dislikes = weatherReportEntity.getLikes();
+        List<UserEntity> likes = weatherReportEntity.getLikes();
+
+        if (likes.contains(user)) {
+            likes.remove(user);
+        } else {
+            dislikes.remove(user);
+            likes.add(user);
+        }
+//        weatherReportRepository.save(weatherReportEntity);
+        return userId;
+    }
+
+    @Override
+    public Integer rankDown(Long reportId, Integer userId) {
+        WeatherReportEntity weatherReportEntity = weatherReportRepository.getReferenceById(reportId);
+        UserEntity user = userRepository.getReferenceById(userId);
+        List<UserEntity> dislikes = weatherReportEntity.getLikes();
+        List<UserEntity> likes = weatherReportEntity.getLikes();
+
+        if (dislikes.contains(user)) {
+            dislikes.remove(user);
+        } else {
+            likes.remove(user);
+            dislikes.add(user);
+        }
+//        weatherReportRepository.save(weatherReportEntity);
+        return userId;
+    }
 
 
 }
