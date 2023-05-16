@@ -12,7 +12,7 @@ public interface UserService {
 
     UserDto registration(UserEntity userEntity) throws UserAlreadyExistsException;
 
-    UserDto getUser(Integer userId) throws NotFoundException;
+    UserDto getUser(String userEmail) throws NotFoundException;
 
     Integer deleteUser(Integer userId);
 }

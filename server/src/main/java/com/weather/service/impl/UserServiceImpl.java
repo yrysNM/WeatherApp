@@ -42,12 +42,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto getUser(Integer userId) throws NotFoundException {
-        UserEntity userEntity = userRepository.findByUserId(userId);
+    public UserDto getUser(String userEmail) throws NotFoundException {
+        UserEntity userEntity = userRepository.findByUserEmail(userEmail).get();
         if (userEntity != null) {
             return mapToUserDto(userEntity);
         } else {
-            throw new NotFoundException("User not found! id: " + userId);
+            throw new NotFoundException("User not found!");
         }
     }
 
