@@ -1,6 +1,2 @@
-import {
-  AddReport,
-  WeatherDataDescription,
-  WeatherDataTypes,
-} from "./AddReport";
-export { AddReport, WeatherDataDescription, WeatherDataTypes };
+import {AddReport} from './AddReport';
+export {AddReport};

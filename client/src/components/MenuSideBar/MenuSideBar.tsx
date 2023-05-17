@@ -23,7 +23,7 @@ const MenuSideBar = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isLogged) {
+    if (isLogged && !user) {
       dispatch(fetchUserData());
     }
   }, [isLogged]);

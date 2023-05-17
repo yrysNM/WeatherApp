@@ -46,4 +46,14 @@ public class WeatherReportController {
     public ResponseEntity<List<WeatherReportDto>> getAllReports(@RequestParam Integer userId, Integer hour) {
         return ResponseEntity.ok(weatherReportService.getAllReports(hour, userId));
     }
+
+    @PutMapping("/like")
+    public ResponseEntity<Integer> rankUp(@RequestParam Long reportId, Integer userId) {
+        return ResponseEntity.ok(weatherReportService.rankUp(reportId, userId));
+    }
+
+    @PutMapping("/dislike")
+    public ResponseEntity<Integer> rankDown(@RequestParam Long reportId, @RequestParam Integer userId) {
+        return ResponseEntity.ok(weatherReportService.rankDown(reportId, userId));
+    }
 }

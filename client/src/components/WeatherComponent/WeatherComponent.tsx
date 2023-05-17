@@ -9,6 +9,7 @@ import './weatherComponent.scss';
 
 const WeatherComponent = () => {
   const {user} = useAppSelector((state) => state.currentUser);
+  const {city, country} = useAppSelector((state) => state.cityChange.location);
 
   return (
     <div className="weather">
@@ -18,7 +19,7 @@ const WeatherComponent = () => {
             {user ? user.userLogin : 'Anonymous'}
           </h3>
           <span className="weather-cityTitle sub-title">
-            Almaty, Kazakhstan
+            {city}, {country}
           </span>
         </div>
         <div>

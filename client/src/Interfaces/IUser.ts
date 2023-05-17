@@ -15,8 +15,14 @@ export interface IUserData {
 export interface IWeatherReportsByUser {
   city: string;
   createdAt: Date;
+  icon: string;
+  lastUpdateAt: Date;
+  meRankedDown: boolean;
+  meRankedUp: boolean;
+  rank: number;
   reportId: number;
   temperature: number;
+  title: string;
   userName: string;
   weatherDescription: string;
 }
