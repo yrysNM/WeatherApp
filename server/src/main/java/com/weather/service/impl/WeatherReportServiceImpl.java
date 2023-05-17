@@ -6,7 +6,6 @@ import com.weather.repository.IconRepository;
 import com.weather.repository.UserRepository;
 import com.weather.service.WeatherReportService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import com.weather.dto.WeatherReportDto;
@@ -14,7 +13,7 @@ import com.weather.entity.WeatherReportEntity;
 import com.weather.exception.NotFoundException;
 import com.weather.repository.WeatherReportRepository;
 
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -53,7 +52,11 @@ public class WeatherReportServiceImpl implements WeatherReportService {
     @Override
     public WeatherReportDto updateReportData(Long reportId, WeatherReportDto weatherReportDto)
             throws NotFoundException {
-        WeatherReportEntity weatherReportEntity = weatherReportRepository.getReferenceById(reportId);
+        WeatherReportEntity weatherReportEntity = weatherReportRepository.findById(reportId).get();
+
+        if (weatherReportEntity == null) {
+            throw new NotFoundException("User not found!");
+        }
 
         weatherReportEntity.setTemperature(weatherReportEntity.getTemperature());
         weatherReportEntity.setWeatherDescription(weatherReportDto.getWeatherDescription());
@@ -120,6 +123,34 @@ public class WeatherReportServiceImpl implements WeatherReportService {
         return userId;
     }
 
+    @Override
+    public List<WeatherReportDto> getAllByFilter(Integer userId, Integer hour, LocalDate date, String location) {
+        List<WeatherReportEntity> allReports = weatherReportRepository.findAll();
+        List<WeatherReportEntity> filteredReports = WeatherReportMapper.filtered(date, location, allReports);
+        UserEntity user = userRepository.getReferenceById(userId);
 
+        return filteredReports.stream()
+                .map(weatherReport -> WeatherReportMapper.mapToWeatherReportDtoGet(weatherReport, user, hour))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<WeatherReportDto> getAllReportsAnonymous(Integer hour) {
+        List<WeatherReportEntity> reports = weatherReportRepository.findAll();
+
+        return reports.stream()
+                .map(weatherReport -> WeatherReportMapper.mapToWeatherReportDtoAnonymous(weatherReport, hour))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<WeatherReportDto> getAllByFilterAnonymous(Integer hour, LocalDate date, String location) {
+        List<WeatherReportEntity> allReports = weatherReportRepository.findAll();
+        List<WeatherReportEntity> filteredReports = WeatherReportMapper.filtered(date, location, allReports);
+
+        return filteredReports.stream()
+                .map(weatherReport -> WeatherReportMapper.mapToWeatherReportDtoAnonymous(weatherReport, hour))
+                .collect(Collectors.toList());
+    }
 
 }

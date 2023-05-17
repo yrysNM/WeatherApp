@@ -4,6 +4,8 @@ import com.weather.dto.WeatherReportDto;
 import com.weather.exception.NotFoundException;
 
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public interface WeatherReportService {
@@ -21,5 +23,8 @@ public interface WeatherReportService {
     Integer rankUp(Long reportId, Integer userId);
     Integer rankDown(Long reportId, Integer userId);
 
-//    List<WeatherReportDto> getAllByFilter()
+    List<WeatherReportDto> getAllByFilter(Integer userId, Integer hour, LocalDate date, String location);
+
+    List<WeatherReportDto> getAllReportsAnonymous(Integer hour);
+    List<WeatherReportDto> getAllByFilterAnonymous(Integer hour, LocalDate date, String location);
 }

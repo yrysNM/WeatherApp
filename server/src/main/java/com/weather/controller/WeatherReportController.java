@@ -6,6 +6,7 @@ import com.weather.service.WeatherReportService;
 
 import jakarta.validation.Valid;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class WeatherReportController {
 
     @GetMapping("/all")
     public ResponseEntity<List<WeatherReportDto>> getAllReports(@RequestParam Integer userId, Integer hour) {
-        return ResponseEntity.ok(weatherReportService.getAllReports(hour, userId));
+        return ResponseEntity.ok(weatherReportService.getAllReports(userId, hour));
     }
 
     @PutMapping("/dislike")
@@ -62,5 +63,22 @@ public class WeatherReportController {
         return ResponseEntity.ok(weatherReportService.deleteReport(reportId));
     }
 
+    @GetMapping("/all/filter")
+    public ResponseEntity<List<WeatherReportDto>> getAllReportsByFilter(@RequestParam Integer userId,
+                                                                        Integer hour, LocalDate date,
+                                                                        String location) {
+        return ResponseEntity.ok(weatherReportService.getAllByFilter(userId, hour, date, location));
+    }
+
+    @GetMapping("anonymous/all")
+    public ResponseEntity<List<WeatherReportDto>> getAllReportsAnonymous(@RequestParam Integer hour) {
+        return ResponseEntity.ok(weatherReportService.getAllReportsAnonymous(hour));
+    }
+
+    @GetMapping("anonymous/all/filter")
+    public ResponseEntity<List<WeatherReportDto>> getAllReportsByFilterAnonymous(@RequestParam Integer hour,
+                                                                                 LocalDate date, String location) {
+        return ResponseEntity.ok(weatherReportService.getAllByFilterAnonymous(hour, date, location));
+    }
 
 }
