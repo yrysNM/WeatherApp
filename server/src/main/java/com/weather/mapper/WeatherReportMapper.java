@@ -24,6 +24,8 @@ public class WeatherReportMapper {
     // To set day-night mode icon code
     public static WeatherReportDto mapToWeatherReportDtoGet(WeatherReportEntity reportEntity, UserEntity user, Integer hour) {
         String iconMode = reportEntity.getIcon() + "";
+        boolean meRankedUp = false;
+        boolean meRankedDown = false;
 
         if (
                 (hour >= 18 && hour <= 23) || (hour >= 0 && hour <= 6)
@@ -31,6 +33,13 @@ public class WeatherReportMapper {
             iconMode += "n";
         else
             iconMode += "d";
+
+        if(reportEntity.getLikes().contains(user)){
+            meRankedUp = true;
+        }
+        else if (reportEntity.getDislikes().contains(user)) {
+            meRankedDown = true;
+        }
 
         WeatherReportDto weatherReportDto =  WeatherReportDto.builder()
                 .reportId(reportEntity.getReportId())
@@ -43,14 +52,9 @@ public class WeatherReportMapper {
                 .lastUpdateAt(reportEntity.getLastUpdateAt())
                 .userName(reportEntity.getUser().getUserLogin())
                 .rank(getTotalRank(reportEntity))
+                .meRankedDown(meRankedDown)
+                .meRankedUp(meRankedUp)
                 .build();
-
-        if(reportEntity.getLikes().contains(user)){
-            weatherReportDto.setMeRankedUp(true);
-        }
-        else if (reportEntity.getDislikes().contains(user)) {
-            weatherReportDto.setMeRankedDown(true);
-        }
 
         return weatherReportDto;
     }

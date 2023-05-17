@@ -20,4 +20,6 @@ public interface WeatherReportService {
 
     Integer rankUp(Long reportId, Integer userId);
     Integer rankDown(Long reportId, Integer userId);
+
+//    List<WeatherReportDto> getAllByFilter()
 }

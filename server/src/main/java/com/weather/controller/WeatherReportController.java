@@ -47,13 +47,20 @@ public class WeatherReportController {
         return ResponseEntity.ok(weatherReportService.getAllReports(hour, userId));
     }
 
+    @PutMapping("/dislike")
+    public ResponseEntity<Integer> rankDown(@RequestParam Long reportId, Integer userId) {
+        return ResponseEntity.ok(weatherReportService.rankDown(reportId, userId));
+    }
+
     @PutMapping("/like")
     public ResponseEntity<Integer> rankUp(@RequestParam Long reportId, Integer userId) {
         return ResponseEntity.ok(weatherReportService.rankUp(reportId, userId));
     }
 
-    @PutMapping("/dislike")
-    public ResponseEntity<Integer> rankDown(@RequestParam Long reportId, @RequestParam Integer userId) {
-        return ResponseEntity.ok(weatherReportService.rankDown(reportId, userId));
+    @DeleteMapping("/{reportId}")
+    public ResponseEntity<Long> deleteReport(@PathVariable Long reportId) {
+        return ResponseEntity.ok(weatherReportService.deleteReport(reportId));
     }
+
+
 }

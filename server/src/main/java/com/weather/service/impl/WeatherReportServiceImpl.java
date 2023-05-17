@@ -90,7 +90,7 @@ public class WeatherReportServiceImpl implements WeatherReportService {
     public Integer rankUp(Long reportId, Integer userId) {
         WeatherReportEntity weatherReportEntity = weatherReportRepository.getReferenceById(reportId);
         UserEntity user = userRepository.getReferenceById(userId);
-        List<UserEntity> dislikes = weatherReportEntity.getLikes();
+        List<UserEntity> dislikes = weatherReportEntity.getDislikes();
         List<UserEntity> likes = weatherReportEntity.getLikes();
 
         if (likes.contains(user)) {
@@ -99,7 +99,7 @@ public class WeatherReportServiceImpl implements WeatherReportService {
             dislikes.remove(user);
             likes.add(user);
         }
-//        weatherReportRepository.save(weatherReportEntity);
+        weatherReportRepository.save(weatherReportEntity);
         return userId;
     }
 
@@ -107,7 +107,7 @@ public class WeatherReportServiceImpl implements WeatherReportService {
     public Integer rankDown(Long reportId, Integer userId) {
         WeatherReportEntity weatherReportEntity = weatherReportRepository.getReferenceById(reportId);
         UserEntity user = userRepository.getReferenceById(userId);
-        List<UserEntity> dislikes = weatherReportEntity.getLikes();
+        List<UserEntity> dislikes = weatherReportEntity.getDislikes();
         List<UserEntity> likes = weatherReportEntity.getLikes();
 
         if (dislikes.contains(user)) {
@@ -116,9 +116,10 @@ public class WeatherReportServiceImpl implements WeatherReportService {
             likes.remove(user);
             dislikes.add(user);
         }
-//        weatherReportRepository.save(weatherReportEntity);
+        weatherReportRepository.save(weatherReportEntity);
         return userId;
     }
+
 
 
 }
