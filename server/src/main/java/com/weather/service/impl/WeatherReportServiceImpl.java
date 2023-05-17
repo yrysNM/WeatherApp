@@ -52,13 +52,9 @@ public class WeatherReportServiceImpl implements WeatherReportService {
     @Override
     public WeatherReportDto updateReportData(Long reportId, WeatherReportDto weatherReportDto)
             throws NotFoundException {
-        WeatherReportEntity weatherReportEntity = weatherReportRepository.findById(reportId).get();
+        WeatherReportEntity weatherReportEntity = weatherReportRepository.getReferenceById(reportId);
 
-        if (weatherReportEntity == null) {
-            throw new NotFoundException("User not found!");
-        }
-
-        weatherReportEntity.setTemperature(weatherReportEntity.getTemperature());
+        weatherReportEntity.setTemperature(weatherReportDto.getTemperature());
         weatherReportEntity.setWeatherDescription(weatherReportDto.getWeatherDescription());
         return WeatherReportMapper.mapToWeatherReportDto(weatherReportRepository.save(weatherReportEntity));
     }
