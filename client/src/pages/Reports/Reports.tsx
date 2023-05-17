@@ -1,8 +1,9 @@
+import {useEffect} from 'react';
 import {ReportWeatherInformationBlock} from '../../components/Blocs/ReportWeatherInformationBlock';
 import {ErrorMessage} from '../../components/ErrorMessage';
 import {Loading} from '../../components/Loading';
 import {SubHeader} from '../../components/SubHeader';
-import {useAppSelector} from '../../hooks/redux.hook';
+import {useAppDispatch, useAppSelector} from '../../hooks/redux.hook';
 import {useGetAllReportsQuery} from '../../redux/services/allReports';
 
 const Reports = () => {
@@ -22,7 +23,7 @@ const Reports = () => {
   if (error) return <ErrorMessage />;
 
   return (
-    <div className="reports">
+    <div className="reports" style={{marginBottom: 40}}>
       <SubHeader />
 
       <p className="title-justFw500 title_page" style={{marginTop: 30}}>

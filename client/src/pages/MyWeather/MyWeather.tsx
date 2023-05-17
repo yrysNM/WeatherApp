@@ -4,14 +4,16 @@ import {SubHeader} from '../../components/SubHeader';
 
 import './myWeather.scss';
 import {useGetUserReportsQuery} from '../../redux/services/userReports';
-import {useAppSelector} from '../../hooks/redux.hook';
+import {useAppDispatch, useAppSelector} from '../../hooks/redux.hook';
 import {ErrorMessage} from '../../components/ErrorMessage';
 import {Loading} from '../../components/Loading';
+import axios from 'axios';
 
 export function MyWeather() {
   const {user} = useAppSelector((state) => state.currentUser);
-
+  const dispatch = useAppDispatch();
   const {
+    refetch,
     data: userReportsData,
     isFetching,
     error,
@@ -25,7 +27,7 @@ export function MyWeather() {
   if (error) return <ErrorMessage />;
 
   return (
-    <div className="my-weather">
+    <div className="my-weather" style={{marginBottom: 40}}>
       <SubHeader />
 
       <p className="title-justFw500 title_page" style={{marginTop: 30}}>
@@ -57,7 +59,31 @@ export function MyWeather() {
               isConfirmedAdmin={true}
               icon={report.icon}
             />
-            <ReportsMethod id={report.reportId} />
+            {/* <ReportsMethod id={report.reportId} /> */}
+            <div>
+              <div style={{marginBottom: 10}}>
+                <Link to={`/edit/report/${report.reportId}`}>
+                  <span className="icon-edit">
+                    <i className="ion-edit" />
+                  </span>
+                </Link>
+              </div>
+
+              <span
+                className="icon-edit"
+                onClick={() => {
+                  axios
+                    .delete(
+                      `${
+                        import.meta.env.VITE_BASE_JAVA_API_URL
+                      }/reports/remove/${report.reportId}`
+                    )
+                    .then(() => refetch());
+                }}
+              >
+                <i className="ion-trash-a" />
+              </span>
+            </div>
           </div>
         ))
       ) : (
@@ -80,7 +106,17 @@ const ReportsMethod = (props: {id: number}) => {
         </Link>
       </div>
 
-      <span className="icon-edit">
+      <span
+        className="icon-edit"
+        onClick={() => {
+          axios.delete(
+            `${import.meta.env.VITE_BASE_JAVA_API_URL}/reports/remove/${
+              props.id
+            }`
+          );
+          // .then(() => refetch());
+        }}
+      >
         <i className="ion-trash-a" />
       </span>
     </div>

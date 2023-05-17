@@ -81,4 +81,9 @@ public class WeatherReportController {
         return ResponseEntity.ok(weatherReportService.getAllByFilterAnonymous(hour, date, location));
     }
 
+
+    @DeleteMapping("/remove/{reportId}")
+    public ResponseEntity<Long> deleteReport(@PathVariable("reportId") Long reportId) {
+        return ResponseEntity.ok(weatherReportService.deleteReport(reportId));
+    }
 }

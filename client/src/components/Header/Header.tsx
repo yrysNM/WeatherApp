@@ -19,6 +19,7 @@ import {ICurrentCityWeather} from '../../Interfaces/ICurrentCityWeather';
 const Header = () => {
   const [openModalProfile, setOpenModalProfile] = useState(false);
   const {base} = useAppSelector((state) => state.cityWeather);
+  const {user} = useAppSelector((state) => state.currentUser);
 
   const dispatch = useAppDispatch();
 
@@ -68,6 +69,7 @@ const Header = () => {
           <div
             className={classNames('header_data-block', {
               'active-header': openModalProfile,
+              isUser: user,
             })}
             onClick={() => setOpenModalProfile(true)}
           >

@@ -60,7 +60,7 @@ public class WeatherReportServiceImpl implements WeatherReportService {
     }
 
     @Override
-    public List<WeatherReportDto> getReportsFromUser(Integer userId, Integer hour){
+    public List<WeatherReportDto> getReportsFromUser(Integer userId, Integer hour) {
         UserEntity user = userRepository.getReferenceById(userId);
 
         return user.getWeatherReportsByUser().stream()
@@ -98,7 +98,7 @@ public class WeatherReportServiceImpl implements WeatherReportService {
             dislikes.remove(user);
             likes.add(user);
         }
-        weatherReportRepository.save(weatherReportEntity);
+        // weatherReportRepository.save(weatherReportEntity);
         return userId;
     }
 
@@ -115,7 +115,7 @@ public class WeatherReportServiceImpl implements WeatherReportService {
             likes.remove(user);
             dislikes.add(user);
         }
-        weatherReportRepository.save(weatherReportEntity);
+        // weatherReportRepository.save(weatherReportEntity);
         return userId;
     }
 

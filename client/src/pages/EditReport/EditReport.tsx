@@ -9,12 +9,24 @@ import {useGetUserReportsQuery} from '../../redux/services/userReports';
 import {useNavigate, useParams} from 'react-router-dom';
 import {useAppSelector} from '../../hooks/redux.hook';
 
+const staticTypeWeather = [
+  {type: 'clear sky', value: 'Clear sky'},
+  {type: 'few clouds', value: 'Few clouds'},
+  {type: 'scattered clouds', value: 'Scattered clouds'},
+  {type: 'broken clouds', value: 'Broken clouds'},
+  {type: 'shower rain', value: 'Shower rain'},
+  {type: 'rain', value: 'Rain'},
+  {type: 'thunderstorm', value: 'Thunderstorm'},
+  {type: 'snow', value: 'Snow'},
+  {type: 'mist', value: 'Mist'},
+];
+
 export const EditReport = () => {
   const navigate = useNavigate();
   const {reportId} = useParams();
   const {user} = useAppSelector((state) => state.currentUser);
   const {city} = useAppSelector((state) => state.cityChange.location);
-  const {data} = useGetUserReportsQuery({
+  const {data, refetch} = useGetUserReportsQuery({
     hour: new Date().getHours(),
     userId: user?.userId,
   });
@@ -45,10 +57,10 @@ export const EditReport = () => {
         city,
         temperature: tempData,
         weatherDescription: descrData,
-        title: titleData,
       })
       .then(() => {
-        navigate(`/weather/${user?.userLogin}`);
+        refetch();
+        navigate(`/weather/${user?.userLogin}`, {replace: true});
       });
   }
 
@@ -91,26 +103,13 @@ export const EditReport = () => {
             <Swiper
               spaceBetween={50}
               slidesPerView={1}
-              onSlideChange={(index) =>
-                setTitleData(
-                  index.slides[index.activeIndex].innerHTML.toLowerCase()
-                )
-              }
-              // onSwiper={(swiper) => console.log(swiper)}
+              onSlideChange={(index) => console.log(index)}
               navigation={true}
               mousewheel={true}
               direction="horizontal"
               modules={[Mousewheel, Navigation]}
             >
-              <SwiperSlide>Clear sky</SwiperSlide>
-              <SwiperSlide>Few clouds</SwiperSlide>
-              <SwiperSlide>Scattered clouds</SwiperSlide>
-              <SwiperSlide>Broken clouds</SwiperSlide>
-              <SwiperSlide>shower rain</SwiperSlide>
-              <SwiperSlide>Rain</SwiperSlide>
-              <SwiperSlide>Thunderstorm</SwiperSlide>
-              <SwiperSlide>Snow</SwiperSlide>
-              <SwiperSlide>Mist</SwiperSlide>
+              <SwiperSlide>{titleData}</SwiperSlide>
             </Swiper>
           </div>
         </div>
@@ -148,7 +147,6 @@ export const EditReport = () => {
         style={{marginRight: 0}}
         type="submit"
         onClick={(e) => {
-          e.preventDefault();
           handleSubmit();
         }}
       >

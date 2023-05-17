@@ -11,15 +11,20 @@ import 'swiper/css/mousewheel';
 import './addReport.scss';
 import {useAppSelector} from '../../hooks/redux.hook';
 import {useNavigate} from 'react-router-dom';
+import {useGetUserReportsQuery} from '../../redux/services/userReports';
 
 export const AddReport = () => {
   const navigate = useNavigate();
-  const [tempData, setTempData] = useState<number>(0);
-  const [titleData, setTitleData] = useState<string>('');
+  const [tempData, setTempData] = useState<number>(283);
+  const [titleData, setTitleData] = useState<string>('clear sky');
   const [descrData, setDescrData] = useState<string>('');
   const [textareaLengthCounter, setTextareaLengthCounter] = useState(0);
   const {city} = useAppSelector((state) => state.cityChange.location);
   const {user} = useAppSelector((state) => state.currentUser);
+  const {refetch} = useGetUserReportsQuery({
+    hour: new Date().getHours(),
+    userId: user?.userId,
+  });
 
   function handleSubmit() {
     axios
@@ -35,7 +40,8 @@ export const AddReport = () => {
         }
       )
       .then(() => {
-        navigate(`/weather/${user?.userLogin}`);
+        refetch();
+        navigate(`/weather/${user?.userLogin}`, {replace: true});
       });
   }
 
@@ -131,7 +137,6 @@ export const AddReport = () => {
         style={{marginRight: 0}}
         type="submit"
         onClick={(e) => {
-          e.preventDefault();
           handleSubmit();
         }}
       >
