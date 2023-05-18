@@ -1,8 +1,8 @@
-import { ReactComponent as TickAdminIcon } from "../../../assets/icons/tickIcon.svg";
-import { ReactComponent as ArrowRainting } from "../../../assets/icons/arrowRainting.svg";
+import {ReactComponent as TickAdminIcon} from '../../../assets/icons/tickIcon.svg';
+import {ReactComponent as ArrowRainting} from '../../../assets/icons/arrowRainting.svg';
 
-import cloundImg from "../../../assets/image/clound.png";
-import "./reportWeatherInformationBlock.scss";
+import cloundImg from '../../../assets/image/clound.png';
+import './reportWeatherInformationBlock.scss';
 
 interface IReportWeather {
   likeNumber: number;
@@ -14,6 +14,7 @@ interface IReportWeather {
   weatherTemp: number;
   weatherDescription: string;
   isConfirmedAdmin?: boolean;
+  icon: string;
 }
 
 const ReportWeatherInformationBlock = ({
@@ -23,6 +24,7 @@ const ReportWeatherInformationBlock = ({
   weatherTemp,
   weatherDescription,
   isConfirmedAdmin = false,
+  icon,
 }: IReportWeather) => {
   return (
     <div className="report">
@@ -30,15 +32,15 @@ const ReportWeatherInformationBlock = ({
         <div className="report__wrapper_block">
           <div className="report_customBlock">
             <div className="like">
-              <span className="icon" style={{ cursor: "pointer" }}>
+              <span className="icon" style={{cursor: 'pointer'}}>
                 <ArrowRainting />
               </span>
               <span className="likeNumber">{likeNumber}</span>
-              <span className="icon" style={{ cursor: "pointer" }}>
-                <ArrowRainting style={{ transform: "rotate(-180deg)" }} />
+              <span className="icon" style={{cursor: 'pointer'}}>
+                <ArrowRainting style={{transform: 'rotate(-180deg)'}} />
               </span>
               {isConfirmedAdmin && (
-                <span className="icon-edit" style={{ width: 30, height: 30 }}>
+                <span className="icon-edit" style={{width: 30, height: 30}}>
                   <TickAdminIcon />
                 </span>
               )}
@@ -51,7 +53,10 @@ const ReportWeatherInformationBlock = ({
         <div className="report__wrapper_block">
           <div className="report_weatherBlock">
             <div className="report_weatherIcon weatherImg">
-              <img src={cloundImg} alt="weather img" />
+              <img
+                src={`https://openweathermap.org/img/wn/${icon}@2x.png`}
+                alt="weather img"
+              />
             </div>
             <p className="report_weatherBlock-temp">{weatherTemp}° C</p>
             <span className="report_weatherBlock-descr">
@@ -70,4 +75,4 @@ const ReportWeatherInformationBlock = ({
   );
 };
 
-export { ReportWeatherInformationBlock };
+export {ReportWeatherInformationBlock};

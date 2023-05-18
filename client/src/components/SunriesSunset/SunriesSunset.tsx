@@ -1,45 +1,63 @@
-import classNames from "classnames";
+import {useEffect, useState} from 'react';
+import moment from 'moment';
+import classNames from 'classnames';
+import {useAppSelector} from '../../hooks/redux.hook';
+import {ContentLayout} from '../layouts/contentLayout';
 
-import { ContentLayout } from "../layouts/contentLayout";
-import { CustomDate } from "../../utils/helpers/CustomDate";
+import sunRise from '../../assets/image/sunRise.png';
+import sunSet from '../../assets/image/sunSet.png';
 
-import sunRise from "../../assets/image/sunRise.png";
-import sunSet from "../../assets/image/sunSet.png";
-
-import "./sunriesSunset.scss";
-
-const getLotitudeAndLongitude = (position: GeolocationPosition) => {
-  const cDate = new CustomDate();
-
-  console.log(
-    cDate.getSunriseAndSunset(
-      new Date(),
-      43.25,
-      76.95
-      // position.coords.longitude
-    )
-  );
-};
+import './sunriesSunset.scss';
 
 export const SunriesSunset = () => {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(getLotitudeAndLongitude);
+  const {sys, timezone} = useAppSelector((state) => state.cityWeather);
+  const sunRiseDt = moment
+    .utc(sys.sunrise, 'X')
+    .add(timezone, 'seconds')
+    .format('HH:mm');
+
+  const sunSetDt = moment
+    .utc(sys.sunset, 'X ')
+    .add(timezone, 'seconds')
+    .format('HH:mm');
+
+  const [currentTime] = useState(moment());
+
+  const [checkSunrise, setCheckSunrise] = useState(0);
+  const [checkSunset, setCheckSunset] = useState(0);
+
+  function updateTime() {
+    setCheckSunrise(currentTime.diff(moment(sunRiseDt, 'HH:mm'), 'hours'));
+    setCheckSunset(currentTime.diff(moment(sunSetDt, 'HH:mm'), 'hours'));
   }
+
+  useEffect(() => {
+    updateTime();
+  }, [sunRiseDt, sunSetDt]);
 
   return (
     <ContentLayout title="Sunries & Sunset" isWeather>
       <LayoutSunriesSunset
         img={sunSet}
         text="Sunrise"
-        time="4:20 AM"
-        nowTime="4 hourse ago"
-        isSunSet={true}
+        time={`${sunRiseDt} AM`}
+        nowTime={
+          checkSunrise > 0
+            ? `${checkSunrise} hourse ago`
+            : `in ${checkSunrise * -1} hours`
+        }
+        isSunSet={currentTime.format('A') === 'AM'}
       />
       <LayoutSunriesSunset
         img={sunRise}
         text="Sunset"
-        time="5:50 AM"
-        nowTime="in 9 hours"
+        time={`${sunSetDt} PM`}
+        nowTime={
+          checkSunset < 0
+            ? `in ${checkSunset * -1} hours`
+            : `${checkSunset} hours ago`
+        }
+        isSunSet={currentTime.format('A') === 'PM'}
       />
     </ContentLayout>
   );
@@ -47,7 +65,7 @@ export const SunriesSunset = () => {
 
 interface ILayoutSunriesSunset {
   img: string;
-  text: "Sunrise" | "Sunset";
+  text: 'Sunrise' | 'Sunset';
   time: string;
   nowTime: string;
   isSunSet?: boolean;
@@ -62,8 +80,8 @@ const LayoutSunriesSunset = ({
 }: ILayoutSunriesSunset) => {
   return (
     <div
-      className={classNames("sunset-sunrise_block ", {
-        "sunset-sunrise_block-active": isSunSet,
+      className={classNames('sunset-sunrise_block ', {
+        'sunset-sunrise_block-active': isSunSet,
       })}
     >
       <div className="sunset-sunrise_block-wrapper">

@@ -3,6 +3,9 @@ package com.weather.service;
 import java.util.Arrays;
 import java.util.List;
 
+import com.weather.entity.UserEntity;
+import com.weather.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -12,10 +15,12 @@ public class WeatherService {
   private final String API_KEY = "1b386436debb80340ab45dca79516e21";
   private RestTemplate restTempplate = new RestTemplate();
 
-  public Object gWeatherDays(double lat, double lon) {
-    String ui = _url + "/forecast/?lat=" + lat + "&lon=" + lon + "&appid=" + API_KEY;
 
-    // Object[] listWeatherDays = weatherDays.list;
+  @Autowired
+  private UserRepository userRepository;
+
+  public Object gWeatherDays(String lat, String lon) {
+    String ui = _url + "/forecast/?lat=" + lat + "&lon=" + lon + "&appid=" + API_KEY;
 
     return restTempplate.getForObject(ui, Object.class);
   }
@@ -30,8 +35,6 @@ public class WeatherService {
 
   public Object gWeatherData(String cityName) {
     String wheatherBaseUrl = _url + "/weather?q=" + cityName + "&appid=" + API_KEY;
-//    Object weatherData = restTempplate.getForObject(wheatherBaseUrl, Object.class);
-//    System.out.println(wheatherBaseUrl);
 
     return restTempplate.getForObject(wheatherBaseUrl, Object.class);
   }

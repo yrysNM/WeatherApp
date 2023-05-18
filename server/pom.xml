@@ -15,6 +15,7 @@
 	<description>Weather Spring MVC app</description>
 	<properties>
 		<java.version>20</java.version>
+		<!-- <start-class>com.weather.ServerApplication</start-class> -->
 	</properties>
 	<dependencies>
 		<dependency>
@@ -25,6 +26,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
+		<dependency>
+   	 <groupId>org.springframework.boot</groupId>
+   	 <artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -53,11 +59,55 @@
 			<version>1.18.24</version>
 			<scope>provided</scope>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
 			<scope>test</scope>
 		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.flywaydb</groupId>-->
+<!--			<artifactId>flyway-core</artifactId>-->
+<!--		</dependency>-->
+
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation -->
+		<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-validation</artifactId>
+				<version>3.0.4</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
+		<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-core</artifactId>
+				<version>6.0.2</version>
+		</dependency>
+
+	<dependency>
+		<groupId>io.jsonwebtoken</groupId>
+		<artifactId>jjwt-api</artifactId>
+		<version>0.11.5</version>
+	</dependency>
+	
+	 <!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-impl -->
+	<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-impl</artifactId>
+			<version>0.11.5</version>
+			<scope>runtime</scope>
+	</dependency>
+
+	<!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-jackson -->
+	<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-jackson</artifactId>
+			<version>0.11.5</version>
+			<scope>runtime</scope>
+	</dependency>
+
+
+
 	</dependencies>
 
 	<build>

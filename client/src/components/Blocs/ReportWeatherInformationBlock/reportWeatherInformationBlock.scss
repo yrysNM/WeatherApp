@@ -1,6 +1,7 @@
 .report {
   margin-top: 20px;
   min-height: auto;
+  flex: 1;
 
   &__wrapper {
     border-radius: 8px;
@@ -12,6 +13,7 @@
     &_block {
       color: #25394e;
       border-bottom: 1px solid rgba(162, 166, 169, 0.2);
+      border-right: 1px solid rgba(162, 166, 169, 0.2)
     }
   }
 }
@@ -22,7 +24,6 @@
   align-items: center;
   gap: 20px;
 
-  border-right: 1px solid rgba(162, 166, 169, 0.2)
 }
 
 .report_weatherBlock {

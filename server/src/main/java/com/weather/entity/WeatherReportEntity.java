@@ -7,7 +7,12 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Entity
 @Builder
@@ -20,27 +25,52 @@ public class WeatherReportEntity {
     @Id
     private long reportId;
     private String city;
-    private int temperature;
+    private Integer temperature;
+    private String title;
+    private String icon;
     private String weatherDescription;
     @CreationTimestamp
     private LocalDateTime createdAt;
-    @ManyToOne
+    @UpdateTimestamp
+    private LocalDateTime lastUpdateAt;
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "likes",
+            joinColumns = {@JoinColumn(name = "report_id", referencedColumnName = "reportId")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "userId")}
+    )
+    private List<UserEntity> likes = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "dislikes",
+            joinColumns = {@JoinColumn(name = "report_id", referencedColumnName = "reportId")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "userId")}
+    )
+    private List<UserEntity> dislikes = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         WeatherReportEntity that = (WeatherReportEntity) o;
 
-        if (reportId != that.reportId) return false;
-        if (temperature != that.temperature) return false;
-        if (city != null ? !city.equals(that.city) : that.city != null) return false;
-        if (weatherDescription != null ? !weatherDescription.equals(that.weatherDescription) : that.weatherDescription != null)
+        if (reportId != that.reportId)
             return false;
-        if (createdAt != null ? !createdAt.equals(that.createdAt) : that.createdAt != null) return false;
+        if (temperature != that.temperature)
+            return false;
+        if (city != null ? !city.equals(that.city) : that.city != null)
+            return false;
+        if (weatherDescription != null ? !weatherDescription.equals(that.weatherDescription)
+                : that.weatherDescription != null)
+            return false;
+        if (createdAt != null ? !createdAt.equals(that.createdAt) : that.createdAt != null)
+            return false;
 
         return true;
     }

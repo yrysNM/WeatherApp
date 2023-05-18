@@ -1,5 +1,5 @@
-import { TodayOverview } from "../../components/TodayOverview";
-import { AverageWeekTemperature } from "../../components/AverageWeekTemperature";
+import {TodayOverview} from '../../components/TodayOverview';
+import {AverageWeekTemperature} from '../../components/AverageWeekTemperature';
 
 const Main = () => {
   return (
@@ -10,4 +10,4 @@ const Main = () => {
   );
 };
 
-export { Main };
+export {Main};

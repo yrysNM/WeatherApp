@@ -1,21 +1,32 @@
-import { IconTextBlock } from "../Blocs";
-import { Settings } from "../Settings";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux.hook";
-import { logoutCurrentUser } from "../../redux/modules/currentUserSlice";
+import {useEffect} from 'react';
+import {useNavigate} from 'react-router-dom';
 
-import { ReactComponent as HomeIcon } from "../../assets/icons/homeIcon.svg";
-import { ReactComponent as MapIcon } from "../../assets/icons/mapIcon.svg";
-import { ReactComponent as MyWeather } from "../../assets/icons/myWeather.svg";
-import { ReactComponent as ReportsIcon } from "../../assets/icons/reportsIcon.svg";
-import { ReactComponent as LogoutIcon } from "../../assets/icons/logoutIcon.svg";
+import {IconTextBlock} from '../Blocs';
+import {Settings} from '../Settings';
+import {useAppDispatch, useAppSelector} from '../../hooks/redux.hook';
+import {logoutCurrentUser} from '../../redux/modules/currentUserSlice';
 
-import logoImg from "../../assets/image/logoImg.png";
+import {ReactComponent as HomeIcon} from '../../assets/icons/homeIcon.svg';
+import {ReactComponent as MapIcon} from '../../assets/icons/mapIcon.svg';
+import {ReactComponent as MyWeather} from '../../assets/icons/myWeather.svg';
+import {ReactComponent as ReportsIcon} from '../../assets/icons/reportsIcon.svg';
+import {ReactComponent as LogoutIcon} from '../../assets/icons/logoutIcon.svg';
 
-import "./menuSideBar.scss";
+import logoImg from '../../assets/image/logoImg.png';
+
+import './menuSideBar.scss';
+import {fetchUserData} from '../../api/auth';
 
 const MenuSideBar = () => {
-  const { isLogged, user } = useAppSelector((state) => state.currentUser);
+  const {isLogged, user} = useAppSelector((state) => state.currentUser);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isLogged && !user) {
+      dispatch(fetchUserData());
+    }
+  }, [isLogged]);
 
   function systemBlocks() {
     if (isLogged) {
@@ -24,13 +35,19 @@ const MenuSideBar = () => {
           <Settings />
           <div className="iconText logout">
             <LogoutIcon
-              style={{ cursor: "pointer" }}
-              onClick={() => dispatch(logoutCurrentUser())}
+              style={{cursor: 'pointer'}}
+              onClick={() => {
+                dispatch(logoutCurrentUser());
+                navigate('/login', {replace: false});
+              }}
             />
             <span
-              style={{ cursor: "pointer" }}
+              style={{cursor: 'pointer'}}
               className="title-sidebar"
-              onClick={() => dispatch(logoutCurrentUser())}
+              onClick={() => {
+                dispatch(logoutCurrentUser());
+                navigate('/login', {replace: false});
+              }}
             >
               Logout&nbsp;account
             </span>
@@ -84,7 +101,7 @@ const MenuSideBar = () => {
               <IconTextBlock
                 icon={<MyWeather />}
                 text="My&nbsp;Weathers"
-                pageUrl={`/weather/${user.username}`}
+                pageUrl={`/weather/${user?.userLogin ?? 'anonymous'}`}
               />
             </li>
           </ul>
@@ -93,7 +110,7 @@ const MenuSideBar = () => {
       <div className="sideBar_wrapper">
         <span className="sub-title">System</span>
 
-        <div className="menu-block subBlocks" style={{ margin: "20px 0" }}>
+        <div className="menu-block subBlocks" style={{margin: '20px 0'}}>
           {systemBlocks()}
         </div>
       </div>
@@ -101,4 +118,4 @@ const MenuSideBar = () => {
   );
 };
 
-export { MenuSideBar };
+export {MenuSideBar};

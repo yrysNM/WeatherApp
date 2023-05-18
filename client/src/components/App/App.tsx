@@ -1,5 +1,5 @@
-import { Outlet, Route, Routes } from "react-router-dom";
-import PrivateRoutes from "../../utils/PrivateRoutes";
+import {Outlet, Route, Routes} from 'react-router-dom';
+import PrivateRoutes from '../../utils/PrivateRoutes';
 
 import {
   MainDemo,
@@ -12,10 +12,10 @@ import {
   AddReport,
   EditUser,
   EditReport,
-} from "../../pages";
-import { PageLayout } from "../layouts/pagesLayout";
+} from '../../pages';
+import {PageLayout} from '../layouts/pagesLayout';
 
-import "./app.scss";
+import './app.scss';
 const App = () => {
   return (
     <Routes>
@@ -34,6 +34,7 @@ const App = () => {
           <Route path="edit/user/:user" element={<EditUser />} />
           <Route path="edit/report/:reportId" element={<EditReport />} />
           <Route path="add/report" element={<AddReport />} />
+          <Route path="reports" element={<Reports />} />
         </Route>
       </Route>
       <Route element={<PageLayout />}>
@@ -41,10 +42,9 @@ const App = () => {
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="map" element={<Map />} />
-        <Route path="reports" element={<Reports />} />
       </Route>
     </Routes>
   );
 };
 
-export { App };
+export {App};

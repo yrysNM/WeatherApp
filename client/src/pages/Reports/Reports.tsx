@@ -1,30 +1,64 @@
-import { ReportWeatherInformationBlock } from "../../components/Blocs/ReportWeatherInformationBlock";
-import { SubHeader } from "../../components/SubHeader";
+import {useEffect} from 'react';
+import {ReportWeatherInformationBlock} from '../../components/Blocs/ReportWeatherInformationBlock';
+import {ErrorMessage} from '../../components/ErrorMessage';
+import {Loading} from '../../components/Loading';
+import {SubHeader} from '../../components/SubHeader';
+import {useAppDispatch, useAppSelector} from '../../hooks/redux.hook';
+import {useGetAllReportsQuery} from '../../redux/services/allReports';
 
 const Reports = () => {
+  const {user} = useAppSelector((state) => state.currentUser);
+
+  const {
+    data: reportsData,
+    isFetching: isFetchingReports,
+    error,
+  } = useGetAllReportsQuery({
+    hour: new Date().getHours(),
+    userId: user?.userId,
+  });
+
+  if (isFetchingReports) return <Loading />;
+
+  if (error) return <ErrorMessage />;
+
   return (
-    <div className="reports">
+    <div className="reports" style={{marginBottom: 40}}>
       <SubHeader />
 
-      <p className="title-justFw500 title_page" style={{ marginTop: 30 }}>
+      <p className="title-justFw500 title_page" style={{marginTop: 30}}>
         Reports
       </p>
 
       <div className="reports__list">
-        <ReportWeatherInformationBlock
-          likeNumber={142}
-          customWeatherText="Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque provident non corporis ullam asperiores temporibus, quasi error iure consequuntur quae architecto suscipit maiores distinctio culpa illo harum delectus vero in."
-          moreInformation={{
-            created: "Apr 30 2023 at 14:30:20",
-            edit: "Apr 30 2023 at 14:30:20",
-          }}
-          weatherTemp={27}
-          weatherDescription="Rainny"
-          isConfirmedAdmin={true}
-        />
+        {reportsData?.map((report) => (
+          <ReportWeatherInformationBlock
+            key={report.reportId}
+            likeNumber={142}
+            customWeatherText={report.weatherDescription}
+            moreInformation={{
+              created: `${new Date(report.createdAt)
+                .toUTCString()
+                .substring(0, 15)} at ${new Date(report.createdAt)
+                .toUTCString()
+                .substring(16, 25)} by ${report.userName}`,
+              edit: `${new Date(report.lastUpdateAt)
+                .toUTCString()
+                .substring(0, 15)} at ${new Date(report.lastUpdateAt)
+                .toUTCString()
+                .substring(16, 25)}`,
+            }}
+            weatherTemp={Math.round(report.temperature - 273.15)}
+            weatherDescription={
+              report.title.charAt(0).toUpperCase() + report.title.slice(1)
+            }
+            isConfirmedAdmin={true}
+            icon={report.icon}
+          />
+        ))}
       </div>
     </div>
   );
 };
 
-export { Reports };
+export {Reports};

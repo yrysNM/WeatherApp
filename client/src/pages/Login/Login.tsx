@@ -1,6 +1,12 @@
-import { AuthTemplate } from "../../components/AuthTemplate";
+import {useNavigate} from 'react-router-dom';
+import {fetchUserData, fetchUserLogin} from '../../api/auth';
+import {AuthTemplate} from '../../components/AuthTemplate';
+import {useAppDispatch} from '../../hooks/redux.hook';
 
 export const Login = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   return (
     <div className="authBlock">
       <div className="card">
@@ -8,8 +14,11 @@ export const Login = () => {
 
         <AuthTemplate
           isLogin={true}
-          getValueInput={(v: { email: string; password: string }) =>
-            console.log(v)
+          getValueInput={(v: {email: string; password: string}) =>
+            dispatch(fetchUserLogin(v)).then(() => {
+              navigate('/', {replace: false});
+              dispatch(fetchUserData());
+            })
           }
         />
       </div>

@@ -1,24 +1,54 @@
-import classNames from "classnames";
-import { useState } from "react";
+import classNames from 'classnames';
+import {useCallback, useEffect, useState} from 'react';
 
-import { CustomDate, cusomDate } from "../../utils/helpers/CustomDate";
-import { Modal } from "../Modal";
-import { Profile } from "../Profile";
+import {CustomDate, cusomDate} from '../../utils/helpers/CustomDate';
+import {Modal} from '../Modal';
+import {Profile} from '../Profile';
+import {
+  fetchCurrentCityWeather,
+  fetchWeatherDaysTheCity,
+} from '../../api/weather';
+import {useAppDispatch, useAppSelector} from '../../hooks/redux.hook';
 
-import { ReactComponent as SearchIcon } from "../../assets/icons/searchIcon.svg";
-import { ReactComponent as BellIcon } from "../../assets/icons/bellIcon.svg";
-import { ReactComponent as ProfileIcon } from "../../assets/icons/profileIcon.svg";
-import "./header.scss";
+import {ReactComponent as SearchIcon} from '../../assets/icons/searchIcon.svg';
+import {ReactComponent as BellIcon} from '../../assets/icons/bellIcon.svg';
+import {ReactComponent as ProfileIcon} from '../../assets/icons/profileIcon.svg';
+import './header.scss';
+import {ICurrentCityWeather} from '../../Interfaces/ICurrentCityWeather';
 
 const Header = () => {
   const [openModalProfile, setOpenModalProfile] = useState(false);
+  const {base} = useAppSelector((state) => state.cityWeather);
+  const {user} = useAppSelector((state) => state.currentUser);
+
+  const dispatch = useAppDispatch();
+
+  const fetchDefaultCityWeather = useCallback(() => {
+    if (!base) {
+      dispatch(fetchCurrentCityWeather({cityName: 'Almaty'})).then(
+        ({payload}) => {
+          const dataWeather = payload as {data: ICurrentCityWeather};
+
+          dispatch(
+            fetchWeatherDaysTheCity({
+              ...dataWeather.data.coord,
+            })
+          );
+        }
+      );
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchDefaultCityWeather();
+  }, [fetchDefaultCityWeather]);
 
   return (
     <>
       <div className="header">
         <div className="header_date">
           <h3 className="dateMonth">
-            {CustomDate.getMonthName() + " " + new Date().getFullYear()}
+            {CustomDate.getMonthName() + ' ' + new Date().getFullYear()}
           </h3>
           <span className="sub-title">{cusomDate()}</span>
         </div>
@@ -37,8 +67,9 @@ const Header = () => {
           </div>
 
           <div
-            className={classNames("header_data-block", {
-              "active-header": openModalProfile,
+            className={classNames('header_data-block', {
+              'active-header': openModalProfile,
+              isUser: user,
             })}
             onClick={() => setOpenModalProfile(true)}
           >
@@ -55,4 +86,4 @@ const Header = () => {
   );
 };
 
-export { Header };
+export {Header};

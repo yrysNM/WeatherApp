@@ -4,10 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.weather.entity.WeatherReportEntity;
-
+// import com.weather.entity.WeatherReportEntity;
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
 
 @Data
 @Builder
@@ -18,6 +17,7 @@ public class UserDto {
     private String userLogin;
     private String userEmail;
     private LocalDateTime createdAt;
+    private String confirmPassword;
     private LocalDateTime lastUpdateAt;
-    private Set<WeatherReportEntity> weatherReportsByUser;
+    private List<WeatherReportDto> weatherReportsByUser;
 }
